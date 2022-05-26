@@ -1,0 +1,53 @@
+    /* 
+        $("#register-form").submit(function (e) {
+            //CAPTURE FORM DEFAULT ACTIONS; 
+            //Default will be overriden by this script instead
+            e.preventDefault();
+    
+            var formData = new FormData(this);
+    
+            console.log("has been pressed");
+            for (var value of formData.values()) {
+                console.log(value);
+            }
+    
+            for (var value of formData.keys()) {
+                console.log(value);
+            }
+    
+            // If passwords aren't the same, don't send POST request
+            if ($("#pass-register").val().normalize() != $("#re-pass-register").val().normalize()) {
+                $("#pass-register").addClass("is-danger");
+                $("#re-pass-register").addClass("is-danger");
+    
+                var badpasstext = "<p class='has-text-danger-dark'>Error: Passwords don't match</p>"
+                $("#pass-register").parent().append(badpasstext);
+                $("#re-pass-register").parent().append(badpasstext);
+            } else {
+    
+    
+                console.log($(this).attr("action"));
+                $.ajax({
+                    type: "POST",
+                    url: $(this).attr('action'),
+                    data: formData,
+                    success: function (response) {
+                        console.log("Complete Request");
+                        console.log(response);
+                    }
+                });
+            }
+        });
+
+        // Trim on demand per keystroke
+         $('input').on('input', function () {
+            id = "#" + this.id;
+    
+            value = $(id).val();
+    
+            console.log(id + " : " + value);
+    
+            $(id).val($(id).val().trim());
+        });
+
+     */

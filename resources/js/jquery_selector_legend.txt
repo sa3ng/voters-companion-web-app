@@ -1,0 +1,8 @@
+html tag
+$("selector").val();
+
+id
+$("#selector").val();
+
+name attr
+$("[name='html-name']").val();
