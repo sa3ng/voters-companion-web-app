@@ -1,18 +1,27 @@
 <?php
-
-function checkConnection($db_credentials)
+// class to be utilized by fetchCandidates()
+class CandidateOverviewClass
 {
+    private $name;
+    private $candidate_id;
 
-    $conn = new mysqli(
-        $db_credentials["server"],
-        $db_credentials["user"],
-        $db_credentials["pass"],
-        $db_credentials["db_name"],
-        $db_credentials["port"]
-    );
+    // CONSTRUCTORS
+    function __construct($name, $candidate_id)
+    {
+        $this->name = $name;
+        $this->candidate_id = $candidate_id;
+    }
 
-    if ($conn) return true;
-    else return false;
+    // GETTERS
+    function getName()
+    {
+        return $this->name;
+    }
+
+    function getCandidateId()
+    {
+        return $this->candidate_id;
+    }
 }
 
 function fetchCandidates($db_credentials)
@@ -32,17 +41,17 @@ function fetchCandidates($db_credentials)
     // result retrieval
     $results = $stmt->get_result();
     //define CandidateName as an array
-    $candidateNames = array();
+    $candidates_arr = [];
 
     //Fill up Candidate Names
-    while ($candidates = mysqli_fetch_assoc($results)) {
-        array_push($candidateNames, $candidates['Name']);
+    while ($current_row = $results->fetch_assoc()) {
+        array_push($candidates_arr, new CandidateOverviewClass($current_row["full_name"], $current_row["candidate_id"]));
     }
-
-    return $candidateNames;
 
     $conn->close();
     $stmt->close();
+
+    return $candidates_arr;
 }
 
 function displayCandidates($db_credentials)
@@ -52,7 +61,7 @@ function displayCandidates($db_credentials)
     $num_of_candidates = 1;
 
     foreach ($candidate_names as $names) {
-
+        // TODO : REFACTOR THIS
         if (!($num_of_candidates % 2 == 0) || $num_of_candidates == 1) {
             echo "
                     <div class='columns'>
