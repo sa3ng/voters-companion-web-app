@@ -2,68 +2,68 @@
 // class to be utilized by fetchCandidates()
 class CandidateOverviewClass
 {
-    private $name;
-    private $candidate_id;
+  private $name;
+  private $candidate_id;
 
-    // CONSTRUCTORS
-    function __construct($name, $candidate_id)
-    {
-        $this->name = $name;
-        $this->candidate_id = $candidate_id;
-    }
+  // CONSTRUCTORS
+  function __construct($name, $candidate_id)
+  {
+    $this->name = $name;
+    $this->candidate_id = $candidate_id;
+  }
 
-    // GETTERS
-    function getName()
-    {
-        return $this->name;
-    }
+  // GETTERS
+  function getName()
+  {
+    return $this->name;
+  }
 
-    function getCandidateId()
-    {
-        return $this->candidate_id;
-    }
+  function getCandidateId()
+  {
+    return $this->candidate_id;
+  }
 }
 
 function fetchCandidates($db_credentials)
 {
-    $conn = new mysqli(
-        $db_credentials["server"],
-        $db_credentials["user"],
-        $db_credentials["pass"],
-        $db_credentials["db_name"],
-        $db_credentials["port"]
-    );
+  $conn = new mysqli(
+    $db_credentials["server"],
+    $db_credentials["user"],
+    $db_credentials["pass"],
+    $db_credentials["db_name"],
+    $db_credentials["port"]
+  );
 
-    // preparation of prepared statement
-    $stmt = $conn->prepare("SELECT * FROM candidatesTBL");
-    // execution
-    $stmt->execute();
-    // result retrieval
-    $results = $stmt->get_result();
-    //define CandidateName as an array
-    $candidates_arr = [];
+  // preparation of prepared statement
+  $stmt = $conn->prepare("SELECT * FROM candidatesTBL");
+  // execution
+  $stmt->execute();
+  // result retrieval
+  $results = $stmt->get_result();
+  //define CandidateName as an array
+  $candidates_arr = [];
 
-    //Fill up Candidate Names
-    while ($current_row = $results->fetch_assoc()) {
-        array_push($candidates_arr, new CandidateOverviewClass($current_row["full_name"], $current_row["candidate_id"]));
-    }
+  //Fill up Candidate Names
+  while ($current_row = $results->fetch_assoc()) {
+    array_push($candidates_arr, new CandidateOverviewClass($current_row["full_name"], $current_row["candidate_id"]));
+  }
 
-    $conn->close();
-    $stmt->close();
+  $conn->close();
+  $stmt->close();
 
-    return $candidates_arr;
+  return $candidates_arr;
 }
 
 function displayCandidates($db_credentials)
 {
-    $candidate_names = fetchCandidates($db_credentials);
+  $candidate_names = fetchCandidates($db_credentials);
 
-    $num_of_candidates = 1;
+  $num_of_candidates = 1;
 
-    foreach ($candidate_names as $names) {
-        // TODO : REFACTOR THIS
-        if (!($num_of_candidates % 2 == 0) || $num_of_candidates == 1) {
-            echo "
+  foreach ($candidate_names as $names) {
+    // TODO : REFACTOR THIS
+    if (!($num_of_candidates % 2 == 0) || $num_of_candidates == 1) {
+      echo "
                     <div class='columns'>
                     <div class='column'>
                      <div class='card hovereffect'>
@@ -76,8 +76,8 @@ function displayCandidates($db_credentials)
                        </div>
                        <div class='media-content'>
                        "
-                . "<p class ='title'>" . $candidate_names[$num_of_candidates - 1] . "</p>" .
-                "
+        . "<p class ='title'>" . $candidate_names[$num_of_candidates - 1] . "</p>" .
+        "
                          <p class='subtitle'>
                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis fugit quibusdam iste nam, dolorem ullam nulla, ratione saepe ipsam sequi a eius quos necessitatibus sed nesciunt vero corporis natus voluptatum.
                          </p>
@@ -94,8 +94,8 @@ function displayCandidates($db_credentials)
                      </div>
                      </div>
                      ";
-        } else {
-            echo "
+    } else {
+      echo "
                     <div class='column'>
                      <div class='card hovereffect'>
                        <div class='card-content'>
@@ -107,8 +107,8 @@ function displayCandidates($db_credentials)
                        </div>
                        <div class='media-content'>
                        "
-                . "<p class ='title'>" . $candidate_names[$num_of_candidates - 1] . "</p>" .
-                "
+        . "<p class ='title'>" . $candidate_names[$num_of_candidates - 1] . "</p>" .
+        "
                          <p class='subtitle'>
                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis fugit quibusdam iste nam, dolorem ullam nulla, ratione saepe ipsam sequi a eius quos necessitatibus sed nesciunt vero corporis natus voluptatum.
                          </p>
@@ -126,9 +126,9 @@ function displayCandidates($db_credentials)
                      </div>
                      </div> 
                      ";
-        };
+    };
 
 
-        $num_of_candidates += 1;
-    }
+    $num_of_candidates += 1;
+  }
 }
