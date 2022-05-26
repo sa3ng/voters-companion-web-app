@@ -20,7 +20,7 @@
 
         //Fill up Candidate Names
         while($candidates = mysqli_fetch_assoc($results)){
-            array_push($candidateNames , $candidates['Full_Name']);
+            array_push($candidateNames , $candidates['full_name']);
             
         }
 
@@ -28,4 +28,7 @@
         
         $conn->close();
         $stmt->close();
+
     }
+
+?>

@@ -29,7 +29,7 @@ require_once '../phpScripts/usr_page_functions.php';
     
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item" href="Home.php">
+          <a class="navbar-item" href="index.php">
             Home
           </a>
 
@@ -82,7 +82,7 @@ require_once '../phpScripts/usr_page_functions.php';
                             <a class='button is-link' href='usrRegister.php'>
                             <strong>Sign up</strong>
                             </a>
-                            <a class='button is-light' href='index.php'>
+                            <a class='button is-light' href='usrLogin.php'>
                                 Log in
                             </a>
                                 ";

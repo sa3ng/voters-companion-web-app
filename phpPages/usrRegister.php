@@ -54,7 +54,7 @@ require_once 'footer-header/header.php';
                   <h1 class="title">Enter your details here</h1>
                   <div class="field">
                     <div class="control">
-                      <input id="email-register" name="email-register" class="input is-size-5 register-input" required type="email" placeholder="Email">
+                      <input id="email-register" name="email-register" class="input is-size-5 register-input" required type="email" placeholder="[EMAIL NEXT TIME]">
                     </div>
                     <p id="error-email" class='hidden has-text-danger-dark'>Email has already been registered</p>
                   </div>

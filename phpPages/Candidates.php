@@ -87,7 +87,7 @@ $candidate_names = fetchCandidates($DB_CREDENTIALS);
                    <footer class='card-footer'>
                      <p class='card-footer-item'>
                        <span>
-                        <a href='CandidatePage.html'>Learn More</a>
+                        <a href='CandidatePage.php'>Learn More</a>
                        </span>
                      </p>
                    </footer>
@@ -118,7 +118,7 @@ $candidate_names = fetchCandidates($DB_CREDENTIALS);
                    <footer class='card-footer'>
                      <p class='card-footer-item'>
                        <span>
-                        <a href='CandidatePage.html'>Learn More</a>
+                        <a href='CandidatePage.php'>Learn More</a>
                        </span>
                      </p>
                    </footer>
