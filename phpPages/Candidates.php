@@ -1,7 +1,6 @@
 <?php
 require_once '../phpScripts/globals.php';
-require_once '../phpScripts/candidates_page_processor.php';
-
+require_once '../phpScripts/candidates_page_functions.php';
 
 ?>
 
@@ -57,7 +56,7 @@ require_once '../phpScripts/candidates_page_processor.php';
   <div class="container">
 
     <?php
-    displayCandidates($LOCALHOST_CREDENTIALS);
+    displayCandidates($DB_CREDENTIALS);
     ?>
 
   </div>
