@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
     function fetchCandidates($db_credentials)
     {
         $conn = new mysqli(
@@ -32,3 +33,5 @@
     }
 
 ?>
+=======
+>>>>>>> 25524b6518d74088ff85afb297a7a48e75ed1f3a

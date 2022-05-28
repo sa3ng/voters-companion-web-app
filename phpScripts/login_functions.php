@@ -43,18 +43,19 @@ function queryAccount($db_credentials, $login_credentials, $target_tbl, $target_
         // If a user has been returned, validate password
         if ($user["pass"] == $login_credentials["pass"]) {
             //valid account, set it to a cookie for reference
+<<<<<<< HEAD
             $cookie_acc_id_name  = "acc_id";
             $cookie_acc_id_value = $user["acc_id"];
+=======
+>>>>>>> 25524b6518d74088ff85afb297a7a48e75ed1f3a
 
             $cookie_acc_user_name  = "acc_name";
             $cookie_acc_user_value = $user["name"];
 
             //checking if "remember me" was ticked
             if (array_key_exists("remember-check", $_POST)) {
-                setcookie($cookie_acc_id_name, $cookie_acc_id_value, 0, "/");
                 setcookie($cookie_acc_user_name, $cookie_acc_user_value, 0, "/");
             } else {
-                setcookie($cookie_acc_id_name, $cookie_acc_id_value, 0, "/");
                 setcookie($cookie_acc_user_name, $cookie_acc_user_value, 0, "/");
             }
 

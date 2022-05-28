@@ -1,9 +1,6 @@
 <?php
-require '../phpScripts/globals.php';
-require '../phpScripts/candidates_page_processor.php';
-
-$candidate_names = fetchCandidates($DB_CREDENTIALS);
-
+require_once '../phpScripts/globals.php';
+require_once '../phpScripts/candidates_page_functions.php';
 
 ?>
 
@@ -59,6 +56,7 @@ $candidate_names = fetchCandidates($DB_CREDENTIALS);
   <div class="container">
 
     <?php
+<<<<<<< HEAD
     $num_of_candidates = 1;
 
     foreach ($candidate_names as $names) {
@@ -132,8 +130,10 @@ $candidate_names = fetchCandidates($DB_CREDENTIALS);
 
       $num_of_candidates += 1;
     }
+=======
+    displayCandidates($DB_CREDENTIALS);
+>>>>>>> 25524b6518d74088ff85afb297a7a48e75ed1f3a
     ?>
-
 
   </div>
 
