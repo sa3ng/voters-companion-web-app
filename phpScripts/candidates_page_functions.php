@@ -147,3 +147,67 @@ function displayCandidates($db_credentials)
     }
   }
 }
+
+// CANDIDATE PAGE PROPER FUNCTIONS
+
+/* 
+this function should check if the user has passed the request to the server
+*/
+function validateRequestType()
+{
+  if (array_key_exists("REQUEST_METHOD", $_SERVER)) {
+    if ($_SERVER["REQUEST_METHOD"] == "GET")
+      return true;
+  }
+
+  // default return
+  return false;
+}
+
+function checkCandidateParamExist()
+{
+  if (array_key_exists("cid", $_GET))
+    return true;
+  return false;
+}
+
+function returnToOverviewPage()
+{
+  header("Location: Candidates.php", true);
+  die();
+}
+
+function queryCandidate($get_cid, $db_credentials)
+{
+  $conn = new mysqli(
+    $db_credentials["server"],
+    $db_credentials["user"],
+    $db_credentials["pass"],
+    $db_credentials["db_name"],
+    $db_credentials["port"]
+  );
+
+  // preparation of prepared statement
+  $stmt = $conn->prepare("SELECT * FROM candidatesTBL WHERE candidate_id=?");
+  $stmt->bind_param("i", $get_cid);
+
+  // execution
+  $stmt->execute();
+  // result retrieval
+  $results = $stmt->get_result();
+  // should only have one result; No need to have a while iterator here
+
+  $candidate = $results->fetch_assoc();
+  // closing of connections
+  $stmt->close();
+  $conn->close();
+
+  if (!(empty($candidate)))
+    return $candidate["candidate_id"];
+
+  return -1;
+}
+
+function getCandidateInfo($candidate_id, $db_credentials)
+{
+}
