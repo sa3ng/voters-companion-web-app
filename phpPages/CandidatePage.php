@@ -3,17 +3,26 @@
 include_once '../phpScripts/candidates_page_functions.php';
 include_once '../phpScripts/globals.php';
 
+
+/* 
+WE MUST MAKE SURE THAT THE USER DOESN'T COME FROM INVALID REQUESTS/REDIRECTS:
+Lines the three if-else lines underneath attempt to do this
+*/
+
 if (!(validateRequestType()))
     returnToOverviewPage();
 
 if (!(checkCandidateParamExist()))
     returnToOverviewPage();
 
-$fetched_candidate;
-if (!($fetched_candidate = queryCandidate($_GET["cid"], $DB_CREDENTIALS) == -1))
-    getCandidateInfo($fetched_candidate, $DB_CREDENTIALS);
+// FINAL VALIDATION CHECK INTO THE DB, WE GET THE CANDIDATE INFO ONCE THERE IS A POSITIVE RETURN
+$fetched_candidate_id;
+$candidate_info;
+if (!($fetched_candidate_id = queryCandidate($_GET["cid"], $DB_CREDENTIALS) == -1))
+    $candidate_info = getCandidateInfo($fetched_candidate_id, $DB_CREDENTIALS);
 else
     returnToOverviewPage();
+
 
 
 ?>

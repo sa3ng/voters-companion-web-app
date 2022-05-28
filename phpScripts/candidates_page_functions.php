@@ -24,6 +24,82 @@ class CandidateOverviewClass
   }
 }
 
+/* 
+
+Candidate info model that will store the extracted information
+
+*/
+class CandidateInformationClass
+{
+  private $name;
+  private $political_party;
+  private $birthday;
+  private $birthplace;
+  private $religion;
+
+  // DEFAULT CONSTRUCTOR INTIALIZES CLASS MEMBERS WITH EMPTY STRINGS
+  function __construct()
+  {
+    $this->name = "";
+    $this->political_party = "";
+    $this->birthday = "";
+    $this->birthplace = "";
+    $this->religion = "";
+  }
+
+  // SETTERS
+  function setName($name)
+  {
+    $this->name = $name;
+  }
+
+  function setPolParty($political_party)
+  {
+    $this->political_party = $political_party;
+  }
+
+  function setBirthday($birthday)
+  {
+    $this->birthday = $birthday;
+  }
+
+  function setBirthPlace($birthplace)
+  {
+    $this->birthplace = $birthplace;
+  }
+
+  function setReligion($religion)
+  {
+    $this->religion = $religion;
+  }
+
+  // GETTERS
+  function getName($name)
+  {
+    return $this->name;
+  }
+
+  function getPolParty()
+  {
+    return $this->political_party;
+  }
+
+  function getBirthday()
+  {
+    return $this->birthday;
+  }
+
+  function getBirthplace()
+  {
+    return $this->birthplace;
+  }
+
+  function getReligion()
+  {
+    return $this->religion;
+  }
+}
+
 function fetchCandidates($db_credentials)
 {
   $conn = new mysqli(
@@ -153,6 +229,8 @@ function displayCandidates($db_credentials)
 /* 
 this function should check if the user has passed the request to the server
 */
+
+
 function validateRequestType()
 {
   if (array_key_exists("REQUEST_METHOD", $_SERVER)) {
@@ -193,7 +271,7 @@ function queryCandidate($get_cid, $db_credentials)
 
   // execution
   $stmt->execute();
-  // result retrieval
+  // result retrievalphpScripts/candidates_page_functions.php
   $results = $stmt->get_result();
   // should only have one result; No need to have a while iterator here
 
@@ -210,4 +288,5 @@ function queryCandidate($get_cid, $db_credentials)
 
 function getCandidateInfo($candidate_id, $db_credentials)
 {
+  return new CandidateInformationClass();
 }
