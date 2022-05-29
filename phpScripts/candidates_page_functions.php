@@ -299,6 +299,7 @@ function getCandidateInfo($candidate_id, $db_credentials)
   $candidate_info = new CandidateInformationClass();
   $info_table = "candidatesInfoTBL";
   $name_table = "candidatesTBL";
+  $religion_table = "religionTBL";
 
   $candidate_info->setBirthday(getCandidateBirthday(
     $conn,
@@ -321,11 +322,12 @@ function getCandidateInfo($candidate_id, $db_credentials)
     $info_table
   ));
 
-  $candidate_info->setReligion(getCandidateBirthday(
+  $candidate_info->setReligion(getCandidateReligion(
     $conn,
     $candidate_id,
-    "religion",
-    $info_table
+    "religion_id",
+    $info_table,
+    $religion_table
   ));
 
   $candidate_info->setName(getCandidateName(
@@ -346,41 +348,130 @@ A DATABASE AND THESE FUNCTIONS DO NOT CLOSE THE SQLi CONNECTION IN ANY MANNER
  */
 
 function getCandidateBirthday(
-  $sqli_conn,
+  mysqli $sqli_conn,
   $candidate_id,
   $birthday_column,
   $target_tbl
 ) {
+
+  // PREPARE prep statement
+  $stmt = $sqli_conn->prepare("SELECT " . $birthday_column . " FROM " . $target_tbl . " WHERE candidate_id=?");
+  $stmt->bind_param("i", $candidate_id);
+
+  // execute
+  $stmt->execute();
+
+  // get result
+  $result = $stmt->get_result();
+  $birthday = $result->fetch_assoc();
+
+  // close connection
+  $stmt->close();
+
+  // if birthday is not empty, fetch the data
+  if (!(empty($birthday)))
+    return $birthday[$birthday_column];
+
+  return "NULL";
 }
 
 function getCandidateBirthplace(
-  $sqli_conn,
+  mysqli $sqli_conn,
   $candidate_id,
   $birthplace_column,
   $target_tbl
 ) {
+
+  // PREPARE prep statement
+  $stmt = $sqli_conn->prepare("SELECT " . $birthplace_column . " FROM " . $target_tbl . " WHERE candidate_id=?");
+  $stmt->bind_param("i", $candidate_id);
+
+  // execute
+  $stmt->execute();
+
+  // get result
+  $result = $stmt->get_result();
+  $birthplace = $result->fetch_assoc();
+
+  // close connection
+  $stmt->close();
+
+  // if birthplace is not empty, fetch the data
+  if (!(empty($birthplace)))
+    return $birthplace[$birthplace_column];
+
+  return "NULL";
 }
 
 function getCandidatePoliticalParty(
-  $sqli_conn,
+  mysqli $sqli_conn,
   $candidate_id,
   $political_party_column,
   $target_tbl
 ) {
+
+  // PREPARE prep statement
+  $stmt = $sqli_conn->prepare("SELECT " . $political_party_column . " FROM " . $target_tbl . " WHERE candidate_id=?");
+  $stmt->bind_param("i", $candidate_id);
+
+  // execute
+  $stmt->execute();
+
+  // get result
+  $result = $stmt->get_result();
+  $political_party = $result->fetch_assoc();
+
+  // close connection
+  $stmt->close();
+
+  // if political_party is not empty, fetch the data
+  if (!(empty($political_party)))
+    return $political_party[$political_party_column];
+
+  return "NULL";
 }
 
 function getCandidateNum(
-  $sqli_conn,
+  mysqli $sqli_conn,
   $candidate_id,
-  $political_party_column,
+  $candidate_num_column,
+  $target_tbl
+) {
+
+  // PREPARE prep statement
+  $stmt = $sqli_conn->prepare("SELECT " . $candidate_num_column . " FROM " . $target_tbl . " WHERE candidate_id=?");
+  $stmt->bind_param("i", $candidate_id);
+
+  // execute
+  $stmt->execute();
+
+  // get result
+  $result = $stmt->get_result();
+  $candidate_num = $result->fetch_assoc();
+
+  // close connection
+  $stmt->close();
+
+  // if candidate_num is not empty, fetch the data
+  if (!(empty($candidate_num)))
+    return $candidate_num[$candidate_num_column];
+
+  return "NULL";
+}
+
+function getCandidateName(
+  mysqli $sqli_conn,
+  $candidate_id,
+  $name_column,
   $target_tbl
 ) {
 }
 
-function getCandidateName(
-  $sqli_conn,
+function getCandidateReligion(
+  mysqli $sqli_conn,
   $candidate_id,
-  $name_column,
-  $target_tbl
+  $candidate_religion_column,
+  $candidate_target_tbl,
+  $religion_target_tbl
 ) {
 }
