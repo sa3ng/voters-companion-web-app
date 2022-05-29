@@ -288,5 +288,99 @@ function queryCandidate($get_cid, $db_credentials)
 
 function getCandidateInfo($candidate_id, $db_credentials)
 {
-  return new CandidateInformationClass();
+  $conn = new mysqli(
+    $db_credentials["server"],
+    $db_credentials["user"],
+    $db_credentials["pass"],
+    $db_credentials["db_name"],
+    $db_credentials["port"]
+  );
+
+  $candidate_info = new CandidateInformationClass();
+  $info_table = "candidatesInfoTBL";
+  $name_table = "candidatesTBL";
+
+  $candidate_info->setBirthday(getCandidateBirthday(
+    $conn,
+    $candidate_id,
+    "birthday",
+    $info_table
+  ));
+
+  $candidate_info->setBirthPlace(getCandidateBirthplace(
+    $conn,
+    $candidate_id,
+    "birthplace",
+    $info_table
+  ));
+
+  $candidate_info->setPolParty(getCandidatePoliticalParty(
+    $conn,
+    $candidate_id,
+    "political_party",
+    $info_table
+  ));
+
+  $candidate_info->setReligion(getCandidateBirthday(
+    $conn,
+    $candidate_id,
+    "religion",
+    $info_table
+  ));
+
+  $candidate_info->setName(getCandidateName(
+    $conn,
+    $candidate_id,
+    "full_name",
+    $name_table
+  ));
+
+
+  return $candidate_info;
+}
+
+/* 
+HELPER METHODS FOR THE getCandidateInfo()
+IT IS IMPORTANT TO NOTE THAT THESE SHOULD USE AN ACITVE CONNECTION TOWARDS
+A DATABASE AND THESE FUNCTIONS DO NOT CLOSE THE SQLi CONNECTION IN ANY MANNER 
+ */
+
+function getCandidateBirthday(
+  $sqli_conn,
+  $candidate_id,
+  $birthday_column,
+  $target_tbl
+) {
+}
+
+function getCandidateBirthplace(
+  $sqli_conn,
+  $candidate_id,
+  $birthplace_column,
+  $target_tbl
+) {
+}
+
+function getCandidatePoliticalParty(
+  $sqli_conn,
+  $candidate_id,
+  $political_party_column,
+  $target_tbl
+) {
+}
+
+function getCandidateNum(
+  $sqli_conn,
+  $candidate_id,
+  $political_party_column,
+  $target_tbl
+) {
+}
+
+function getCandidateName(
+  $sqli_conn,
+  $candidate_id,
+  $name_column,
+  $target_tbl
+) {
 }
