@@ -337,6 +337,7 @@ function getCandidateInfo($candidate_id, $db_credentials)
     $name_table
   ));
 
+  $conn->close();
 
   return $candidate_info;
 }
@@ -465,6 +466,26 @@ function getCandidateName(
   $name_column,
   $target_tbl
 ) {
+
+  // PREPARE prep statement
+  $stmt = $sqli_conn->prepare("SELECT " . $name_column . " FROM " . $target_tbl . " WHERE candidate_id=?");
+  $stmt->bind_param("i", $candidate_id);
+
+  // execute
+  $stmt->execute();
+
+  // get result
+  $result = $stmt->get_result();
+  $candidate_name = $result->fetch_assoc();
+
+  // close connection
+  $stmt->close();
+
+  // if candidate_name is not empty, fetch the data
+  if (!(empty($candidate_name)))
+    return $candidate_name[$name_column];
+
+  return "NULL";
 }
 
 function getCandidateReligion(
@@ -474,4 +495,46 @@ function getCandidateReligion(
   $candidate_target_tbl,
   $religion_target_tbl
 ) {
+
+  // PREPARE prep statement
+  $stmt = $sqli_conn->prepare("SELECT " . $candidate_religion_column . " FROM " . $candidate_target_tbl . " WHERE candidate_id=?");
+  $stmt->bind_param("i", $candidate_id);
+
+  // execute first sttmt
+  $stmt->execute();
+
+  // get result of first stmt
+  $result = $stmt->get_result();
+  $religion_id = $result->fetch_assoc();
+  $religion_string = "NULL";
+
+  // close connection
+  $stmt->close();
+
+  // if religion_id is not empty, fetch the data and prepare for the second stmt query
+  if (!(empty($religion_id))) {
+
+    // PREPARE prep statement
+    $stmt = $sqli_conn->prepare("SELECT religion" . " FROM " . $religion_target_tbl . " WHERE religion_id=?");
+    $stmt->bind_param("i", $religion_id[$candidate_religion_column]);
+
+    // execute second sttmt
+    $stmt->execute();
+
+    // get result of second stmt
+    $result = $stmt->get_result();
+    $religion_string = $result->fetch_assoc();
+
+    // close connection
+    $stmt->close();
+
+    // if religion_string is not empty, fetch the data
+    if (!($religion_string == "NULL")) {
+      return $religion_string["religion"];
+    }
+  } else {
+    return $religion_string;
+  }
+
+  return "NULL";
 }
