@@ -109,7 +109,7 @@ class CandidateInformationClass
 
   function getNumber()
   {
-    return $this->candidate_number;
+    return $this->number;
   }
 }
 

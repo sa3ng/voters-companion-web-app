@@ -78,8 +78,11 @@ else
                                 <?php
                                 echo $candidate_info->getNumber();
                                 ?>.</em>
-                            <br><br>Robin Padillia is a well-known Filipino Actor. He is currently running for senate under PDP-Laban and is hoping for voters to
+                            <br><br>
+                            <!-- 
+                                Robin Padillia is a well-known Filipino Actor. He is currently running for senate under PDP-Laban and is hoping for voters to
                             elect a Muslim senator. Recently, he served under the strategic communications arm of the Philippine Army Multi-Sectoral Advisory Board.
+                             -->
                             <!-- <button class="button is-link is-small"><a href="https://votepilipinas.com/candidate/padilla-robin.html" target="_blank"><em>Learn more at Vote Pilipinas</em></a></button> -->
                         </p>
                     </div>
