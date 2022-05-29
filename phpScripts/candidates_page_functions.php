@@ -36,6 +36,8 @@ class CandidateInformationClass
   private $birthday;
   private $birthplace;
   private $religion;
+  private $number;
+
 
   // DEFAULT CONSTRUCTOR INTIALIZES CLASS MEMBERS WITH EMPTY STRINGS
   function __construct()
@@ -45,6 +47,7 @@ class CandidateInformationClass
     $this->birthday = "";
     $this->birthplace = "";
     $this->religion = "";
+    $this->number = "";
   }
 
   // SETTERS
@@ -73,8 +76,13 @@ class CandidateInformationClass
     $this->religion = $religion;
   }
 
+  function setNumber($number)
+  {
+    $this->number = $number;
+  }
+
   // GETTERS
-  function getName($name)
+  function getName()
   {
     return $this->name;
   }
@@ -97,6 +105,11 @@ class CandidateInformationClass
   function getReligion()
   {
     return $this->religion;
+  }
+
+  function getNumber()
+  {
+    return $this->candidate_number;
   }
 }
 
@@ -319,6 +332,13 @@ function getCandidateInfo($candidate_id, $db_credentials)
     $conn,
     $candidate_id,
     "political_party",
+    $info_table
+  ));
+
+  $candidate_info->setNumber(getCandidateNum(
+    $conn,
+    $candidate_id,
+    "candidate_num",
     $info_table
   ));
 

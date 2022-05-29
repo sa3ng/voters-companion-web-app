@@ -69,10 +69,15 @@ else
                     </div>
                     <div class="media-content">
                         <p class="title">
-                            Padilla, Robin
+                            <?php
+                            echo $candidate_info->getName();
+                            ?>
                         </p>
                         <p class="subtitle">
-                            <em>Presidential Candidate #49.</em>
+                            <em>Presidential Candidate #
+                                <?php
+                                echo $candidate_info->getNumber();
+                                ?>.</em>
                             <br><br>Robin Padillia is a well-known Filipino Actor. He is currently running for senate under PDP-Laban and is hoping for voters to
                             elect a Muslim senator. Recently, he served under the strategic communications arm of the Philippine Army Multi-Sectoral Advisory Board.
                             <!-- <button class="button is-link is-small"><a href="https://votepilipinas.com/candidate/padilla-robin.html" target="_blank"><em>Learn more at Vote Pilipinas</em></a></button> -->
@@ -120,7 +125,6 @@ else
             <!--Personal Details-->
             <div class="tab-pane is-active" id="pane-1">
                 <div class="content">
-                    <h1>Robinhood Ferdinand Cariño Padilla</h1>
                     <p><em>Information regarding the candidate's background, family, past jobs or work experience and criminal record.</em></p>
 
                     <figure>
@@ -129,17 +133,34 @@ else
 
                     <dl>
                         <dt><strong>Birthday:</strong></dt>
-                        <dd>Nov. 23, 1969</dd><br>
+                        <dd>
+                            <?php
+                            echo $candidate_info->getBirthday();
+                            ?>
+                        </dd><br>
 
                         <dt><strong>Birthplace:</strong></dt>
-                        <dd> Daet, Camarines Norte</dd><br>
+                        <dd>
+                            <?php
+                            echo $candidate_info->getBirthplace();
+                            ?>
+                        </dd><br>
 
                         <dt><strong>Religion:</strong></dt>
-                        <dd>Islam</dd> <br>
+                        <dd>
+                            <?php
+                            echo $candidate_info->getReligion();
+                            ?>
+                        </dd> <br>
 
                         <dt><strong>Martial Status:</strong></dt>
-                        <dd>Mariel Rodriguez, former actress and TV host, (Aug. 19, 2010 - present)
-                            <br>Liezl Sicangco, former actress, (1997-2007, divorced)
+                        <dd>
+                            Mariel Rodriguez, former actress and TV host, (Aug. 19, 2010 - present)
+                            <br>
+                            Liezl Sicangco, former actress, (1997-2007, divorced)
+                            <?php
+                            echo "((!!!---DISPLAY IMPLEMENTATION HERE NOT YET PRESENT FROM HERE---!!!))";
+                            ?>
                         </dd> <br>
 
                         <h2>Education</h2>
