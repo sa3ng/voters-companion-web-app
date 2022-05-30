@@ -36,7 +36,7 @@ if (array_key_exists("REQUEST_METHOD", $_SERVER)) {
     }
 } else {
     // ARRIVED HERE WITHOUT REQUEST
-    header("Location: ../phpPages/index.php");
+    header("Location: ../phpPages/usrLogin.php");
     die("ARRIVED HERE WITHOUT REQUEST");
     return -3;
 }
