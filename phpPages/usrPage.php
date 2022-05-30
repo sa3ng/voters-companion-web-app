@@ -1,112 +1,120 @@
+
 <?php
 require_once '../phpScripts/usr_page_functions.php';
 ?>
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <link rel="stylesheet" href="../resources/css/style.css">
-    <link rel="stylesheet" type="text/css" href="../resources/css/home.css" />
-
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Voters' Companion</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+   
+    <link rel='stylesheet prefetch' href='https://unpkg.com/bulma@0.9.0/css/bulma.min.css'>
     <link rel="stylesheet" href="../resources/css/voterscompanion.css">
+    <link rel="stylesheet" href="../resources/css/tabs.css">
+   
+    <script src="https://kit.fontawesome.com/7dc3015a44.js" crossorigin="anonymous"></script>
 
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .has-bg-img { background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAa8AAAB1CAMAAADOZ57OAAAANlBMVEUAdP4EMv4ELP4Ad/4ELf4BY/4CW/4BXv4BYP4DWf4DV/4DVf4DTv4BXP4DUv4DUP4BZf4DS/5B5NwOAAACFElEQVR4nO3VCU4DMRBEUU8cAtkI3P+yBAgiyWy2R5qukv4/gaWnaqduQZtjTrRuS7gOcK0eXF7B5RVcXrVy7eEKiXV5xbq8gssruLyCyyu4vKrm2sEVGevyinV5BZdXcHkFl1dweVXOdYZLINblFVxecQy9gssruLyCy6sCrle4dGJdXsHlFcfQK7i8gssruLya4nqDSy7W5RVcXnEMvYLLK7i8gssruLyCyyu4vILLqx7XC1zKPXFtWZd2rMsruLx6OIZwyQeXVxxDr+DyimPoFVxecQydyol1GZV3CS6f8nmTOIY2Xbm6q9fmAy6HvrmuXlu4LPrh6hJcHv1ydYm/y6IbVxf9Dirqjwsvi/LuxoWXQ/9ceBl0x4WXfvdceMmX93dceKn3sC681Hviwku7x2OIl3g9LryU63PhJdwAF1665UOfCy/ZBrnwUm3oGOIl2/C68BJtjAsvyUa58FJsnAsvwfJxlAsvvaa48JJr4hjipdfkuvBSa4YLL63muPCSapYLL6XmufASqoALL51KuPCSqYgLL5XyewkXXiIVcuGlUSkXXhIVc+GlUDkXXgJVcOEVXw0XXuHlSwUXXtHVceEVXCUXXrHVcuEVWjUXXpHVc+EVWAMXXnHlUz0XXmHl07aeC6+omtaFV1SNXHjF1HYM8QqqmQuviNq58ApoARde67eEC6/VW8SF19rlzyVc3RceLRWbBjPEzQAAAABJRU5ErkJggg==')center center; background-size:cover; }
+    </style>
 
-    <title>User Page</title>
-</head>
+  </head>
 
 
-<?php
+  <?php
 
-require_once 'footer-header/header.php';
+    require_once 'footer-header/header.php';
 
-?>
+  ?>
 
+ 
 <body>
 
-    <!-- USER INFORMATION SECTION -->
-    <section class="section">
+
+  <!--Tabs-->
+<section class="hero is-link">
+    <div class="hero-body">
         <div class="container">
-            <!-- IMAGE -->
-            <div class="columns">
-                <div class="column">
-                    <figure class="image is-128x128 mx-auto">
-                        <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png" alt="usrProfilePicture">
-                    </figure>
-                </div>
-                <div class="columns is-flex-direction-column container">
-                    <!-- USER NAME -->
-                    <div class="column block">
-                        <?php
+        <div class="media">
+            <div class="media-left">
+            <figure class="image is-128x128">
+              <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png">
+            </figure>
+          </div>
+          <div class="media-content">
+            <p class="title">
+            &nbsp;
+
+                <?php
                         if (isLoggedIn()) {
                             echo "<h1 class='title is-1'>" . selectSelfNameCookie() . "</h1>";
                         } else {
                             echo "<h1 class='title is-1'>User Profile</h1>";
                         }
-                        ?>
-                    </div>
-                    <hr class="prf-divider">
-                    <!-- USER DESCRIPTION -->
-                    <div class="column block">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia dolor in neque
-                            aliquam, at accumsan odio scelerisque. Nulla facilisi. Maecenas pharetra accumsan enim sit
-                            amet ullamcorper. Nam nec tincidunt mi, non rhoncus lacus. Nam a ligula orci. Donec gravida
-                            vel neque sed cursus. Aenean congue fringilla rhoncus. Etiam id accumsan tortor, sit amet
-                            suscipit quam. Ut viverra, orci et tempor eleifend, risus ex pharetra odio, ac pharetra
-                            ligula nisi quis enim. Maecenas id tellus sed justo sagittis vulputate. Nulla nunc ipsum,
-                            porttitor sed tortor non, tempor lobortis purus.</p>
-                    </div>
-                </div>
+                ?>
+
+              
+              
+            </p>
             </div>
         </div>
-    </section>
+        </div>       
+    </div>
 
-    <!-- CHOSEN CANDIDATES SECTION -->
-    <section class="section">
-        <!-- TABS -->
-        <div class="container outline-1">
-            <div class="tabs is-fullwidth is-centered">
-                <ul>
-                    <li class="is-active">
-                        <a>
-                            <span>Supported Candidates</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a>
-                            <span>Thread History</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+    <div class="tabs is-boxed is-centered main-menu" id="nav">
+        <ul>
+            <li data-target="pane-1" id="1" class="is-active">
+                <a>
+                    <span class="icon is-small"><i class="fa fa-id-card"></i></span>
+                    <span>Supported Candidates</span>
+                </a>
+            </li>
+            <li data-target="pane-2" id="2">
+                <a>
+                    <span class="icon is-small"><i class="fa fa-briefcase"></i></span>
+                    <span>Thread History</span>
+                </a>
+            </li>
+            <li data-target="pane-3" id="3">
+                <a>
+                    <span class="icon is-small"><i class="fa fa-user-plus"></i></span>
+                    <span>Personal Information</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 
-            <!-- CONTAINER FOR THE CHOSEN CANDIDATES -->
-            <div>
-                <div class="columns">
+   
+    <div class="tab-content">
+
+            <div class="tab-pane is-active" id="pane-1">
+             <!-- CONTAINER FOR THE CHOSEN CANDIDATES -->
+                <div class="columns" >
                     <div class="column has-text-centered">
-                        <h1 class="title is-1">President</h1>
+                        <h1 class="title is-2" style="color: black;">President</h1>
                         <figure class="image is-128x128 mx-auto">
-                            <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png" alt="usrProfilePicture">
+                            <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                         </figure>
-                        <h2 class="title is-3">Name</h2>
+                        <h2 class="title is-2" style="color: black;">Name</h2>
                         <a href="">Learn More</a>
                     </div>
 
-                    <div class="column has-text-centered">
-                        <h1 class="title is-1">Vice President</h1>
+                    <div class="column has-text-centered" >
+                        <h1 class="title is-2" style="color: black;">Vice President</h1>
                         <figure class="image is-128x128 mx-auto">
-                            <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png" alt="usrProfilePicture">
+                            <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                         </figure>
-                        <h2 class="title is-3">Name</h2>
+                        <h2 class="title is-3" style="color: black;">Name</h2>
                         <a href="">Learn More</a>
                     </div>
                 </div>
-
+        
+                <br><br>
                 <!-- SEPERATOR FOR THE SENATORS -->
                 <div class="has-text-centered">
-                    <p>Senatorial Candidates</p>
+                    <h2 class="title" style="color: black;"> <em>Senatorial Candidates</em></h2>
                 </div>
 
                 <div class="column">
@@ -114,142 +122,185 @@ require_once 'footer-header/header.php';
                     <div class="column">
                         <div class="columns">
                             <div class="column has-text-centered">
-                                <h1 class="title is-1">Senator 1</h1>
+                                <h1 class="title is-3" style="color: black;">Senator 1</h1>
                                 <figure class="image is-128x128 mx-auto">
-                                    <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png" alt="usrProfilePicture">
+                                    <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
-                                <h2 class="title is-3">Name</h2>
+                                <br>
+                                <h2 class="title is-3" style="color: black;">Name</h2>
                                 <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
-                                <h1 class="title is-1">Senator 2</h1>
+                                <h1 class="title is-3" style="color: black;">Senator 2</h1>
                                 <figure class="image is-128x128 mx-auto">
-                                    <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png" alt="usrProfilePicture">
+                                    <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
-                                <h2 class="title is-3">Name</h2>
+                                <br>
+                                <h2 class="title is-3" style="color: black;">Name</h2>
                                 <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
-                                <h1 class="title is-1">Senator 3</h1>
+                                <h1 class="title is-3" style="color: black;">Senator 3</h1>
                                 <figure class="image is-128x128 mx-auto">
-                                    <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png" alt="usrProfilePicture">
+                                    <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
-                                <h2 class="title is-3">Name</h2>
+                                <br>
+                                <h2 class="title is-3" style="color: black;">Name</h2>
                                 <a href="">Learn More</a>
                             </div>
                         </div>
                     </div>
 
+                    <br>
                     <!-- ROW 2 -->
                     <div class="column">
                         <div class="columns">
                             <div class="column has-text-centered">
-                                <h1 class="title is-1">Senator 4</h1>
+                                <h1 class="title is-3" style="color: black;">Senator 4</h1>
                                 <figure class="image is-128x128 mx-auto">
-                                    <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png" alt="usrProfilePicture">
+                                    <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
-                                <h2 class="title is-3">Name</h2>
+                                <br>
+                                <h2 class="title is-3" style="color: black;">Name</h2>
                                 <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
-                                <h1 class="title is-1">Senator 5</h1>
+                                <h1 class="title is-3" style="color: black;">Senator 5</h1>
                                 <figure class="image is-128x128 mx-auto">
-                                    <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png" alt="usrProfilePicture">
+                                    <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
-                                <h2 class="title is-3">Name</h2>
+                                <br>
+                                <h2 class="title is-3" style="color: black;">Name</h2>
                                 <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
-                                <h1 class="title is-1">Senator 6</h1>
+                                <h1 class="title is-3" style="color: black;">Senator 6</h1>
                                 <figure class="image is-128x128 mx-auto">
-                                    <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png" alt="usrProfilePicture">
+                                    <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
-                                <h2 class="title is-3">Name</h2>
+                                <br>
+                                <h2 class="title is-3" style="color: black;">Name</h2>
                                 <a href="">Learn More</a>
                             </div>
                         </div>
                     </div>
 
+                    <br>
                     <!-- ROW 3 -->
                     <div class="column">
                         <div class="columns">
                             <div class="column has-text-centered">
-                                <h1 class="title is-1">Senator 7</h1>
+                                <h1 class="title is-3" style="color: black;">Senator 7</h1>
                                 <figure class="image is-128x128 mx-auto">
-                                    <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png" alt="usrProfilePicture">
+                                    <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
-                                <h2 class="title is-3">Name</h2>
+                                <br>
+                                <h2 class="title is-3" style="color: black;">Name</h2>
                                 <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
-                                <h1 class="title is-1">Senator 8</h1>
+                                <h1 class="title is-3" style="color: black;">Senator 8</h1>
                                 <figure class="image is-128x128 mx-auto">
-                                    <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png" alt="usrProfilePicture">
+                                    <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
-                                <h2 class="title is-3">Name</h2>
+                                <br>
+                                <h2 class="title is-3" style="color: black;">Name</h2>
                                 <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
-                                <h1 class="title is-1">Senator 9</h1>
+                                <h1 class="title is-3" style="color: black;">Senator 9</h1>
                                 <figure class="image is-128x128 mx-auto">
-                                    <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png" alt="usrProfilePicture">
+                                    <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
-                                <h2 class="title is-3">Name</h2>
+                                <br>
+                                <h2 class="title is-3" style="color: black;">Name</h2>
                                 <a href="">Learn More</a>
                             </div>
                         </div>
                     </div>
 
+                    <br>
                     <!-- ROW 4 -->
                     <div class="column">
                         <div class="columns">
                             <div class="column has-text-centered">
-                                <h1 class="title is-1">Senator 10</h1>
+                                <h1 class="title is-3" style="color: black;">Senator 10</h1>
                                 <figure class="image is-128x128 mx-auto">
-                                    <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png" alt="usrProfilePicture">
+                                    <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
-                                <h2 class="title is-3">Name</h2>
+                                <br>
+                                <h2 class="title is-3" style="color: black;">Name</h2>
                                 <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
-                                <h1 class="title is-1">Senator 11</h1>
+                                <h1 class="title is-3" style="color: black;">Senator 11</h1>
                                 <figure class="image is-128x128 mx-auto">
-                                    <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png" alt="usrProfilePicture">
+                                    <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
-                                <h2 class="title is-3">Name</h2>
+                                <br>
+                                <h2 class="title is-3" style="color: black;">Name</h2>
                                 <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
-                                <h1 class="title is-1">Senator 12</h1>
+                                <h1 class="title is-3" style="color: black;">Senator 12</h1>
                                 <figure class="image is-128x128 mx-auto">
-                                    <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png" alt="usrProfilePicture">
+                                    <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
-                                <h2 class="title is-3">Name</h2>
+                                <br>
+                                <h2 class="title is-3" style="color: black;">Name</h2>
                                 <a href="">Learn More</a>
                             </div>
                         </div>
-                    </div>
+                    </div>    
                 </div>
-    </section>
+            </div>
+        
+        
+        <!--Thread History-->
+        <div class="tab-pane is-centered" id="pane-2">
+        
+        </div>
+        
 
-    <!-- FOOTER SECTION -->
-    <!-- Begin Footer -->
-    <footer class="footer">
-        <p>
-            <strong class="white">Voter's Companion</strong> by <a href="AboutUs.php">Team Hapon</a>
-            As a project for their software engineering class in
-            <a href="https://iacademy.edu.ph">iACADEMY</a>.
-        </p>
-    </footer>
-    <!-- End Footer -->
+        <!--Personal Details-->
+        <div class="tab-pane is-active" id="pane-3">
+            <div class="content">
+                <dl>
+                    <dt><strong>Name:</strong></dt> 
+                    <dd> Name Here</dd><br>
+
+                    <dt><strong>Bio:</strong></dt>
+                    <dd> Bio Here </dd><br>
+
+                    <dt><strong>Birthday:</strong></dt> 
+                    <dd> Month Day, Year </dd> <br>
+
+                    <dt><strong>Birthplace:</strong></dt> 
+                    <dd> Birthplace Here </dd> <br>
+
+                    <dt><strong>Relgion:</strong></dt> 
+                    <dd> Religion Here </dd> <br>
+
+                    <dt><strong>Marital Status:</strong></dt> 
+                    <dd> Status Here </dd> <br>
+                </dl>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</section>
+<script src="../resources/js/bulma.js"></script>
+<script src="../resources/js/tabs.js"></script>
+<script src="../resources/js/platform.js"></script>
 </body>
-
 </html>

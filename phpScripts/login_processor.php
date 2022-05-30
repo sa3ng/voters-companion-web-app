@@ -12,16 +12,16 @@ $response_ajax = [
 
 if (array_key_exists("REQUEST_METHOD", $_SERVER)) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (checkConnection($LOCALHOST_CREDENTIALS)) {
+        if (checkConnection($DB_CREDENTIALS)) {
             $raw_value = queryAccount(
-                $LOCALHOST_CREDENTIALS,
+                $DB_CREDENTIALS,
                 // array with POST login credentials
                 [
                     "email" => $_POST["email-input"],
                     "pass" => $_POST["pass-input"]
                 ],
-                "user_table",
-                "user_email"
+                "accTBL",
+                "email"
             );
 
             if ($raw_value == -1) {
