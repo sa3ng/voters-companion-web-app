@@ -75,7 +75,7 @@ require_once '../phpScripts/candidates_page_functions.php';
 
     <div class="modal-content">
       <div class="box">
-        <form id="candidate-modal-form" action="../phpScripts/test.php" method="POST">
+        <form id="candidate-modal-form" action="../phpScripts/candidate_create_validation.php" method="POST">
 
           <div class="field">
             <label class="label">Candidate Name</label>
