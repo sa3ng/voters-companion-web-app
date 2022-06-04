@@ -61,7 +61,6 @@
             </div>
             <div class="media-right">
               <span class="post-icons has-text-grey-light"><i class="fa-solid fa-thumbs-up"></i> 1</span>
-              <span class="post-icons has-text-grey-light"><i class="fa fa-comments"></i> 1</span>
             </div>
           </div>
         </article>
