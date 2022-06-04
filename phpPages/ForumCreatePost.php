@@ -11,8 +11,6 @@
 
   require_once 'footer-header/header.php';
 
-
-
   ?>
 </head>
 

@@ -24,23 +24,27 @@
   require '../phpScripts/forum_processor.php';
 
 
-  //Temporaray upload
-  //Declaring variables
-  $acc_id = 1;                      // Get key from current session cookie
-  $header = $_POST["title-input"];
-  $message = $_POST["message-input"];
-  $is_reply = 0;
+  // //Temporaray upload
+  // //Declaring variables
 
-  //Upload to Database
-  if($header != NULL)
-    uploadPost($DB_CREDENTIALS, $acc_id, $_POST["title-input"], $_POST["message-input"], $is_reply);
+  // $acc_id = 1;                      // Get key from current session cookie
+  // $header = $_POST["title-input"];
+  // $message = $_POST["message-input"];
+  // $is_reply = 0;
+
+  // //Upload to Database
+  // if($header != NULL)
+  //   uploadPost($DB_CREDENTIALS, $acc_id, $_POST["title-input"], $_POST["message-input"], $is_reply);
 
 
-  //Initialize functions
-  $post_headers = fetchHeaders($DB_CREDENTIALS);
   //$post_id
   //$post_messages
 
+
+  
+  //Initialize functions
+  $post_headers = fetchHeaders($DB_CREDENTIALS);
+  $user_name;
   
 
 
