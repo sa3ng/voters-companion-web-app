@@ -62,12 +62,17 @@ $(function () {
       data: formData,
       contentType: false,
       processData: false,
-      dataType: "json",
 
       success: function (response) {
         console.log(response);
-        alert("Basic Candidate Info has been registered!");
-        document.location.reload();
+        if (response == "BAD_NAME") {
+          alert("Invalid Name. Have a valid name for the candidate");
+        }
+
+        if (response == "OK") {
+          alert("Basic Candidate Info has been registered!");
+          document.location.reload();
+        }
       }
     });
   });

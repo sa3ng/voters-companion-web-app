@@ -13,4 +13,12 @@ $num = $_POST["c-cand-num"];
 $pos = $_POST["c-cand-pos"];
 $desc = $_POST["c-cand-desc"];
 
-echo json_encode([$name, $num, $pos, $desc]);
+// SHOULD VALIDATE FIRST STRING: NAME
+$trm_name = "";
+if ($trm_name = trim($name) == "")
+    echo "BAD_NAME";
+else {
+    echo "OK";
+}
+
+// SHOULD CHECK FOR DUPLICATES IN DB: NUM AND NAME
