@@ -41,8 +41,9 @@
   <body>
     <div class="column is-10 is-offset-1">
       <div class="box content">
+        
         <article class="specific-post">
-          <h4>Bulma: How do you center a button in a box?</h4>
+          <h4 class="post_header">Bulma: How do you center a button in a box?</h4>
           <p class = "post-message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore molestiae unde eveniet excepturi accusantium assumenda adipisci alias, quia, magnam aliquid ea repellat nemo provident, minima rerum deleniti officiis aut repellendus.</p>
           <div class="media">
             <div class="media-left">
@@ -64,8 +65,9 @@
             </div>
           </div>
         </article>
+
         <article class="reply column is-offset-1">
-          <h4>You are stupid....</h4>
+         
           <p class = "reply">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore molestiae unde eveniet excepturi accusantium assumenda adipisci alias, quia, magnam aliquid ea repellat nemo provident, minima rerum deleniti officiis aut repellendus.</p>
           <div class="media">
             <div class="media-left">
@@ -87,7 +89,7 @@
           </div>
         </article>
         <article class="reply column is-offset-1">
-          <h4>Yes I am....</h4>
+          
           <p class = "reply">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore molestiae unde eveniet excepturi accusantium assumenda adipisci alias, quia, magnam aliquid ea repellat nemo provident, minima rerum deleniti officiis aut repellendus.</p>
           <div class="media">
             <div class="media-left">
@@ -107,6 +109,23 @@
               <span class="post-icons has-text-grey-light"><i class="fa-solid fa-thumbs-up"></i> 1</span>
             </div>
           </div>
+        </article>
+
+        <article class="reply column is-offset-1">
+        <form  method="GET">
+          
+          <div class="message-input-div media">
+            <textarea class="textarea is-medium is-hovered" name='message-input' placeholder="Express yourself..."></textarea>
+          </div>
+          <div class="media">
+            <div class="media-content">
+              (1000 Characters max)
+            </div>
+            <div class="media-right">
+              <a class="button " name='post' type="submit"> <strong> Post </strong></a>
+            </div>
+          </div>
+        </form>
         </article>
       </div>
     </div>

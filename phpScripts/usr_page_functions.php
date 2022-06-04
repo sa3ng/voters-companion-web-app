@@ -1,7 +1,7 @@
 <?php
 function isLoggedIn()
 {
-    if (array_key_exists("acc_id", $_COOKIE))
+    if (array_key_exists("acc_name", $_COOKIE))
         return true;
     return false;
 }

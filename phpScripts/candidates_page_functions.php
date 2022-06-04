@@ -558,3 +558,8 @@ function getCandidateReligion(
 
   return "NULL";
 }
+
+function isEditor()
+{
+  return true;
+}
