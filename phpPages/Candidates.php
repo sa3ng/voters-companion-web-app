@@ -52,6 +52,69 @@ require_once '../phpScripts/candidates_page_functions.php';
   </section>
 
   <br><br>
+  <!-- BUTTONS FOR CRUD -->
+  <div class="container">
+    <button class="js-modal-trigger button is-success" data-target="modal-js-add">
+      Add Candidate
+    </button>
+    <button class="button is-link">
+      Edit Candidate
+    </button>
+    <button class="button is-danger">
+      Delete Candidate
+    </button>
+  </div>
+  <br><br>
+
+  <!-- MODAL FOR ADDING -->
+  <div id="modal-js-add" class="modal">
+    <div class="modal-background"></div>
+
+    <div class="modal-content">
+      <div class="box">
+        <form id="candidate-modal-form" action="../phpScripts/test.php" method="POST">
+
+          <div class="field">
+            <label class="label">Candidate Name</label>
+            <div class="control">
+              <input name="c-cand-name" class="input" type="text" placeholder="Candidate Name">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Candidate Number</label>
+            <div class="control">
+              <input name="c-cand-num" class="input" type="number" placeholder="Candidate Number">
+            </div>
+          </div>
+
+          <div class="select is-primary">
+            <select name="c-cand-pos">
+              <option value="P">President</option>
+              <option value="VP">Vice President</option>
+              <option value="S">Senator</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="label">Description</label>
+            <div class="control">
+              <textarea name="c-cand-desc" class="textarea" placeholder="Description"></textarea>
+            </div>
+          </div>
+
+          <div class="field is-grouped">
+            <div class="control">
+              <input type="submit" class="button is-link" value="Submit">
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <button class="modal-close is-large" aria-label="close"></button>
+  </div>
 
   <div class="container">
 
@@ -67,5 +130,6 @@ require_once '../phpScripts/candidates_page_functions.php';
   </div>
 
 </body>
+<script src="../resources/js/candidates.js"></script>
 
 </html>
