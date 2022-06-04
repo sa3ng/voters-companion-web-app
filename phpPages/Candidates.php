@@ -80,14 +80,14 @@ require_once '../phpScripts/candidates_page_functions.php';
           <div class="field">
             <label class="label">Candidate Name</label>
             <div class="control">
-              <input name="c-cand-name" class="input" type="text" placeholder="Candidate Name">
+              <input name="c-cand-name" class="input" type="text" required placeholder="Candidate Name">
             </div>
           </div>
 
           <div class="field">
             <label class="label">Candidate Number</label>
             <div class="control">
-              <input name="c-cand-num" class="input" type="number" placeholder="Candidate Number">
+              <input name="c-cand-num" class="input" type="number" required placeholder="Candidate Number" min="1" max="1000">
             </div>
           </div>
 
