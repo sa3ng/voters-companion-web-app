@@ -16,7 +16,7 @@ require_once '../phpScripts/usr_page_functions.php';
     <!--NAV BAR-->
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <a class="navbar-item" href="Home.php">
+        <a class="navbar-item" href="../index.php">
           <img src="../resources/images/VC-logo" width="112" height="25">
         </a>
     
@@ -29,7 +29,7 @@ require_once '../phpScripts/usr_page_functions.php';
     
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item" href="Home.php">
+          <a class="navbar-item" href="../index.php">
             Home
           </a>
 
@@ -82,7 +82,7 @@ require_once '../phpScripts/usr_page_functions.php';
                             <a class='button is-link' href='usrRegister.php'>
                             <strong>Sign up</strong>
                             </a>
-                            <a class='button is-light' href='index.php'>
+                            <a class='button is-light' href='usrLogin.php'>
                                 Log in
                             </a>
                                 ";
