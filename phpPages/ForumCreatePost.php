@@ -48,7 +48,7 @@
         <form  method="GET">
           <div class="title-input-div media">
             <h4 class='media-left'>Title:</h4>
-            <input class="input is-hovered" name='title' type="text" placeholder="Enter your Title" value="b">
+            <input class="input is-hovered" name='title' type="text" placeholder="Enter your Title">
           </div>
           <div class="message-input-div media">
             <textarea class="textarea is-medium is-hovered" name='message-input' placeholder="Express yourself..."></textarea>
