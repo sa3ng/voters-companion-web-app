@@ -1,31 +1,3 @@
-<?php
-
-include_once '../phpScripts/candidates_page_functions.php';
-include_once '../phpScripts/globals.php';
-
-/* 
-WE MUST MAKE SURE THAT THE USER DOESN'T COME FROM INVALID REQUESTS/REDIRECTS:
-Lines the three if-else lines underneath attempt to do this
-*/
-
-if (!(validateRequestType()))
-    returnToOverviewPage();
-
-if (!(checkCandidateParamExist()))
-    returnToOverviewPage();
-
-// FINAL VALIDATION CHECK INTO THE DB, WE GET THE CANDIDATE INFO ONCE THERE IS A POSITIVE RETURN
-$fetched_candidate_id = queryCandidate($_GET["cid"], $DB_CREDENTIALS);
-$candidate_info;
-if (!($fetched_candidate_id == -1))
-    $candidate_info = getCandidateInfo($fetched_candidate_id, $DB_CREDENTIALS);
-else
-    returnToOverviewPage();
-
-
-
-?>
-
 <!DOCTYPE html>
 <html>
 
@@ -64,26 +36,17 @@ else
                 <div class="media">
                     <div class="media-left">
                         <figure class="image is-128x128">
-                            <img class="is-rounded" src="../resources/images/usr_generic/profile-user.png">
+                            <img class="is-rounded" src="https://newsinfo.inquirer.net/files/2022/05/290796.jpeg">
                         </figure>
                     </div>
                     <div class="media-content">
                         <p class="title">
-                            <?php
-                            echo $candidate_info->getName();
-                            ?>
+                            <!-- NAME HERE -->
                         </p>
                         <p class="subtitle">
-                            <em>Presidential Candidate #
-                                <?php
-                                echo $candidate_info->getNumber();
-                                ?>.</em>
+                            <em>Senatorial Candidate #49.</em>
                             <br><br>
-                            <!-- 
-                                Robin Padillia is a well-known Filipino Actor. He is currently running for senate under PDP-Laban and is hoping for voters to
-                            elect a Muslim senator. Recently, he served under the strategic communications arm of the Philippine Army Multi-Sectoral Advisory Board.
-                             -->
-                            <!-- <button class="button is-link is-small"><a href="https://votepilipinas.com/candidate/padilla-robin.html" target="_blank"><em>Learn more at Vote Pilipinas</em></a></button> -->
+                            <!-- DESCRIPTION HERE -->
                         </p>
                     </div>
                 </div>
@@ -128,89 +91,102 @@ else
             <!--Personal Details-->
             <div class="tab-pane is-active" id="pane-1">
                 <div class="content">
+                    <h1>Robinhood Ferdinand Cariño Padilla</h1>
                     <p><em>Information regarding the candidate's background, family, past jobs or work experience and criminal record.</em></p>
 
                     <figure>
-                        <img src="../resources/images/placeholder.png" alt="💯" class="cent">
+                        <img src="../resources/images/candidate_images/robin1.jpg" alt="💯" class="cent">
                     </figure>
 
                     <dl>
                         <dt><strong>Birthday:</strong></dt>
-                        <dd>
-                            <?php
-                            echo "<p>";
-                            echo $candidate_info->getBirthday();
-                            echo "</p>";
-                            ?>
-                        </dd><br>
+                        <dd>Nov. 23, 1969</dd><br>
 
                         <dt><strong>Birthplace:</strong></dt>
-                        <dd>
-                            <?php
-                            echo $candidate_info->getBirthplace();
-                            ?>
-                        </dd><br>
+                        <dd> Daet, Camarines Norte</dd><br>
 
                         <dt><strong>Religion:</strong></dt>
-                        <dd>
-                            <?php
-                            echo $candidate_info->getReligion();
-                            ?>
-                        </dd> <br>
+                        <dd>Islam</dd> <br>
 
                         <dt><strong>Martial Status:</strong></dt>
-                        <dd>
-                            Mariel Rodriguez, former actress and TV host, (Aug. 19, 2010 - present)
-                            <br>
-                            Liezl Sicangco, former actress, (1997-2007, divorced)
-                            <?php
-                            echo "((!!!---DISPLAY IMPLEMENTATION HERE NOT YET PRESENT FROM HERE---!!!))";
-                            ?>
+                        <dd>Mariel Rodriguez, former actress and TV host, (Aug. 19, 2010 - present)
+                            <br>Liezl Sicangco, former actress, (1997-2007, divorced)
                         </dd> <br>
 
-                        <h2>Education</h2>
-                        <p>Robin Padilla went to Philippine College of Criminology after serving time in prison.</p>
-                        <ul>
-                            <li>BS Criminology</li>
-                        </ul>
+                        <dt><strong>Parents:</strong></dt>
+                        <dd>
+                            <ol>
+                                <li>Casimero Ruiz Padilla, deceased, Father, former governor of Camarines Norte</li>
+                                <li>Lolita Eva Cariño, Mother, former actress</li>
+                            </ol>
+                        </dd> <br>
 
-                        <h2>Work Experience</h2>
-                        <p>Known Filipino actor and chairperson of ARMY MSAB Strategic Committee that now is delving into politics.</p>
-                        <ul>
-                            <li>Actor 1980s - present</li>
-                            <li>Film Writer 1990s - present</li>
-                            <li>Film Director 1990s - present</li>
-                            <li>Chairperson of the Strategic Communications Committee of the Philippine Army Multi-Sectoral Advisory Board, 2020-2021</li>
-                        </ul>
+                        <dt><strong>Siblings:</strong></dt>
+                        <dd>
+                            <ol>
+                                <li>Royette Padilla, deceased, former actress</li>
+                                <li>Binibining Gandanghari, model</li>
+                                <li>Romell Padilla, candidate for representative of the 1st District of Nueva Ecija</li>
+                            </ol>
+                        </dd> <br>
 
-                        <h2>Criminal Record</h2>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Subject Matter</th>
-                                    <th>Relevant Dates</th>
-                                    <th>Accrued Liability</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><em>Illegal possession of firearms and ammunitions under P.D. 186</em></td>
-                                    <td>Charged on Dec. 3 1992<br><br>
+                        <dt><strong>Children:</strong></dt>
+                        <dd>
+                            <ol>
+                                <li>Camille Orosa</li>
+                                <li>Queenie Padilla</li>
+                                <li>Kylie Padilla</li>
+                                <li>Zhen-Zhen Padilla</li>
+                                <li>Ali Padilla</li>
+                                <li>Maria Isabella Padilla</li>
+                                <li>Maria Gabriela Padilla</li>
+                            </ol>
+                        </dd> <br>
+                    </dl>
 
-                                        Convicted at the Regional Trial Court level on Apr. 25 1994,
-                                        affirmed by the Court of Appeals on July 21, 1995<br><br>
+                    <h2>Education</h2>
+                    <p>Robin Padilla went to Philippine College of Criminology after serving time in prison.</p>
+                    <ul>
+                        <li>BS Criminology</li>
+                    </ul>
 
-                                        Supreme Court affirmed the conviction on Mar. 12, 1997</td>
-                                    <td>The penalty imposed was imprisonment of 10 years and 1 day, as minimum, to 18 years, 8 months, and 1 day, as maximum
-                                        <br><br>
-                                        Padilla was released in 1998 after receiving a conditional pardon from then President Ramos
-                                    </td>
-                                    <td>Padilla received an absolute pardon from his close ally President Duterte in 2016.</td>
-                                </tr>
+                    <h2>Work Experience</h2>
+                    <p>Known Filipino actor and chairperson of ARMY MSAB Strategic Committee that now is delving into politics.</p>
+                    <ul>
+                        <li>Actor 1980s - present</li>
+                        <li>Film Writer 1990s - present</li>
+                        <li>Film Director 1990s - present</li>
+                        <li>Chairperson of the Strategic Communications Committee of the Philippine Army Multi-Sectoral Advisory Board, 2020-2021</li>
+                    </ul>
 
-                            </tbody>
-                        </table>
+                    <h2>Criminal Record</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subject Matter</th>
+                                <th>Relevant Dates</th>
+                                <th>Accrued Liability</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><em>Illegal possession of firearms and ammunitions under P.D. 186</em></td>
+                                <td>Charged on Dec. 3 1992<br><br>
+
+                                    Convicted at the Regional Trial Court level on Apr. 25 1994,
+                                    affirmed by the Court of Appeals on July 21, 1995<br><br>
+
+                                    Supreme Court affirmed the conviction on Mar. 12, 1997</td>
+                                <td>The penalty imposed was imprisonment of 10 years and 1 day, as minimum, to 18 years, 8 months, and 1 day, as maximum
+                                    <br><br>
+                                    Padilla was released in 1998 after receiving a conditional pardon from then President Ramos
+                                </td>
+                                <td>Padilla received an absolute pardon from his close ally President Duterte in 2016.</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
 
                 </div>
             </div>
@@ -377,7 +353,7 @@ else
                     <h3>Advisor</h3>
 
                     <figure>
-                        <img src="../resources/images/placeholder.png" alt="💯" class="cent">
+                        <img src="https://politics.com.ph/wp-content/uploads/2021/11/RobinPadilla2.jpg" alt="💯" class="cent">
                     </figure>
 
                     <p>Elected as chairperson, Strategic Communications Committee of the Philippine Army Multi-Sectoral Advisory Board, July 30, 2020 - October 2021 </p>
