@@ -69,6 +69,15 @@ $(function () {
           alert("Invalid Name. Have a valid name for the candidate");
         }
 
+        if (response == "NAME_IN_DB") {
+          alert("Name is present in DB. Edit that instance instead or consider deleting that same name instance");
+        }
+
+        if (response == "CANDIDATE_NUM_EXISTS_IN_POSITION") {
+          alert("Candidate Number is already used in selected position.");
+        }
+
+
         if (response == "OK") {
           alert("Basic Candidate Info has been registered!");
           document.location.reload();
