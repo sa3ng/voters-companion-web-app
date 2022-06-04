@@ -41,6 +41,7 @@
   <body>
     <div class="column is-10 is-offset-1">
       <div class="box content">
+        
         <article class="specific-post">
           <h4>Bulma: How do you center a button in a box?</h4>
           <p class = "post-message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore molestiae unde eveniet excepturi accusantium assumenda adipisci alias, quia, magnam aliquid ea repellat nemo provident, minima rerum deleniti officiis aut repellendus.</p>
@@ -64,6 +65,7 @@
             </div>
           </div>
         </article>
+
         <article class="reply column is-offset-1">
           <h4>You are stupid....</h4>
           <p class = "reply">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore molestiae unde eveniet excepturi accusantium assumenda adipisci alias, quia, magnam aliquid ea repellat nemo provident, minima rerum deleniti officiis aut repellendus.</p>
