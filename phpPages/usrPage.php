@@ -1,6 +1,7 @@
 
 <?php
 require_once '../phpScripts/usr_page_functions.php';
+require_once '../phpScripts/globals.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -71,12 +72,7 @@ require_once '../phpScripts/usr_page_functions.php';
                     <span>Supported Candidates</span>
                 </a>
             </li>
-            <li data-target="pane-2" id="2">
-                <a>
-                    <span class="icon is-small"><i class="fa fa-briefcase"></i></span>
-                    <span>Thread History</span>
-                </a>
-            </li>
+         
             <li data-target="pane-3" id="3">
                 <a>
                     <span class="icon is-small"><i class="fa fa-user-plus"></i></span>
@@ -264,33 +260,71 @@ require_once '../phpScripts/usr_page_functions.php';
             </div>
         
         
-        <!--Thread History-->
-        <div class="tab-pane is-centered" id="pane-2">
-        
-        </div>
-        
 
         <!--Personal Details-->
         <div class="tab-pane is-active" id="pane-3">
             <div class="content">
                 <dl>
                     <dt><strong>Name:</strong></dt> 
-                    <dd> Name Here</dd><br>
+                    <?php
+                        $full_name = fetchPersonalInfo($DB_CREDENTIALS,"full_name");
+                        
+                        if (isLoggedIn()) {
+                            echo "<dd>".$full_name."</dd><br>";
+                        } else {
+                            echo "<dd> Name Here</dd><br>";
+                        }
+
+                    ?>
+                    
 
                     <dt><strong>Bio:</strong></dt>
-                    <dd> Bio Here </dd><br>
+                    <?php
+                        $bio = fetchPersonalInfo($DB_CREDENTIALS,"bio");
+                        
+                        if (isLoggedIn()) {
+                            echo "<dd>".$bio."</dd><br>";
+                        } else {
+                            echo "<dd> Name Here</dd><br>";
+                        }
+
+                    ?>
 
                     <dt><strong>Birthday:</strong></dt> 
-                    <dd> Month Day, Year </dd> <br>
+                    <?php
+                        $bday = fetchPersonalInfo($DB_CREDENTIALS,"birthday");
+                        
+                        if (isLoggedIn()) {
+                            echo "<dd>".$bday."</dd><br>";
+                        } else {
+                            echo "<dd> Name Here</dd><br>";
+                        }
 
-                    <dt><strong>Birthplace:</strong></dt> 
-                    <dd> Birthplace Here </dd> <br>
+                    ?>
 
                     <dt><strong>Relgion:</strong></dt> 
-                    <dd> Religion Here </dd> <br>
+                    <?php
+                        $religion = fetchPersonalInfo($DB_CREDENTIALS,"religion_id");
+                        
+                        if (isLoggedIn()) {
+                            echo "<dd>".$religion."</dd><br>";
+                        } else {
+                            echo "<dd> Name Here</dd><br>";
+                        }
+
+                    ?>
 
                     <dt><strong>Marital Status:</strong></dt> 
-                    <dd> Status Here </dd> <br>
+                    <?php
+                        $status = fetchPersonalInfo($DB_CREDENTIALS,"status_id");
+                        
+                        if (isLoggedIn()) {
+                            echo "<dd>".$status."</dd><br>";
+                        } else {
+                            echo "<dd> Name Here</dd><br>";
+                        }
+
+                    ?>
                 </dl>
             </div>
         </div>
