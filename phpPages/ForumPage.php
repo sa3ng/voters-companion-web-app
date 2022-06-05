@@ -103,9 +103,11 @@
         $user_tag_array = fetchTags($DB_CREDENTIALS, $post_ids, $num_of_posts);
 
         echo "
-        <a href='ForumPostPage.php'>
+      
+        <form action='ForumPostPage.php' method='POST'>
         <article class='post'>
-          <h4>" . $headers . "</h4>
+        <input type='hidden' name='post_header' value= '". $headers."'></input>
+          <h4> " . $headers . "</h4>
           <div class='media'>
             <div class='media-left'>
               <p class='image is-32x32'>
@@ -125,7 +127,7 @@
             </div>
           </div>
         </article>
-        </a>
+        </form>
         ";
         $num_of_posts += 1;
       }
