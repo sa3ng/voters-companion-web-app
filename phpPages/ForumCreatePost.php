@@ -58,7 +58,7 @@
               (1000 Characters max)
             </div>
             <div class="media-right">
-              <a class="button " name='post' type="submit"> <strong> Post </strong></a>
+              <button type="submit"><a class="button" name='post' type="submit"> <strong> Post </strong></a></button>
             </div>
           </div>
         </form>
