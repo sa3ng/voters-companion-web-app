@@ -7,12 +7,14 @@ class CandidateOverviewClass
 {
   private $name;
   private $candidate_id;
+  private $description;
 
   // CONSTRUCTORS
-  function __construct($name, $candidate_id)
+  function __construct($name, $candidate_id, $description)
   {
     $this->name = $name;
     $this->candidate_id = $candidate_id;
+    $this->description = $description;
   }
 
   // GETTERS
@@ -24,6 +26,11 @@ class CandidateOverviewClass
   function getCandidateId()
   {
     return $this->candidate_id;
+  }
+
+  function getDescription()
+  {
+    return $this->description;
   }
 }
 
@@ -49,7 +56,7 @@ function fetchCandidates($db_credentials, $pos_id)
 
   //Fill up Candidate Names
   while ($current_row = $results->fetch_assoc()) {
-    array_push($candidates_arr, new CandidateOverviewClass($current_row["full_name"], $current_row["candidate_id"]));
+    array_push($candidates_arr, new CandidateOverviewClass($current_row["full_name"], $current_row["candidate_id"], $current_row["bio"]));
   }
 
   $conn->close();
@@ -90,10 +97,7 @@ function displayCandidates($db_credentials, $pos_id)
       echo "          </div>";
       echo "          <div class='media-content'>";
       echo "            <p class ='title'>" . $candidate_objs[$candidates_displayed]->getName() . "</p>";
-      echo "            <p class='subtitle'> Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Veritatis fugit quibusdam iste nam, dolorem ullam nulla, ratione saepe ipsam 
-                        sequi a eius quos necessitatibus sed nesciunt vero corporis natus voluptatum.
-                        </p>";
+      echo "            <p class='subtitle'>" . $candidate_objs[$candidates_displayed]->getDescription() . "</p>";
       echo "          </div>";
       echo "        </div>";
       echo "      <footer class='card-footer'>";
@@ -124,10 +128,7 @@ function displayCandidates($db_credentials, $pos_id)
       echo "          </div>";
       echo "          <div class='media-content'>";
       echo "            <p class ='title'>" . $candidate_objs[$candidates_displayed]->getName() . "</p>";
-      echo "            <p class='subtitle'> Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Veritatis fugit quibusdam iste nam, dolorem ullam nulla, ratione saepe ipsam 
-                        sequi a eius quos necessitatibus sed nesciunt vero corporis natus voluptatum.
-                        </p>";
+      echo "            <p class='subtitle'>" . $candidate_objs[$candidates_displayed]->getDescription() . "</p>";
       echo "          </div>";
       echo "        </div>";
       echo "      <footer class='card-footer'>";
@@ -373,5 +374,51 @@ class CandidateInformationClass
   public function getExtraInfo()
   {
     return $this->extra_info;
+  }
+}
+
+function getHeader()
+{
+  if (array_key_exists("pos_id", $_GET)) {
+    if (($_GET["pos_id"] == "P")) {
+
+      echo "  <section class='hero is-danger'>";
+      echo "  <div class='hero-body'>";
+      echo "  <p class='title' style='text-align: center;'>";
+      echo "  <em>Candidates</em>";
+      echo "  </p>";
+      echo "  <p class='subtitle' style='text-align: center;'>";
+      echo "  <em>Running for President</em>";
+      echo "  </p>";
+      echo "  </section>";
+    } else if ($_GET["pos_id"] == "VP") {
+
+      echo "  <section class='hero is-success'>";
+      echo "  <div class='hero-body'>";
+      echo "  <p class='title' style='text-align: center;'>";
+      echo "  <em>Candidates</em>";
+      echo "  </p>";
+      echo "  <p class='subtitle' style='text-align: center;'>";
+      echo "  <em>Running for VP</em>";
+      echo "  </p>";
+      echo "  </section>";
+    } else if ($_GET["pos_id"] == "S") {
+
+      echo "  <section class='hero is-warning'>";
+      echo "  <div class='hero-body'>";
+      echo "  <p class='title' style='text-align: center;'>";
+      echo "  <em>Candidates</em>";
+      echo "  </p>";
+      echo "  <p class='subtitle' style='text-align: center;'>";
+      echo "  <em>Running for Senator</em>";
+      echo "  </p>";
+      echo "  </section>";
+    } else {
+      // IF POS_ID IS PRESENT BUT NOT ACCORDING TO VALID POS_IDs
+      header("Location: Candidates.php?pos_id=P", true);
+    }
+  } else {
+    // IF POS_ID IS ABSENT IN GENERAL
+    header("Location: Candidates.php?pos_id=P", true);
   }
 }
