@@ -8,9 +8,9 @@ $desc;
 
 
 // SETTING VALUE TO AN EMPTY STRING
-$name = $num = $pos = $desc = "";
+$name = $pos = $desc = "";
 
-$name = $_POST["c-cand-name"];
+$name = strtoupper($_POST["c-cand-name"]);
 $num = $_POST["c-cand-num"];
 $pos = $_POST["c-cand-pos"];
 $desc = $_POST["c-cand-desc"];
@@ -35,7 +35,10 @@ $conn = new mysqli(
 $stmt = $conn->prepare("SELECT 
 candidatesTBL.full_name, candidatesTBL.position_id, candidatesInfoTBL.candidate_num 
 FROM candidatesTBL LEFT JOIN candidatesInfoTBL 
-ON candidatesTBL.candidate_id = candidatesInfoTBL.candidate_id;");
+ON candidatesTBL.candidate_id = candidatesInfoTBL.candidate_id 
+WHERE position_id = ?;");
+
+$stmt->bind_param("s", $pos);
 
 $stmt->execute();
 
@@ -53,3 +56,28 @@ while ($current_row = $results->fetch_assoc()) {
     die();
   }
 }
+
+// OK TO EXECUTE IF SCRIPT REACHES THIS FAR
+$stmt = $conn->prepare("INSERT INTO candidatesTBL(candidate_id, full_name, position_id, bio)
+VALUES(NULL,?,?,?);");
+$stmt->bind_param("sss", $name, $pos, $desc);
+$stmt->execute();
+
+$stmt = $conn->prepare("SELECT candidate_id FROM candidatesTBL ORDER BY candidate_id DESC LIMIT 1;");
+$stmt->execute();
+$results = $stmt->get_result();
+$result_columns = $results->fetch_assoc();
+$last_id = $result_columns["candidate_id"];
+$defaulted_str = "<p>DEFAULTED</p>";
+
+$stmt = $conn->prepare("INSERT INTO candidatesInfoTBL(candidate_id, candidate_num, political_party, birthday, birthplace)
+VALUES(?,?,?,?,?);");
+$stmt->bind_param("iisss", $last_id, $num, $defaulted_str, $defaulted_str, $defaulted_str);
+$stmt->execute();
+
+// CLOSE CONNECTIONS TO DB
+$conn->close();
+$stmt->close();
+
+echo "OK";
+die();
