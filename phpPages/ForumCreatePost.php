@@ -45,7 +45,7 @@
     <div class="box content">
 
       <article class="specific-post">
-        <form  method="GET">
+        <form  action="../phpScripts/upload.php" method="POST">
           <div class="title-input-div media">
             <h4 class='media-left'>Title:</h4>
             <input class="input is-hovered" name='title' type="text" placeholder="Enter your Title">
