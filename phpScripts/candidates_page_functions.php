@@ -27,7 +27,7 @@ class CandidateOverviewClass
   }
 }
 
-function fetchCandidates($db_credentials)
+function fetchCandidates($db_credentials, $pos_id)
 {
   $conn = new mysqli(
     $db_credentials["server"],
@@ -38,7 +38,8 @@ function fetchCandidates($db_credentials)
   );
 
   // preparation of prepared statement
-  $stmt = $conn->prepare("SELECT * FROM candidatesTBL");
+  $stmt = $conn->prepare("SELECT * FROM candidatesTBL WHERE position_id=?");
+  $stmt->bind_param("s", $pos_id);
   // execution
   $stmt->execute();
   // result retrieval
@@ -57,11 +58,11 @@ function fetchCandidates($db_credentials)
   return $candidates_arr;
 }
 
-function displayCandidates($db_credentials)
+function displayCandidates($db_credentials, $pos_id)
 {
 
 
-  $candidate_objs = fetchCandidates($db_credentials);
+  $candidate_objs = fetchCandidates($db_credentials, $pos_id);
 
   $candidates_displayed = 0;
   $candidates_max = sizeof($candidate_objs);

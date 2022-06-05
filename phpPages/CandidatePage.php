@@ -65,8 +65,8 @@ if ($candidate_basic["position_id"] == "P") {
     <script src="../resources/ckeditor/build/ckeditor.js"></script>
     <script src="../resources/js/ckeditors.js"></script>
     <script src="../resources/js/bulma.js"></script>
-    <script src="../resources/js/tabs.js"></script>
     <script src="../resources/js/platform.js"></script>
+    <script src="../resources/js/tabs.js"></script>
 
 
     <style>
@@ -273,9 +273,9 @@ if ($candidate_basic["position_id"] == "P") {
                     </div>
 
                 </div>
+                <br><br><br><br><br><br><br><br>
             </div>
 
-            <br><br><br><br><br><br><br><br>
             <!--Affiliated Party-->
             <div class="tab-pane" id="pane-3">
                 <div class="columns">

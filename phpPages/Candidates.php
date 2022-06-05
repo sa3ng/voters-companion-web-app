@@ -44,15 +44,47 @@ require_once '../phpScripts/candidates_page_functions.php';
 </head>
 
 <body>
-  <section class="hero is-info">
-    <div class="hero-body">
-      <p class="title" style="text-align: center;">
-        <em>Candidates</em>
-      </p>
-      <p class="subtitle" style="text-align: center;">
-        <em>Running for President</em>
-      </p>
-  </section>
+
+  <?php
+  if (!(array_key_exists("pos_id", $_GET))) {
+    header("Location: Candidates.php?pos_id=P", true);
+  } else {
+    if (($_GET["pos_id"] == "P")) {
+
+      echo "  <section class='hero is-danger'>";
+      echo "  <div class='hero-body'>";
+      echo "  <p class='title' style='text-align: center;'>";
+      echo "  <em>Candidates</em>";
+      echo "  </p>";
+      echo "  <p class='subtitle' style='text-align: center;'>";
+      echo "  <em>Running for President</em>";
+      echo "  </p>";
+      echo "  </section>";
+    } else if ($_GET["pos_id"] == "VP") {
+
+      echo "  <section class='hero is-success'>";
+      echo "  <div class='hero-body'>";
+      echo "  <p class='title' style='text-align: center;'>";
+      echo "  <em>Candidates</em>";
+      echo "  </p>";
+      echo "  <p class='subtitle' style='text-align: center;'>";
+      echo "  <em>Running for VP</em>";
+      echo "  </p>";
+      echo "  </section>";
+    } else if ($_GET["pos_id"] == "S") {
+
+      echo "  <section class='hero is-warning'>";
+      echo "  <div class='hero-body'>";
+      echo "  <p class='title' style='text-align: center;'>";
+      echo "  <em>Candidates</em>";
+      echo "  </p>";
+      echo "  <p class='subtitle' style='text-align: center;'>";
+      echo "  <em>Running for Senator</em>";
+      echo "  </p>";
+      echo "  </section>";
+    }
+  }
+  ?>
 
   <br><br>
   <!-- BUTTONS FOR CRUD -->
@@ -122,7 +154,7 @@ require_once '../phpScripts/candidates_page_functions.php';
   <div class="container">
 
     <?php
-    displayCandidates($DB_CREDENTIALS);
+    displayCandidates($DB_CREDENTIALS, $_GET["pos_id"]);
     ?>
 
   </div>
