@@ -14,15 +14,6 @@ if (!(validateRequestType()))
 if (!(checkCandidateParamExist()))
     returnToOverviewPage();
 
-// FINAL VALIDATION CHECK INTO THE DB, WE GET THE CANDIDATE INFO ONCE THERE IS A POSITIVE RETURN
-$fetched_candidate_id = queryCandidate($_GET["cid"], $DB_CREDENTIALS);
-$candidate_info;
-if (!($fetched_candidate_id == -1))
-    $candidate_info = getCandidateInfo($fetched_candidate_id, $DB_CREDENTIALS);
-else
-    returnToOverviewPage();
-
-
 
 ?>
 

@@ -69,10 +69,12 @@ $results = $stmt->get_result();
 $result_columns = $results->fetch_assoc();
 $last_id = $result_columns["candidate_id"];
 $defaulted_str = "<p>DEFAULTED</p>";
+$defaulted_religion = 0;
 
-$stmt = $conn->prepare("INSERT INTO candidatesInfoTBL(candidate_id, candidate_num, political_party, birthday, birthplace)
-VALUES(?,?,?,?,?);");
-$stmt->bind_param("iisss", $last_id, $num, $defaulted_str, $defaulted_str, $defaulted_str);
+$stmt = $conn->prepare("INSERT 
+INTO candidatesInfoTBL(candidate_id, candidate_num, religion_id, political_party, birthday, birthplace, education_txt, experience_txt, criminal_txt, advocacies_txt)
+VALUES(?,?,?,?,?,?,?,?,?,?);");
+$stmt->bind_param("iiisssssss", $last_id, $num, $defaulted_religion, $defaulted_str, $defaulted_str, $defaulted_str, $defaulted_str, $defaulted_str, $defaulted_str, $defaulted_str);
 $stmt->execute();
 
 // CLOSE CONNECTIONS TO DB
