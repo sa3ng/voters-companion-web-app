@@ -50,6 +50,7 @@ if ($candidate_basic["position_id"] == "P") {
 
 ?>
 
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -61,12 +62,6 @@ if ($candidate_basic["position_id"] == "P") {
     <link rel="stylesheet" href="../resources/css/voterscompanion.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7dc3015a44.js" crossorigin="anonymous"></script>
-
-    <script src="../resources/ckeditor/build/ckeditor.js"></script>
-    <script src="../resources/js/ckeditors.js"></script>
-    <script src="../resources/js/bulma.js"></script>
-    <script src="../resources/js/platform.js"></script>
-    <script src="../resources/js/tabs.js"></script>
 
 
     <style>
@@ -83,7 +78,6 @@ if ($candidate_basic["position_id"] == "P") {
 </head>
 
 <body>
-
 
     <!--Tabs-->
     <section class="hero is-info">
@@ -151,7 +145,7 @@ if ($candidate_basic["position_id"] == "P") {
 
         <div class="tab-content">
             <!--Personal Details-->
-            <div class="tab-pane is-center" id="pane-1">
+            <div class="tab-pane is-active" id="pane-1">
                 <div class="content">
                     <h1><?php
                         echo $candidate_basic["full_name"];
@@ -271,10 +265,10 @@ if ($candidate_basic["position_id"] == "P") {
                         echo $candidate_extra["criminal_txt"];
                         ?>
                     </div>
-
+                    <br><br><br><br><br>
                 </div>
-                <br><br><br><br><br><br><br><br>
             </div>
+
 
             <!--Affiliated Party-->
             <div class="tab-pane" id="pane-3">
@@ -351,19 +345,27 @@ if ($candidate_basic["position_id"] == "P") {
                         </div>
                     </div>
                 </div>
+                <br><br><br><br><br>
             </div>
+
 
             <!--Platform-->
-            <div class="tab-pane" id="pane-4">
-                <div class="columns is-centered">
-                    <div class="column is-three-quarters">
-                        <div class="embed-container image">
-                            <iframe src="https://www.youtube.com/embed/cAIwQp30dJM" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-                        </div>
-                    </div>
+            <div class="tab-pane is-center" id="pane-4">
+                <div class="content">
+                    <h1>Platforms</h1>
+                    <h2>Platform 1</h2>
+                    <p>Curabitur accumsan turpis pharetra blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.</p>
+                    <ul>
+                        <li>In fermentum leo eu lectus mollis, quis dictum mi aliquet.</li>
+                        <li>Morbi eu nulla lobortis, lobortis est in, fringilla felis.</li>
+                        <li>Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.</li>
+                        <li>Ut non enim metus.</li>
+                    </ul>
                 </div>
+                <br><br><br><br><br>
             </div>
 
+            <!--interview-->
             <div class="tab-pane" id="pane-5">
                 <div class="columns is-centered">
                     <div class="column is-three-quarters">
@@ -375,10 +377,9 @@ if ($candidate_basic["position_id"] == "P") {
             </div>
 
             <!--Accomplishments-->
-            <div class="tab-pane is-active" id="pane-2">
+            <div class="tab-pane is-center" id="pane-2">
                 <div class="content">
                     <h1>Accomplishment 1 (Can Add Pictures)</h1>
-                    <div id="editor2"></div>
                     <h2>Accomplishment</h2>
                     <p>Curabitur accumsan turpis pharetra blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.</p>
                     <ul>
@@ -470,6 +471,10 @@ if ($candidate_basic["position_id"] == "P") {
             </div>
         </div>
     </section>
+    <script src="../resources/ckeditor/build/ckeditor.js"></script>
+    <script src="../resources/js/ckeditors.js"></script>
+    <script src="../resources/js/bulma.js"></script>
+    <script src="../resources/js/tabs.js"></script>
 </body>
 
 </html>
