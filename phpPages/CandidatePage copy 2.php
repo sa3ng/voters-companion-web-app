@@ -1,9 +1,33 @@
+<?php
+
+include_once '../phpScripts/candidates_page_functions.php';
+include_once '../phpScripts/globals.php';
+
+/* 
+WE MUST MAKE SURE THAT THE USER DOESN'T COME FROM INVALID REQUESTS/REDIRECTS:
+Lines the three if-else lines underneath attempt to do this
+*/
+
+if (!(validateRequestType()))
+    returnToOverviewPage();
+
+if (!(checkCandidateParamExist()))
+    returnToOverviewPage();
+
+// FINAL VALIDATION CHECK INTO THE DB, WE GET THE CANDIDATE INFO ONCE THERE IS A POSITIVE RETURN
+$fetched_candidate_id = queryCandidate($_GET["cid"], $DB_CREDENTIALS);
+$candidate_info;
+if (!($fetched_candidate_id == -1))
+    $candidate_info = getCandidateInfo($fetched_candidate_id, $DB_CREDENTIALS);
+else
+    returnToOverviewPage();
+
+
+
+?>
+
 <!DOCTYPE html>
 <html>
-
-<?php
-include_once '../phpScripts/candidates_page_functions.php';
-?>
 
 <head>
     <meta charset="utf-8">
@@ -12,10 +36,17 @@ include_once '../phpScripts/candidates_page_functions.php';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 
     <link rel='stylesheet prefetch' href='https://unpkg.com/bulma@0.9.0/css/bulma.min.css'>
-    <link rel="stylesheet" href="../resources/css/tabs.css">
     <link rel="stylesheet" href="../resources/css/voterscompanion.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../resources/css/tabs.css">
+
     <script src="https://kit.fontawesome.com/7dc3015a44.js" crossorigin="anonymous"></script>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script src="../resources/js/tabs.js"></script>
+    <script src="../resources/js/platform.js"></script>
+    <script src="../resources/ckeditor/build/ckeditor.js"></script>
+    <script src="../resources/js/ckeditors.js"></script>
 
     <style>
         .has-bg-img {
@@ -23,83 +54,11 @@ include_once '../phpScripts/candidates_page_functions.php';
             background-size: cover;
         }
     </style>
+    <?php
 
-    <!--HEADER-->
-    <section class="headerhero">
-        <div class="hero-body">
-            <p class="headertitle" style="text-align: center;">
-                Voters' Companion
-            </p>
-            <p class="headersubtitle" style="text-align: center;">
-                <em>Your one stop shop for voting and cadidate information!</em>
-            </p>
-        </div>
-    </section>
+    require_once 'footer-header/header.php';
 
-    <!--NAV BAR-->
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="https://bulma.io">
-                <img src="../images/placeholderlogo.png" width="112" height="25">
-            </a>
-
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
-
-        <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item">
-                    Home
-                </a>
-
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        Candidates
-                    </a>
-
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item">
-                            Presidential
-                        </a>
-                        <a class="navbar-item">
-                            Vice Presidential
-                        </a>
-                        <a class="navbar-item">
-                            Senatorial
-                        </a>
-
-                    </div>
-                </div>
-
-                <a class="navbar-item">
-                    Forums
-                </a>
-
-
-                <a class="navbar-item">
-                    About Us
-                </a>
-            </div>
-
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <a class="button is-link">
-                            <strong>Sign up</strong>
-                        </a>
-                        <a class="button is-light">
-                            Log in
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
+    ?>
 </head>
 
 <body>
@@ -349,109 +308,8 @@ include_once '../phpScripts/candidates_page_functions.php';
                     </div>
                 </div>
             </div>
-
-            <!--Accomplishments-->
-            <div class="tab-pane is-active" id="pane-2">
-                <div class="content">
-                    <h1>Accomplishment 1 (Can Add Pictures)</h1>
-                    <div id="editor2"></div>
-                    <h2>Accomplishment</h2>
-                    <p>Curabitur accumsan turpis pharetra blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.</p>
-                    <ul>
-                        <li>In fermentum leo eu lectus mollis, quis dictum mi aliquet.</li>
-                        <li>Morbi eu nulla lobortis, lobortis est in, fringilla felis.</li>
-                        <li>Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.</li>
-                        <li>Ut non enim metus.</li>
-                    </ul>
-                    <h3>Accomplishment 2</h3>
-                    <p>Quisque ante lacus, malesuada ac auctor vitae, congue. Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.</p>
-                    <ol>
-                        <li>Donec blandit a lorem id convallis.</li>
-                        <li>Cras gravida arcu at diam gravida gravida.</li>
-                        <li>Integer in volutpat libero.</li>
-                        <li>Donec a diam tellus.</li>
-                        <li>Aenean nec tortor orci.</li>
-                        <li>Quisque aliquam cursus urna, non bibendum massa viverra eget.</li>
-                        <li>Vivamus maximus ultricies pulvinar.</li>
-                    </ol>
-                    <blockquote>Ut venenatis, nisl scelerisque sollicitudin fermentum, quam libero hendrerit ipsum, ut blandit est tellus sit amet turpis.</blockquote>
-                    <p>Quisque at semper enim, eu hendrerit odio. Etiam auctor nisl et <em>justo sodales</em> elementum. Maecenas ultrices lacus quis neque consectetur, et lobortis nisi molestie.</p>
-                    <p>Sed sagittis enim ac tortor maximus rutrum. Nulla facilisi. Donec mattis vulputate risus in luctus. Maecenas vestibulum interdum commodo.</p>
-                    <dl>
-                        <dt>Web</dt>
-                        <dd>The part of the Internet that contains websites and web pages</dd>
-                        <dt>HTML</dt>
-                        <dd>A markup language for creating web pages</dd>
-                        <dt>CSS</dt>
-                        <dd>A technology to make HTML look better</dd>
-                    </dl>
-                    <p>Suspendisse egestas sapien non felis placerat elementum. Morbi tortor nisl, suscipit sed mi sit amet, mollis malesuada nulla. Nulla facilisi. Nullam ac erat ante.</p>
-                    <h4>Fourth level</h4>
-                    <p>Nulla efficitur eleifend nisi, sit amet bibendum sapien fringilla ac. Mauris euismod metus a tellus laoreet, at elementum ex efficitur.</p>
-                    <pre>
-                     &lt;!DOCTYPE html&gt;
-                        &lt;html&gt;
-                        &lt;head&gt;
-                        &lt;title&gt;Hello World&lt;/title&gt;
-                        &lt;/head&gt;
-                        &lt;body&gt;
-                        &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra nec nulla vitae mollis.&lt;/p&gt;
-                        &lt;/body&gt;
-                    &lt;/html&gt;
-            </pre>
-                    <p>Maecenas eleifend sollicitudin dui, faucibus sollicitudin augue cursus non. Ut finibus eleifend arcu ut vehicula. Mauris eu est maximus est porta condimentum in eu justo. Nulla id iaculis sapien.</p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>One</th>
-                                <th>Two</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Three</td>
-                                <td>Four</td>
-                            </tr>
-                            <tr>
-                                <td>Five</td>
-                                <td>Six</td>
-                            </tr>
-                            <tr>
-                                <td>Seven</td>
-                                <td>Eight</td>
-                            </tr>
-                            <tr>
-                                <td>Nine</td>
-                                <td>Ten</td>
-                            </tr>
-                            <tr>
-                                <td>Eleven</td>
-                                <td>Twelve</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p>Phasellus porttitor enim id metus volutpat ultricies. Ut nisi nunc, blandit sed dapibus at, vestibulum in felis. Etiam iaculis lorem ac nibh bibendum rhoncus. Nam interdum efficitur ligula sit amet ullamcorper. Etiam tristique, leo vitae porta faucibus, mi lacus laoreet metus, at cursus leo est vel tellus. Sed ac posuere est. Nunc ultricies nunc neque, vitae ultricies ex sodales quis. Aliquam eu nibh in libero accumsan pulvinar. Nullam nec nisl placerat, pretium metus vel, euismod ipsum. Proin tempor cursus nisl vel condimentum. Nam pharetra varius metus non pellentesque.</p>
-                    <h5>Fifth level</h5>
-                    <p>Aliquam sagittis rhoncus vulputate. Cras non luctus sem, sed tincidunt ligula. Vestibulum at nunc elit. Praesent aliquet ligula mi, in luctus elit volutpat porta. Phasellus molestie diam vel nisi sodales, a eleifend augue laoreet. Sed nec eleifend justo. Nam et sollicitudin odio.</p>
-                    <figure>
-                        <img src="https://bulma.io/images/placeholders/256x256.png" alt="💯">
-                        <img src="https://bulma.io/images/placeholders/256x256.png" alt="💯">
-                        <figcaption>
-                            Figure 1: Some beautiful placeholders
-                        </figcaption>
-                    </figure>
-                    <h6>Sixth level</h6>
-                    <p>Cras in nibh lacinia, venenatis nisi et, auctor urna. Donec pulvinar lacus sed diam dignissim, ut eleifend eros accumsan. Phasellus non tortor eros. Ut sed rutrum lacus. Etiam purus nunc, scelerisque quis enim vitae, malesuada ultrices turpis. Nunc vitae maximus purus, nec consectetur dui. Suspendisse euismod, elit vel rutrum commodo, ipsum tortor maximus dui, sed varius sapien odio vitae est. Etiam at cursus metus.</p>
-                </div>
-            </div>
         </div>
     </section>
 </body>
-
-<script src="../resources/ckeditor/build/ckeditor.js"></script>
-<script src="../resources/js/ckeditors.js"></script>
-<script src="../resources/js/bulma.js"></script>
-<script src="../resources/js/tabs.js"></script>
-<script src="../resources/js/platform.js"></script>
 
 </html>
