@@ -13,12 +13,17 @@
     $message = $_POST['message-input'];
 
     // preparation of prepared statement
-    $stmt = $conn->prepare("INSERT INTO postsTBL(acc_id,header,message, is_reply) VALUES(2,'". $header ."','". $message . "', 0)");
-
-    // execution
+    $stmt = $conn->prepare("SELECT acc_id FROM accTBL WHERE name='" . $_COOKIE["acc_name"] ."' ");
     $stmt->execute();
+    $result = $stmt->get_result();
+    $name = $result->fetch_assoc();
 
-    
-    $conn->close();
     $stmt->close();
-?>
+
+    $stmt2 = $conn->prepare("INSERT INTO postsTBL(acc_id,header,message, is_reply) VALUES('" . $name["acc_id"] . "','". $header ."','". $message . "', 0)");
+    $stmt2->execute();
+    $stmt2->close();
+
+    $conn->close();
+
+    ?>
