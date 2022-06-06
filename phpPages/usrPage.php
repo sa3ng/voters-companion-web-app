@@ -41,16 +41,49 @@ require_once '../phpScripts/globals.php';
         <div class="media">
             <div class="media-left">
             <figure class="image is-128x128">
-              <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png">
+                <?php
+                    $img_src = fetchPersonalInfo($DB_CREDENTIALS,'image_url');
+
+                    if (isLoggedIn()){
+                        echo  "
+                        <img>
+                        <object class='image is-128x128' data='../resources/images/user_images/".$img_src."' type='image/png'>
+                        <img src='http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png' />
+                       </object>
+                       </img> "; 
+                    }
+                    else{
+                      echo  "<img class='is-rounded' src='http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png'>"; 
+                    }
+                ?>
             </figure>
+        <br>
+        <?php if (isset($_GET['error'])): ?>
+		<p><?php echo "<p class='columns is-one-quarter'>". $_GET['error']."</p>"; ?></p>
+	    <?php endif ?>
+        <form action="../phpScripts/uploadImage.php"
+           method="post"
+           enctype="multipart/form-data">
+            <br>
+           <input class="input is-primary columns is-one-quarter is-small" type="file" 
+                  name="my_image">
+            
+           <input type="submit" 
+                  name="submit"
+                  value="Upload"
+                  class="button is-primary columns is-one-quarter">
+     	
+     </form>
           </div>
           <div class="media-content">
             <p class="title">
             &nbsp;
 
                 <?php
+                        $full_name = fetchPersonalInfo($DB_CREDENTIALS,"full_name");
+
                         if (isLoggedIn()) {
-                            echo "<h1 class='title is-1'>" . selectSelfNameCookie() . "</h1>";
+                            echo "<h1 class='title is-1'>" . $full_name . "</h1>";
                         } else {
                             echo "<h1 class='title is-1'>User Profile</h1>";
                         }
@@ -84,16 +117,23 @@ require_once '../phpScripts/globals.php';
 
    
     <div class="tab-content">
-
             <div class="tab-pane is-active" id="pane-1">
              <!-- CONTAINER FOR THE CHOSEN CANDIDATES -->
+             <form action="" method="POST">
                 <div class="columns" >
                     <div class="column has-text-centered">
                         <h1 class="title is-2" style="color: black;">President</h1>
                         <figure class="image is-128x128 mx-auto">
                             <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                         </figure>
-                        <h2 class="title is-2" style="color: black;">Name</h2>
+                        <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>
                         <a href="">Learn More</a>
                     </div>
 
@@ -102,8 +142,14 @@ require_once '../phpScripts/globals.php';
                         <figure class="image is-128x128 mx-auto">
                             <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                         </figure>
-                        <h2 class="title is-3" style="color: black;">Name</h2>
-                        <a href="">Learn More</a>
+                        <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>                        <a href="">Learn More</a>
                     </div>
                 </div>
         
@@ -123,8 +169,14 @@ require_once '../phpScripts/globals.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
-                                <a href="">Learn More</a>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>                                <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
@@ -133,8 +185,14 @@ require_once '../phpScripts/globals.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
-                                <a href="">Learn More</a>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>                                <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
@@ -143,8 +201,14 @@ require_once '../phpScripts/globals.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
-                                <a href="">Learn More</a>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>                                <a href="">Learn More</a>
                             </div>
                         </div>
                     </div>
@@ -159,8 +223,14 @@ require_once '../phpScripts/globals.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
-                                <a href="">Learn More</a>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>                                <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
@@ -169,8 +239,14 @@ require_once '../phpScripts/globals.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
-                                <a href="">Learn More</a>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>                                <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
@@ -179,8 +255,14 @@ require_once '../phpScripts/globals.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
-                                <a href="">Learn More</a>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>                                <a href="">Learn More</a>
                             </div>
                         </div>
                     </div>
@@ -195,7 +277,14 @@ require_once '../phpScripts/globals.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>
                                 <a href="">Learn More</a>
                             </div>
 
@@ -205,7 +294,14 @@ require_once '../phpScripts/globals.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>
                                 <a href="">Learn More</a>
                             </div>
 
@@ -215,7 +311,14 @@ require_once '../phpScripts/globals.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>
                                 <a href="">Learn More</a>
                             </div>
                         </div>
@@ -231,7 +334,14 @@ require_once '../phpScripts/globals.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>
                                 <a href="">Learn More</a>
                             </div>
 
@@ -241,7 +351,14 @@ require_once '../phpScripts/globals.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>
                                 <a href="">Learn More</a>
                             </div>
 
@@ -251,13 +368,22 @@ require_once '../phpScripts/globals.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>
                                 <a href="">Learn More</a>
                             </div>
                         </div>
                     </div>    
                 </div>
             </div>
+
+            </form> 
         
         
 

@@ -76,3 +76,15 @@ function fetchPersonalInfo($db_credentials, $info){
     return $user[$info];
 }
 
+function setAccImageURL(){
+    include 'db_conn.php';
+
+    $sql = "SELECT image_url FROM accProfileTBL WHERE acc_id = 1";
+    $res = mysqli_query($conn,  $sql);
+
+    
+    $images = mysqli_fetch_assoc($res);
+
+    return $images['images_url'];
+}
+
