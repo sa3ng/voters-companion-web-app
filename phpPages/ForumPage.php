@@ -125,8 +125,7 @@
             <div class='media-content'>
               <div class='content'>
                 <p>
-                  <a href='#'>" . $user_tag_array[0] . "</a> posted 34 minutes ago 
-                  <span class='tag'>Question</span>
+                  <a href='#'>" . $user_tag_array[0] . "</a>
                 </p>
               </div>
             </div>
