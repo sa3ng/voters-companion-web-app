@@ -89,29 +89,13 @@ if (array_key_exists("criminal", $_POST)) {
 }
 
 if (array_key_exists("religion", $_POST)) {
-    /*--------------------------------
-    NEED TO GET THE RELIGION CODE FIRST TO INPUT TO THE DB
-    ----------------------------------*/
-    $stmt =  $conn->prepare(
-        "SELECT religion_id 
-        FROM religionTBL 
-        WHERE religion=?;"
-    );
-    $stmt->bind_param("s", $_POST["religion"]);
-    $stmt->execute();
-
-    $result = $stmt->get_result()->fetch_assoc();
-    $religion_id = $result["religion_id"];
-    $stmt->close();
-    /*-------------------------------------------------------------------*/
-
     $stmt = $conn->prepare(
         "UPDATE candidatesInfoTBL 
         SET religion_id=? 
         WHERE candidate_id = ?;"
     );
 
-    $stmt->bind_param("si", $religion_id, $candidate_id);
+    $stmt->bind_param("si", $_POST["religion"], $candidate_id);
     $stmt->execute();
     $stmt->close();
 }

@@ -215,7 +215,7 @@ function queryCandidate($get_cid, $db_credentials)
   return -1;
 }
 
-function queryReligionforEditor($db_credentials)
+function queryReligionforEditor($db_credentials, $candidate_id)
 {
   /*
   <option value='P'>President</option>
@@ -231,13 +231,52 @@ function queryReligionforEditor($db_credentials)
     $db_credentials["port"]
   );
 
+  /*-----------------------------------------------------------------------
+  NEED TO GET USER RELIGION FIRST SO IT WON'T GET OVERWRITTEN ACCIDENTALLY
+  WITH THE PRINTING OF DEFAULT VALUES
+  -----------------------------------------------------------------------*/
+
+  /*-----------------------------------------------------------------------
+  INITIALLY NEED TO GET THE RELIGION CODE STORED IN THE USER
+  -----------------------------------------------------------------------*/
+  $candidate_religion_code = 0;
+  $stmt =  $conn->prepare(
+    "SELECT religion_id
+    FROM candidatesInfoTBL 
+    WHERE candidate_id=?;"
+  );
+  $stmt->bind_param("s", $candidate_id);
+  $stmt->execute();
+
+  $result = $stmt->get_result()->fetch_assoc();
+  $candidate_religion_code = $result["religion_id"];
+  /* ------------------------------------------------------------------- */
+
+  $stmt =  $conn->prepare(
+    "SELECT * 
+    FROM religionTBL 
+    WHERE religion_id=?;"
+  );
+  $stmt->bind_param("i", $candidate_religion_code);
+  $stmt->execute();
+
+  $result = $stmt->get_result()->fetch_assoc();
+  echo "<option value='" . $result["religion_id"] . "'>";
+  echo $result["religion"] . "</option>";
+  $stmt->close();
+  /* ------------------------------------------------------------------- */
+
   $stmt = $conn->prepare("SELECT * FROM religionTBL");
   $stmt->execute();
   $results = $stmt->get_result();
   while ($current_row = $results->fetch_assoc()) {
-    echo "<option value='" . $current_row["religion_id"] . "'>";
-    echo $current_row["religion"] . "</option>";
+    if ($current_row["religion_id"] != $candidate_religion_code) {
+      echo "<option value='" . $current_row["religion_id"] . "'>";
+      echo $current_row["religion"] . "</option>";
+    }
   }
+
+  $stmt->close();
 }
 
 function isEditor()

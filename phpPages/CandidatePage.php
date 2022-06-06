@@ -191,10 +191,12 @@ if ($candidate_basic["position_id"] == "P") {
                                 "
                                 <div class='select is-primary'>
                                 <select name='religion-select'> ";
-                                queryReligionforEditor($DB_CREDENTIALS);
+                                queryReligionforEditor(
+                                    $DB_CREDENTIALS,
+                                    $_GET["cid"]
+                                );
                                 echo "</select>
-                              </div>
-                                ";
+                              </div>";
                             }
                             echo "<p name='religion-text'>"
                                 . $candidate_extra["religion_id"]

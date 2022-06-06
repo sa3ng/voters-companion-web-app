@@ -208,6 +208,11 @@ $(function () {
             formData.append
                 (
                     "religion",
+                    $("[name='religion-select']").val()
+                );
+
+            $("[name='religion-text']")
+                .text(
                     $("[name='religion-select'] option:selected").text()
                 );
         }
