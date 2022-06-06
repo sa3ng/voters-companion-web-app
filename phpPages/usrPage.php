@@ -179,7 +179,7 @@ require_once '../phpScripts/globals.php';
                                 <h2 class="title is-2" style="color: black;">
                         <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
                             <?php
-                            foreach($vice_pres_names as $names){
+                            foreach($senator_names as $names){
                               echo "<option value='".$names."'>".$names."</option>";
                             }
                             ?>
