@@ -64,6 +64,14 @@
   .post-icons {
     padding-right: 10px;
   }
+
+  .transparent {
+        cursor: pointer;
+        border: 1px solid white;
+        background-color: transparent;
+        color: white;
+
+    }
 </style>
 
 <!-- Font Awesome  -->
@@ -106,8 +114,8 @@
       
         <form action='ForumPostPage.php' method='POST'>
         <article class='post'>
-        <input type='hidden' name='post_header' value= '". $headers."'></input>
-          <h4> " . $headers . "</h4>
+        <input type='hidden' name='post_header' value= '" . $headers. "'></input>
+          <button class='transparent' type='submit'><h3> " . $headers . "</h3></button>
           <div class='media'>
             <div class='media-left'>
               <p class='image is-32x32'>
