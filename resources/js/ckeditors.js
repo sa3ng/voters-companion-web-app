@@ -19,12 +19,12 @@ var selectorBtn6 = "[name='editCR']"
 var selectorContainer6 = "#CK-criminal"
 
 // ORIGINAL HTML STRINGS TO BE COMPARED WITH
-var ckOriginBirthdayHTML = $(selectorContainer1).html();
-var ckOriginBirthplaceHTML = $(selectorContainer2).html();
-var ckOriginMaritalHTML = $(selectorContainer3).html();
-var ckOriginEducationHTML = $(selectorContainer4).html();
-var ckOriginWorkHTML = $(selectorContainer5).html();
-var ckOriginCriminalHTML = $(selectorContainer6).html();
+var ckOriginBirthdayHTML = $.trim($(selectorContainer1).html());
+var ckOriginBirthplaceHTML = $.trim($(selectorContainer2).html());
+var ckOriginMaritalHTML = $.trim($(selectorContainer3).html());
+var ckOriginEducationHTML = $.trim($(selectorContainer4).html());
+var ckOriginWorkHTML = $.trim($(selectorContainer5).html());
+var ckOriginCriminalHTML = $.trim($(selectorContainer6).html());
 
 function newEdit($param) {
     if (globaleditor) {
@@ -171,10 +171,11 @@ $(function () {
             formData.append("birthplace", ckNewBirthdayHTML);
         }
 
-        if (ckNewMaritalHTML.valueOf()
-            != ckOriginMaritalHTML.valueOf()) {
-            formData.append("marital", ckNewBirthdayHTML);
-        }
+        // COMMENTED OUT BCOZ CURRENTLY UNDEFINED
+        // if (ckNewMaritalHTML.valueOf()
+        //     != ckOriginMaritalHTML.valueOf()) {
+        //     formData.append("marital", ckNewMaritalHTML);
+        // }
 
         if (ckNewEducationHTML.valueOf()
             != ckOriginEducationHTML.valueOf()) {
@@ -199,6 +200,17 @@ $(function () {
                     $("[name='religion-select'] option:selected").text()
                 );
         }
+
+        $.ajax({
+            type: "post",
+            url: "../phpScripts/candidate_edit.php",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log("reached successfully");
+            }
+        });
 
 
     });
