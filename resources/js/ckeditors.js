@@ -153,12 +153,14 @@ $(function () {
 
         let formData = new FormData();
 
+        // CANDIDATE PARAMATER TO SUBMIT TO IN THE DB
         let candidate = $("[name='done']").data("target-candidate");
         formData.append
             (
                 "candidate",
                 candidate
             );
+
 
         let ckNewBirthdayHTML = $.trim($(selectorContainer1).html());
         let ckNewBirthplaceHTML = $.trim($(selectorContainer2).html());
@@ -167,7 +169,9 @@ $(function () {
         let ckNewWorkHTML = $.trim($(selectorContainer5).html());
         let ckNewCriminalHTML = $.trim($(selectorContainer6).html());
 
-        // CHECK CHANGES TO PREP FOR AJAX
+        /* ----------------------------------------------------------------
+        CHECK CHANGES TO PREP FOR AJAX; SEND ONES THAT ARE ACTUALLY CHANGED 
+        ---------------------------------------------------------------- */
         if (ckNewBirthdayHTML.valueOf()
             != ckOriginBirthdayHTML.valueOf()) {
             formData.append("birthday", ckNewBirthdayHTML);
@@ -175,7 +179,7 @@ $(function () {
 
         if (ckNewBirthplaceHTML.valueOf() !=
             ckOriginBirthplaceHTML.valueOf()) {
-            formData.append("birthplace", ckNewBirthdayHTML);
+            formData.append("birthplace", ckNewBirthplaceHTML);
         }
 
         // COMMENTED OUT BCOZ CURRENTLY UNDEFINED
@@ -207,6 +211,9 @@ $(function () {
                     $("[name='religion-select'] option:selected").text()
                 );
         }
+        /* ----------------------------------------------------------------
+        CHECK CHANGES TO PREP FOR AJAX; SEND ONES THAT ARE ACTUALLY CHANGED 
+        ---------------------------------------------------------------- */
 
         $.ajax({
             type: "post",
@@ -215,7 +222,13 @@ $(function () {
             contentType: false,
             processData: false,
             success: function (response) {
-                console.log("reached successfully");
+                if (response === "OK") {
+                    alert("Candidate Edited Successfully");
+                }
+                else {
+                    alert("Something went wrong");
+                    console.log(response);
+                }
             }
         });
 
