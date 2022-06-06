@@ -6,8 +6,8 @@ var selectorContainer1 = "#CK-birthday"
 var selectorBtn2 = "[name='editBirthplace']"
 var selectorContainer2 = "#CK-birthplace"
 
-var selectorBtn3 = "[name='editMartial']"
-var selectorContainer3 = "#CK-martial"
+var selectorBtn3 = "[name='editMarital']"
+var selectorContainer3 = "#CK-marital"
 
 var selectorBtn4 = "[name='editEdu']"
 var selectorContainer4 = "#CK-education"
@@ -18,18 +18,26 @@ var selectorContainer5 = "#CK-work"
 var selectorBtn6 = "[name='editCR']"
 var selectorContainer6 = "#CK-criminal"
 
- function newEdit($param) {
-        if (globaleditor) {
-            // DESTROY THE CKEDITOR OBJECT ASSIGNED TO globaleditor
-            globaleditor.destroy();
-            // UNDEFINE globaleditor VALUE
-            globaleditor = undefined;
-        }
- }
+// ORIGINAL HTML STRINGS TO BE COMPARED WITH
+var ckOriginBirthdayHTML = $.trim($(selectorContainer1).html());
+var ckOriginBirthplaceHTML = $.trim($(selectorContainer2).html());
+var ckOriginMaritalHTML = $.trim($(selectorContainer3).html());
+var ckOriginEducationHTML = $.trim($(selectorContainer4).html());
+var ckOriginWorkHTML = $.trim($(selectorContainer5).html());
+var ckOriginCriminalHTML = $.trim($(selectorContainer6).html());
+
+function newEdit($param) {
+    if (globaleditor) {
+        // DESTROY THE CKEDITOR OBJECT ASSIGNED TO globaleditor
+        globaleditor.destroy();
+        // UNDEFINE globaleditor VALUE
+        globaleditor = undefined;
+    }
+}
 
 $(function () {
 
-    $(selectorBtn1).click(function (e)  {
+    $(selectorBtn1).click(function (e) {
         e.preventDefault();
         newEdit($(selectorContainer1));
 
@@ -140,6 +148,96 @@ $(function () {
             // UNDEFINE globaleditor VALUE
             globaleditor = undefined;
         }
+
+        // SUBMIT DATA HERE THROUGH AJAX
+
+        let formData = new FormData();
+
+        // CANDIDATE PARAMATER TO SUBMIT TO IN THE DB
+        let candidate = $("[name='done']").data("target-candidate");
+        formData.append
+            (
+                "candidate",
+                candidate
+            );
+
+
+        let ckNewBirthdayHTML = $.trim($(selectorContainer1).html());
+        let ckNewBirthplaceHTML = $.trim($(selectorContainer2).html());
+        let ckNewMaritalHTML = $.trim($(selectorContainer3).html());
+        let ckNewEducationHTML = $.trim($(selectorContainer4).html());
+        let ckNewWorkHTML = $.trim($(selectorContainer5).html());
+        let ckNewCriminalHTML = $.trim($(selectorContainer6).html());
+
+        /* ----------------------------------------------------------------
+        CHECK CHANGES TO PREP FOR AJAX; SEND ONES THAT ARE ACTUALLY CHANGED 
+        ---------------------------------------------------------------- */
+        if (ckNewBirthdayHTML.valueOf()
+            != ckOriginBirthdayHTML.valueOf()) {
+            formData.append("birthday", ckNewBirthdayHTML);
+        }
+
+        if (ckNewBirthplaceHTML.valueOf() !=
+            ckOriginBirthplaceHTML.valueOf()) {
+            formData.append("birthplace", ckNewBirthplaceHTML);
+        }
+
+        // COMMENTED OUT BCOZ CURRENTLY UNDEFINED
+        // if (ckNewMaritalHTML.valueOf()
+        //     != ckOriginMaritalHTML.valueOf()) {
+        //     formData.append("marital", ckNewMaritalHTML);
+        // }
+
+        if (ckNewEducationHTML.valueOf()
+            != ckOriginEducationHTML.valueOf()) {
+            formData.append("education", ckNewEducationHTML);
+        }
+
+        if (ckNewWorkHTML.valueOf()
+            != ckOriginWorkHTML.valueOf()) {
+            formData.append("work", ckNewWorkHTML);
+        }
+
+        if (ckNewCriminalHTML.valueOf()
+            != ckOriginCriminalHTML.valueOf()) {
+            formData.append("criminal", ckNewCriminalHTML);
+        }
+
+        if ($("[name='religion-select'] option:selected").text()
+            != $("[name='religion-text']").text()) {
+            formData.append
+                (
+                    "religion",
+                    $("[name='religion-select']").val()
+                );
+
+            $("[name='religion-text']")
+                .text(
+                    $("[name='religion-select'] option:selected").text()
+                );
+        }
+        /* ----------------------------------------------------------------
+        CHECK CHANGES TO PREP FOR AJAX; SEND ONES THAT ARE ACTUALLY CHANGED 
+        ---------------------------------------------------------------- */
+
+        $.ajax({
+            type: "post",
+            url: "../phpScripts/candidate_edit.php",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response === "OK") {
+                    alert("Candidate Edited Successfully");
+                }
+                else {
+                    alert("Something went wrong");
+                    console.log(response);
+                }
+            }
+        });
+
+
     });
 
 

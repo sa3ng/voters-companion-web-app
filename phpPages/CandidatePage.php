@@ -6,7 +6,54 @@
 
 <?php
 include_once '../phpScripts/candidates_page_functions.php';
+include_once '../phpScripts/globals.php';
+
+
+/* 
+VALIDATION OF REQUEST FROM URL
+*/
+
+if (!(validateRequestType()))
+    returnToOverviewPage();
+
+if (!(checkCandidateParamExist()))
+    returnToOverviewPage();
+else {
+    $candidate = new CandidateInformationClass(
+        new mysqli(
+            $DB_CREDENTIALS["server"],
+            $DB_CREDENTIALS["user"],
+            $DB_CREDENTIALS["pass"],
+            $DB_CREDENTIALS["db_name"],
+            $DB_CREDENTIALS["port"]
+        ),
+        $_GET["cid"]
+    );
+}
+
+if ($candidate->validateCandidate()) {
+    $candidate->fetchInfo();
+} else {
+    returnToOverviewPage();
+}
+
+// IF SCRIPT HAS REACHED THIS FAR, FETCH INFO
+$candidate_basic = $candidate->getBasicInfo();
+$candidate_extra = $candidate->getExtraInfo();
+$pos_string = "";
+
+if ($candidate_basic["position_id"] == "P") {
+    $pos_string = "Presidential";
+} else if ($candidate_basic["position_id"] == "VP") {
+    $pos_string = "Vice Presidential";
+} else if ($candidate_basic["position_id"] == "S") {
+    $pos_string = "Senatorial";
+} else {
+    returnToOverviewPage();
+}
+
 ?>
+
 
 <head>
     <meta charset="utf-8">
@@ -14,11 +61,11 @@ include_once '../phpScripts/candidates_page_functions.php';
     <title>Voters' Companion</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 
-    <link rel='stylesheet prefetch' href='https://unpkg.com/bulma@0.9.0/css/bulma.min.css'>
     <link rel="stylesheet" href="../resources/css/tabs.css">
     <link rel="stylesheet" href="../resources/css/voterscompanion.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7dc3015a44.js" crossorigin="anonymous"></script>
+
 
     <style>
         .has-bg-img {
@@ -27,86 +74,13 @@ include_once '../phpScripts/candidates_page_functions.php';
         }
     </style>
 
-    <!--HEADER-->
-    <section class="headerhero">
-        <div class="hero-body">
-            <p class="headertitle" style="text-align: center;">
-                Voters' Companion
-            </p>
-            <p class="headersubtitle" style="text-align: center;">
-                <em>Your one stop shop for voting and cadidate information!</em>
-            </p>
-        </div>
-    </section>
-
-    <!--NAV BAR-->
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="https://bulma.io">
-                <img src="../images/placeholderlogo.png" width="112" height="25">
-            </a>
-
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
-
-        <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item">
-                    Home
-                </a>
-
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        Candidates
-                    </a>
-
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item">
-                            Presidential
-                        </a>
-                        <a class="navbar-item">
-                            Vice Presidential
-                        </a>
-                        <a class="navbar-item">
-                            Senatorial
-                        </a>
-
-                    </div>
-                </div>
-
-                <a class="navbar-item">
-                    Forums
-                </a>
-
-
-                <a class="navbar-item">
-                    About Us
-                </a>
-            </div>
-
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <a class="button is-link">
-                            <strong>Sign up</strong>
-                        </a>
-                        <a class="button is-light">
-                            Log in
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php
+    include_once '../phpPages/footer-header/header.php'
+    ?>
 
 </head>
 
 <body>
-
 
     <!--Tabs-->
     <section class="hero is-info">
@@ -120,10 +94,16 @@ include_once '../phpScripts/candidates_page_functions.php';
                     </div>
                     <div class="media-content">
                         <p class="title">
-                            President 1
+                            <?php
+                            echo $candidate_basic["full_name"];
+                            ?>
                         </p>
                         <p class="subtitle">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis fugit quibusdam iste nam, dolorem ullam nulla, ratione saepe ipsam sequi a eius quos necessitatibus sed nesciunt vero corporis natus voluptatum.
+                            <?php
+                            echo $pos_string . " Candidate #" . $candidate_extra["candidate_num"];
+                            echo "<br>";
+                            echo $candidate_basic["bio"];
+                            ?>
                         </p>
                     </div>
                 </div>
@@ -166,9 +146,11 @@ include_once '../phpScripts/candidates_page_functions.php';
 
         <div class="tab-content">
             <!--Personal Details-->
-            <div class="tab-pane is-center" id="pane-1">
+            <div class="tab-pane is-active" id="pane-1">
                 <div class="content">
-                    <h1>Shoto Todoroki</h1>
+                    <h1><?php
+                        echo $candidate_basic["full_name"];
+                        ?></h1>
                     <p><em>Infomation regarding the candidate's background, family, past jobs or work experience and criminal record.</em></p>
 
                     <dl>
@@ -176,12 +158,16 @@ include_once '../phpScripts/candidates_page_functions.php';
                             <?php
                             if (isEditor()) {
                                 echo "<button class='button is-small is-info' name='editBirthday'>Edit</button> 
-                                <button class='button is-small is-success' name='done'>Done</button>";
+                                <button class='button is-small is-success' name='done' data-target-candidate='" . $candidate_basic["full_name"] . "'>Done</button>";
                             }
                             ?>
                         </dt><br>
                         <dd>
-                            <div id="CK-birthday">June 12, 2002</div>
+                            <div id="CK-birthday">
+                                <?php
+                                echo $candidate_extra["birthday"];
+                                ?>
+                            </div>
                         </dd><br>
 
 
@@ -193,22 +179,45 @@ include_once '../phpScripts/candidates_page_functions.php';
                             ?>
                         </dt>
                         <dd>
-                            <div id="CK-birthplace">Text</div>
+                            <div id="CK-birthplace">
+                                <?php
+                                echo $candidate_extra["birthplace"];
+                                ?>
+                            </div>
                         </dd><br>
 
                         <dt><strong>Religion:</strong></dt>
-                        <dd>Text</dd><br>
-
-                        <dt><strong>Martial Status:</strong>
+                        <dd>
                             <?php
                             if (isEditor()) {
-                                echo "<button class='button is-small is-info' name='editMartial'>Edit</button>";
+                                echo
+                                "
+                                <div class='select is-primary'>
+                                <select name='religion-select'> ";
+                                queryReligionforEditor(
+                                    $DB_CREDENTIALS,
+                                    $_GET["cid"]
+                                );
+                                echo "</select>
+                              </div>";
                             }
+                            echo "<p name='religion-text'>"
+                                . $candidate_extra["religion_id"]
+                                . "</p>";
+                            ?>
+                        </dd><br>
+
+                        <!-- <dt><strong>Martial Status:</strong>
+                            <?php
+                            // if (isEditor()) {
+                            //     echo "<button class='button is-small is-info' name='editMartial'>Edit</button>";
+                            // }
                             ?>
                         </dt><br>
                         <dd>
-                            <div id="CK-martial">Text</div>
-                        </dd><br>
+                            <div id="CK-marital">
+                            </div>
+                        </dd><br> -->
                     </dl>
 
                     <h2>Education</h2>
@@ -219,12 +228,9 @@ include_once '../phpScripts/candidates_page_functions.php';
                     ?>
                     <br><br>
                     <div id="CK-education">
-                        <p>Shoto Todoroki took hero class in U.A. High School as one of the top students.</p>
-                        <ul>
-                            <li>A.B. in Fire Weilding Powers</li>
-                            <li>Doctor of Ice Weilding Powers</li>
-                            <li>Passed the Hero's License Exam</li>
-                        </ul><br>
+                        <?php
+                        echo $candidate_extra["education_txt"];
+                        ?>
                     </div>
 
                     <h2>Work Experience</h2>
@@ -234,10 +240,9 @@ include_once '../phpScripts/candidates_page_functions.php';
                     }
                     ?><br><br>
                     <div id="CK-work">
-                        <p>Promising intern of hero firms around Japan, He had 4.123 intern offerships.</p>
-                        <ul>
-                            <li>Hero Agency Internship under Endeavor</li>
-                        </ul> <br>
+                        <?php
+                        echo $candidate_extra["experience_txt"];
+                        ?>
                     </div>
 
                     <h2>Criminal Record</h2>
@@ -248,13 +253,15 @@ include_once '../phpScripts/candidates_page_functions.php';
                     ?>
                     <br>
                     <div id="CK-criminal">
-                        <p><em>Free of any criminal</em></p>
+                        <?php
+                        echo $candidate_extra["criminal_txt"];
+                        ?>
                     </div>
-
+                    <br><br><br><br><br>
                 </div>
             </div>
 
-            <br><br><br><br><br><br><br><br>
+
             <!--Affiliated Party-->
             <div class="tab-pane" id="pane-3">
                 <div class="columns">
@@ -330,19 +337,27 @@ include_once '../phpScripts/candidates_page_functions.php';
                         </div>
                     </div>
                 </div>
+                <br><br><br><br><br>
             </div>
+
 
             <!--Platform-->
-            <div class="tab-pane" id="pane-4">
-                <div class="columns is-centered">
-                    <div class="column is-three-quarters">
-                        <div class="embed-container image">
-                            <iframe src="https://www.youtube.com/embed/cAIwQp30dJM" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-                        </div>
-                    </div>
+            <div class="tab-pane is-center" id="pane-4">
+                <div class="content">
+                    <h1>Platforms</h1>
+                    <h2>Platform 1</h2>
+                    <p>Curabitur accumsan turpis pharetra blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.</p>
+                    <ul>
+                        <li>In fermentum leo eu lectus mollis, quis dictum mi aliquet.</li>
+                        <li>Morbi eu nulla lobortis, lobortis est in, fringilla felis.</li>
+                        <li>Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.</li>
+                        <li>Ut non enim metus.</li>
+                    </ul>
                 </div>
+                <br><br><br><br><br>
             </div>
 
+            <!--interview-->
             <div class="tab-pane" id="pane-5">
                 <div class="columns is-centered">
                     <div class="column is-three-quarters">
@@ -354,10 +369,9 @@ include_once '../phpScripts/candidates_page_functions.php';
             </div>
 
             <!--Accomplishments-->
-            <div class="tab-pane is-active" id="pane-2">
+            <div class="tab-pane is-center" id="pane-2">
                 <div class="content">
                     <h1>Accomplishment 1 (Can Add Pictures)</h1>
-                    <div id="editor2"></div>
                     <h2>Accomplishment</h2>
                     <p>Curabitur accumsan turpis pharetra blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.</p>
                     <ul>
@@ -452,7 +466,7 @@ include_once '../phpScripts/candidates_page_functions.php';
     <script src="../resources/ckeditor/build/ckeditor.js"></script>
     <script src="../resources/js/ckeditors.js"></script>
     <script src="../resources/js/bulma.js"></script>
-    <script src="../reources/js/tabs.js"></script>
+    <script src="../resources/js/tabs.js"></script>
 </body>
 
 </html>
