@@ -28,6 +28,11 @@ require_once '../phpScripts/globals.php';
 
     require_once 'footer-header/header.php';
 
+    //Fill up variables
+    $president_names = fetchCandidateNames($DB_CREDENTIALS,'P');
+    $vice_pres_names = fetchCandidateNames($DB_CREDENTIALS,'VP');
+    $senator_names = fetchCandidateNames($DB_CREDENTIALS,'S'); 
+
   ?>
 
  
@@ -128,10 +133,11 @@ require_once '../phpScripts/globals.php';
                         </figure>
                         <h2 class="title is-2" style="color: black;">
                         <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
-                            <option value="fiat" selected>Fiat</option>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="audi">Audi</option>
+                            <?php
+                            foreach($president_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
                         </select>
                         </h2>
                         <a href="">Learn More</a>
@@ -144,10 +150,11 @@ require_once '../phpScripts/globals.php';
                         </figure>
                         <h2 class="title is-2" style="color: black;">
                         <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
-                            <option value="fiat" selected>Fiat</option>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="audi">Audi</option>
+                            <?php
+                            foreach($vice_pres_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
                         </select>
                         </h2>                        <a href="">Learn More</a>
                     </div>
@@ -171,10 +178,11 @@ require_once '../phpScripts/globals.php';
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
                         <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
-                            <option value="fiat" selected>Fiat</option>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="audi">Audi</option>
+                            <?php
+                            foreach($vice_pres_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
                         </select>
                         </h2>                                <a href="">Learn More</a>
                             </div>
