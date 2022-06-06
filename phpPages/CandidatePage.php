@@ -34,6 +34,7 @@ if ($candidate->validateCandidate()) {
     returnToOverviewPage();
 }
 
+// IF SCRIPT HAS REACHED THIS FAR, FETCH INFO
 $candidate_basic = $candidate->getBasicInfo();
 $candidate_extra = $candidate->getExtraInfo();
 $pos_string = "";
@@ -90,13 +91,11 @@ if ($candidate_basic["position_id"] == "P") {
                     </div>
                     <div class="media-content">
                         <p class="title">
-                            <!-- President 1 -->
                             <?php
                             echo $candidate_basic["full_name"];
                             ?>
                         </p>
                         <p class="subtitle">
-                            <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis fugit quibusdam iste nam, dolorem ullam nulla, ratione saepe ipsam sequi a eius quos necessitatibus sed nesciunt vero corporis natus voluptatum. -->
                             <?php
                             echo $pos_string . " Candidate #" . $candidate_extra["candidate_num"];
                             echo "<br>";
@@ -178,7 +177,6 @@ if ($candidate_basic["position_id"] == "P") {
                         </dt>
                         <dd>
                             <div id="CK-birthplace">
-                                <!-- Text -->
                                 <?php
                                 echo $candidate_extra["birthplace"];
                                 ?>
@@ -192,15 +190,16 @@ if ($candidate_basic["position_id"] == "P") {
                                 echo
                                 "
                                 <div class='select is-primary'>
-                                <select name='c-cand-pos'> ";
+                                <select name='religion-select'> ";
                                 queryReligionforEditor($DB_CREDENTIALS);
                                 echo "</select>
                               </div>
                                 ";
                             }
-                            echo $candidate_extra["religion_id"];
+                            echo "<p name='religion-text'>"
+                                . $candidate_extra["religion_id"]
+                                . "</p>";
                             ?>
-                            <!-- Text -->
                         </dd><br>
 
                         <!-- <dt><strong>Martial Status:</strong>
@@ -211,7 +210,7 @@ if ($candidate_basic["position_id"] == "P") {
                             ?>
                         </dt><br>
                         <dd>
-                            <div id="CK-martial">
+                            <div id="CK-marital">
                             </div>
                         </dd><br> -->
                     </dl>
@@ -224,12 +223,6 @@ if ($candidate_basic["position_id"] == "P") {
                     ?>
                     <br><br>
                     <div id="CK-education">
-                        <!-- <p>Shoto Todoroki took hero class in U.A. High School as one of the top students.</p>
-                        <ul>
-                            <li>A.B. in Fire Weilding Powers</li>
-                            <li>Doctor of Ice Weilding Powers</li>
-                            <li>Passed the Hero's License Exam</li>
-                        </ul><br> -->
                         <?php
                         echo $candidate_extra["education_txt"];
                         ?>
@@ -242,10 +235,6 @@ if ($candidate_basic["position_id"] == "P") {
                     }
                     ?><br><br>
                     <div id="CK-work">
-                        <!-- <p>Promising intern of hero firms around Japan, He had 4.123 intern offerships.</p>
-                        <ul>
-                            <li>Hero Agency Internship under Endeavor</li>
-                        </ul> <br> -->
                         <?php
                         echo $candidate_extra["experience_txt"];
                         ?>
@@ -259,7 +248,6 @@ if ($candidate_basic["position_id"] == "P") {
                     ?>
                     <br>
                     <div id="CK-criminal">
-                        <!-- <p><em>Free of any criminal</em></p> -->
                         <?php
                         echo $candidate_extra["criminal_txt"];
                         ?>
