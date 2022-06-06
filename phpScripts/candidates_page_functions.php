@@ -1,15 +1,20 @@
 <?php
 // class to be utilized by fetchCandidates()
+
+use LDAP\Result;
+
 class CandidateOverviewClass
 {
   private $name;
   private $candidate_id;
+  private $description;
 
   // CONSTRUCTORS
-  function __construct($name, $candidate_id)
+  function __construct($name, $candidate_id, $description)
   {
     $this->name = $name;
     $this->candidate_id = $candidate_id;
+    $this->description = $description;
   }
 
   // GETTERS
@@ -22,98 +27,14 @@ class CandidateOverviewClass
   {
     return $this->candidate_id;
   }
-}
 
-/* 
-
-Candidate info model that will store the extracted information
-
-*/
-class CandidateInformationClass
-{
-  private $name;
-  private $political_party;
-  private $birthday;
-  private $birthplace;
-  private $religion;
-  private $number;
-
-
-  // DEFAULT CONSTRUCTOR INTIALIZES CLASS MEMBERS WITH EMPTY STRINGS
-  function __construct()
+  function getDescription()
   {
-    $this->name = "";
-    $this->political_party = "";
-    $this->birthday = "";
-    $this->birthplace = "";
-    $this->religion = "";
-    $this->number = "";
-  }
-
-  // SETTERS
-  function setName($name)
-  {
-    $this->name = $name;
-  }
-
-  function setPolParty($political_party)
-  {
-    $this->political_party = $political_party;
-  }
-
-  function setBirthday($birthday)
-  {
-    $this->birthday = $birthday;
-  }
-
-  function setBirthPlace($birthplace)
-  {
-    $this->birthplace = $birthplace;
-  }
-
-  function setReligion($religion)
-  {
-    $this->religion = $religion;
-  }
-
-  function setNumber($number)
-  {
-    $this->number = $number;
-  }
-
-  // GETTERS
-  function getName()
-  {
-    return $this->name;
-  }
-
-  function getPolParty()
-  {
-    return $this->political_party;
-  }
-
-  function getBirthday()
-  {
-    return $this->birthday;
-  }
-
-  function getBirthplace()
-  {
-    return $this->birthplace;
-  }
-
-  function getReligion()
-  {
-    return $this->religion;
-  }
-
-  function getNumber()
-  {
-    return $this->number;
+    return $this->description;
   }
 }
 
-function fetchCandidates($db_credentials)
+function fetchCandidates($db_credentials, $pos_id)
 {
   $conn = new mysqli(
     $db_credentials["server"],
@@ -124,7 +45,8 @@ function fetchCandidates($db_credentials)
   );
 
   // preparation of prepared statement
-  $stmt = $conn->prepare("SELECT * FROM candidatesTBL");
+  $stmt = $conn->prepare("SELECT * FROM candidatesTBL WHERE position_id=?");
+  $stmt->bind_param("s", $pos_id);
   // execution
   $stmt->execute();
   // result retrieval
@@ -134,7 +56,7 @@ function fetchCandidates($db_credentials)
 
   //Fill up Candidate Names
   while ($current_row = $results->fetch_assoc()) {
-    array_push($candidates_arr, new CandidateOverviewClass($current_row["full_name"], $current_row["candidate_id"]));
+    array_push($candidates_arr, new CandidateOverviewClass($current_row["full_name"], $current_row["candidate_id"], $current_row["bio"]));
   }
 
   $conn->close();
@@ -143,11 +65,11 @@ function fetchCandidates($db_credentials)
   return $candidates_arr;
 }
 
-function displayCandidates($db_credentials)
+function displayCandidates($db_credentials, $pos_id)
 {
 
 
-  $candidate_objs = fetchCandidates($db_credentials);
+  $candidate_objs = fetchCandidates($db_credentials, $pos_id);
 
   $candidates_displayed = 0;
   $candidates_max = sizeof($candidate_objs);
@@ -175,10 +97,7 @@ function displayCandidates($db_credentials)
       echo "          </div>";
       echo "          <div class='media-content'>";
       echo "            <p class ='title'>" . $candidate_objs[$candidates_displayed]->getName() . "</p>";
-      echo "            <p class='subtitle'> Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Veritatis fugit quibusdam iste nam, dolorem ullam nulla, ratione saepe ipsam 
-                        sequi a eius quos necessitatibus sed nesciunt vero corporis natus voluptatum.
-                        </p>";
+      echo "            <p class='subtitle'>" . $candidate_objs[$candidates_displayed]->getDescription() . "</p>";
       echo "          </div>";
       echo "        </div>";
       echo "      <footer class='card-footer'>";
@@ -209,10 +128,7 @@ function displayCandidates($db_credentials)
       echo "          </div>";
       echo "          <div class='media-content'>";
       echo "            <p class ='title'>" . $candidate_objs[$candidates_displayed]->getName() . "</p>";
-      echo "            <p class='subtitle'> Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Veritatis fugit quibusdam iste nam, dolorem ullam nulla, ratione saepe ipsam 
-                        sequi a eius quos necessitatibus sed nesciunt vero corporis natus voluptatum.
-                        </p>";
+      echo "            <p class='subtitle'>" . $candidate_objs[$candidates_displayed]->getDescription() . "</p>";
       echo "          </div>";
       echo "        </div>";
       echo "      <footer class='card-footer'>";
@@ -299,8 +215,14 @@ function queryCandidate($get_cid, $db_credentials)
   return -1;
 }
 
-function getCandidateInfo($candidate_id, $db_credentials)
+function queryReligionforEditor($db_credentials, $candidate_id)
 {
+  /*
+  <option value='P'>President</option>
+  <option value='VP'>Vice President</option>
+  <option value='S'>Senator</option> 
+   */
+
   $conn = new mysqli(
     $db_credentials["server"],
     $db_credentials["user"],
@@ -309,252 +231,233 @@ function getCandidateInfo($candidate_id, $db_credentials)
     $db_credentials["port"]
   );
 
-  $candidate_info = new CandidateInformationClass();
-  $info_table = "candidatesInfoTBL";
-  $name_table = "candidatesTBL";
-  $religion_table = "religionTBL";
+  /*-----------------------------------------------------------------------
+  NEED TO GET USER RELIGION FIRST SO IT WON'T GET OVERWRITTEN ACCIDENTALLY
+  WITH THE PRINTING OF DEFAULT VALUES
+  -----------------------------------------------------------------------*/
 
-  $candidate_info->setBirthday(getCandidateBirthday(
-    $conn,
-    $candidate_id,
-    "birthday",
-    $info_table
-  ));
+  /*-----------------------------------------------------------------------
+  INITIALLY NEED TO GET THE RELIGION CODE STORED IN THE USER
+  -----------------------------------------------------------------------*/
+  $candidate_religion_code = 0;
+  $stmt =  $conn->prepare(
+    "SELECT religion_id
+    FROM candidatesInfoTBL 
+    WHERE candidate_id=?;"
+  );
+  $stmt->bind_param("s", $candidate_id);
+  $stmt->execute();
 
-  $candidate_info->setBirthPlace(getCandidateBirthplace(
-    $conn,
-    $candidate_id,
-    "birthplace",
-    $info_table
-  ));
+  $result = $stmt->get_result()->fetch_assoc();
+  $candidate_religion_code = $result["religion_id"];
+  /* ------------------------------------------------------------------- */
 
-  $candidate_info->setPolParty(getCandidatePoliticalParty(
-    $conn,
-    $candidate_id,
-    "political_party",
-    $info_table
-  ));
+  $stmt =  $conn->prepare(
+    "SELECT * 
+    FROM religionTBL 
+    WHERE religion_id=?;"
+  );
+  $stmt->bind_param("i", $candidate_religion_code);
+  $stmt->execute();
 
-  $candidate_info->setNumber(getCandidateNum(
-    $conn,
-    $candidate_id,
-    "candidate_num",
-    $info_table
-  ));
+  $result = $stmt->get_result()->fetch_assoc();
+  echo "<option value='" . $result["religion_id"] . "'>";
+  echo $result["religion"] . "</option>";
+  $stmt->close();
+  /* ------------------------------------------------------------------- */
 
-  $candidate_info->setReligion(getCandidateReligion(
-    $conn,
-    $candidate_id,
-    "religion_id",
-    $info_table,
-    $religion_table
-  ));
+  $stmt = $conn->prepare("SELECT * FROM religionTBL");
+  $stmt->execute();
+  $results = $stmt->get_result();
+  while ($current_row = $results->fetch_assoc()) {
+    if ($current_row["religion_id"] != $candidate_religion_code) {
+      echo "<option value='" . $current_row["religion_id"] . "'>";
+      echo $current_row["religion"] . "</option>";
+    }
+  }
 
-  $candidate_info->setName(getCandidateName(
-    $conn,
-    $candidate_id,
-    "full_name",
-    $name_table
-  ));
+  $stmt->close();
+}
 
-  $conn->close();
-
-  return $candidate_info;
+function isEditor()
+{
+  return true;
 }
 
 /* 
-HELPER METHODS FOR THE getCandidateInfo()
-IT IS IMPORTANT TO NOTE THAT THESE SHOULD USE AN ACITVE CONNECTION TOWARDS
-A DATABASE AND THESE FUNCTIONS DO NOT CLOSE THE SQLi CONNECTION IN ANY MANNER 
- */
+Candidate info model that will store the:
+  - extracted information 
+  - methods for information extraction
+*/
+class CandidateInformationClass
+{
+  private $conn = null;
+  private $candidate_id;
+  /*
+  candidate_id int(11) AI PK 
+  full_name varchar(100) 
+  position_id varchar(50) 
+  bio text
+   */
+  private $basic_info = [];
 
-function getCandidateBirthday(
-  mysqli $sqli_conn,
-  $candidate_id,
-  $birthday_column,
-  $target_tbl
-) {
+  /*
+  candidate_id int(11) 
+  candidate_num int(11) 
+  political_party varchar(300) 
+  birthday varchar(50) 
+  birthplace varchar(100) 
+  religion_id int(11) 
+  education_txt text 
+  experience_txt text 
+  criminal_txt text 
+  advocacies_txt text 
+   */
+  private $extra_info = [];
 
-  // PREPARE prep statement
-  $stmt = $sqli_conn->prepare("SELECT " . $birthday_column . " FROM " . $target_tbl . " WHERE candidate_id=?");
-  $stmt->bind_param("i", $candidate_id);
-
-  // execute
-  $stmt->execute();
-
-  // get result
-  $result = $stmt->get_result();
-  $birthday = $result->fetch_assoc();
-
-  // close connection
-  $stmt->close();
-
-  // if birthday is not empty, fetch the data
-  if (!(empty($birthday)))
-    return $birthday[$birthday_column];
-
-  return "NULL";
-}
-
-function getCandidateBirthplace(
-  mysqli $sqli_conn,
-  $candidate_id,
-  $birthplace_column,
-  $target_tbl
-) {
-
-  // PREPARE prep statement
-  $stmt = $sqli_conn->prepare("SELECT " . $birthplace_column . " FROM " . $target_tbl . " WHERE candidate_id=?");
-  $stmt->bind_param("i", $candidate_id);
-
-  // execute
-  $stmt->execute();
-
-  // get result
-  $result = $stmt->get_result();
-  $birthplace = $result->fetch_assoc();
-
-  // close connection
-  $stmt->close();
-
-  // if birthplace is not empty, fetch the data
-  if (!(empty($birthplace)))
-    return $birthplace[$birthplace_column];
-
-  return "NULL";
-}
-
-function getCandidatePoliticalParty(
-  mysqli $sqli_conn,
-  $candidate_id,
-  $political_party_column,
-  $target_tbl
-) {
-
-  // PREPARE prep statement
-  $stmt = $sqli_conn->prepare("SELECT " . $political_party_column . " FROM " . $target_tbl . " WHERE candidate_id=?");
-  $stmt->bind_param("i", $candidate_id);
-
-  // execute
-  $stmt->execute();
-
-  // get result
-  $result = $stmt->get_result();
-  $political_party = $result->fetch_assoc();
-
-  // close connection
-  $stmt->close();
-
-  // if political_party is not empty, fetch the data
-  if (!(empty($political_party)))
-    return $political_party[$political_party_column];
-
-  return "NULL";
-}
-
-function getCandidateNum(
-  mysqli $sqli_conn,
-  $candidate_id,
-  $candidate_num_column,
-  $target_tbl
-) {
-
-  // PREPARE prep statement
-  $stmt = $sqli_conn->prepare("SELECT " . $candidate_num_column . " FROM " . $target_tbl . " WHERE candidate_id=?");
-  $stmt->bind_param("i", $candidate_id);
-
-  // execute
-  $stmt->execute();
-
-  // get result
-  $result = $stmt->get_result();
-  $candidate_num = $result->fetch_assoc();
-
-  // close connection
-  $stmt->close();
-
-  // if candidate_num is not empty, fetch the data
-  if (!(empty($candidate_num)))
-    return $candidate_num[$candidate_num_column];
-
-  return "NULL";
-}
-
-function getCandidateName(
-  mysqli $sqli_conn,
-  $candidate_id,
-  $name_column,
-  $target_tbl
-) {
-
-  // PREPARE prep statement
-  $stmt = $sqli_conn->prepare("SELECT " . $name_column . " FROM " . $target_tbl . " WHERE candidate_id=?");
-  $stmt->bind_param("i", $candidate_id);
-
-  // execute
-  $stmt->execute();
-
-  // get result
-  $result = $stmt->get_result();
-  $candidate_name = $result->fetch_assoc();
-
-  // close connection
-  $stmt->close();
-
-  // if candidate_name is not empty, fetch the data
-  if (!(empty($candidate_name)))
-    return $candidate_name[$name_column];
-
-  return "NULL";
-}
-
-function getCandidateReligion(
-  mysqli $sqli_conn,
-  $candidate_id,
-  $candidate_religion_column,
-  $candidate_target_tbl,
-  $religion_target_tbl
-) {
-
-  // PREPARE prep statement
-  $stmt = $sqli_conn->prepare("SELECT " . $candidate_religion_column . " FROM " . $candidate_target_tbl . " WHERE candidate_id=?");
-  $stmt->bind_param("i", $candidate_id);
-
-  // execute first sttmt
-  $stmt->execute();
-
-  // get result of first stmt
-  $result = $stmt->get_result();
-  $religion_id = $result->fetch_assoc();
-  $religion_string = "NULL";
-
-  // close connection
-  $stmt->close();
-
-  // if religion_id is not empty, fetch the data and prepare for the second stmt query
-  if (!(empty($religion_id))) {
-
-    // PREPARE prep statement
-    $stmt = $sqli_conn->prepare("SELECT religion" . " FROM " . $religion_target_tbl . " WHERE religion_id=?");
-    $stmt->bind_param("i", $religion_id[$candidate_religion_column]);
-
-    // execute second sttmt
-    $stmt->execute();
-
-    // get result of second stmt
-    $result = $stmt->get_result();
-    $religion_string = $result->fetch_assoc();
-
-    // close connection
-    $stmt->close();
-
-    // if religion_string is not empty, fetch the data
-    if (!($religion_string == "NULL")) {
-      return $religion_string["religion"];
-    }
-  } else {
-    return $religion_string;
+  public function __construct(mysqli $conn = null, $candidate_id)
+  {
+    $this->conn = $conn;
+    $this->candidate_id = $candidate_id;
   }
 
-  return "NULL";
+  public function setConnection(mysqli $conn)
+  {
+    $this->conn = $conn;
+  }
+
+  public function closeConnection()
+  {
+    $this->conn->close();
+    $this->conn = null;
+  }
+
+  public function validateCandidate()
+  {
+    $stmt = $this->conn->prepare("SELECT * FROM candidatesTBL
+      WHERE candidate_id = ?;");
+    $stmt->bind_param("i", $this->candidate_id);
+    $stmt->execute();
+
+    $results = $stmt->get_result();
+    $user = $results->fetch_assoc();
+    if ($user) {
+      $user = null;
+      return true;
+    }
+
+    return false;
+  }
+
+  public function fetchInfo()
+  {
+    $stmt = $this->conn->prepare("SELECT * FROM candidatesTBL
+    WHERE candidate_id = ?;");
+    $stmt->bind_param("i", $this->candidate_id);
+    $stmt->execute();
+
+    $results = $stmt->get_result();
+    $user = $results->fetch_assoc();
+    if ($user) {
+      $this->basic_info["candidate_id"] = $user["candidate_id"];
+      $this->basic_info["full_name"] = $user["full_name"];
+      $this->basic_info["position_id"] = $user["position_id"];
+      $this->basic_info["bio"] = $user["bio"];
+
+      $user = null;
+    }
+
+    $stmt = $this->conn->prepare("SELECT * FROM candidatesInfoTBL
+    WHERE candidate_id = ?;");
+    $stmt->bind_param("i", $this->candidate_id);
+    $stmt->execute();
+
+    $results = $stmt->get_result();
+    $user = $results->fetch_assoc();
+    if ($user) {
+      $this->extra_info["candidate_id"] = $user["candidate_id"];
+      $this->extra_info["candidate_num"] = $user["candidate_num"];
+      $this->extra_info["political_party"] = $user["political_party"];
+      $this->extra_info["birthday"] = $user["birthday"];
+      $this->extra_info["birthplace"] = $user["birthplace"];
+      $this->extra_info["education_txt"] = $user["education_txt"];
+      $this->extra_info["experience_txt"] = $user["experience_txt"];
+      $this->extra_info["criminal_txt"] = $user["criminal_txt"];
+      $this->extra_info["advocacies_txt"] = $user["advocacies_txt"];
+
+      // GET THE STRING LITERAL INSTEAD OF THE REL_CODE ASSOC WITH CANDID
+      $this->extra_info["religion_id"] = $user["religion_id"];
+
+      $stmt = $this->conn->prepare("SELECT religion FROM religionTBL
+      WHERE religion_id = ?;");
+      $stmt->bind_param("i", $this->extra_info["religion_id"]);
+      $stmt->execute();
+
+      $results = $stmt->get_result();
+      $religion = $results->fetch_assoc();
+
+      $this->extra_info["religion_id"] = $religion["religion"];
+
+      // END
+      $user = null;
+    }
+
+    $stmt->close();
+  }
+
+  public function getBasicInfo()
+  {
+    return $this->basic_info;
+  }
+
+  public function getExtraInfo()
+  {
+    return $this->extra_info;
+  }
+}
+
+function getHeader()
+{
+  if (array_key_exists("pos_id", $_GET)) {
+    if (($_GET["pos_id"] == "P")) {
+
+      echo "  <section class='hero is-danger'>";
+      echo "  <div class='hero-body'>";
+      echo "  <p class='title' style='text-align: center;'>";
+      echo "  <em>Candidates</em>";
+      echo "  </p>";
+      echo "  <p class='subtitle' style='text-align: center;'>";
+      echo "  <em>Running for President</em>";
+      echo "  </p>";
+      echo "  </section>";
+    } else if ($_GET["pos_id"] == "VP") {
+
+      echo "  <section class='hero is-success'>";
+      echo "  <div class='hero-body'>";
+      echo "  <p class='title' style='text-align: center;'>";
+      echo "  <em>Candidates</em>";
+      echo "  </p>";
+      echo "  <p class='subtitle' style='text-align: center;'>";
+      echo "  <em>Running for VP</em>";
+      echo "  </p>";
+      echo "  </section>";
+    } else if ($_GET["pos_id"] == "S") {
+
+      echo "  <section class='hero is-warning'>";
+      echo "  <div class='hero-body'>";
+      echo "  <p class='title' style='text-align: center;'>";
+      echo "  <em>Candidates</em>";
+      echo "  </p>";
+      echo "  <p class='subtitle' style='text-align: center;'>";
+      echo "  <em>Running for Senator</em>";
+      echo "  </p>";
+      echo "  </section>";
+    } else {
+      // IF POS_ID IS PRESENT BUT NOT ACCORDING TO VALID POS_IDs
+      header("Location: Candidates.php?pos_id=P", true);
+    }
+  } else {
+    // IF POS_ID IS ABSENT IN GENERAL
+    header("Location: Candidates.php?pos_id=P", true);
+  }
 }
