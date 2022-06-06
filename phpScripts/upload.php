@@ -8,7 +8,7 @@
         $DB_CREDENTIALS["db_name"],
         $DB_CREDENTIALS["port"]
     );
-    //$acc_id = $_POST[];
+
     $header = $_POST['title'];
     $message = $_POST['message-input'];
 
@@ -26,4 +26,5 @@
 
     $conn->close();
 
+    header("Location:../phpPages/ForumPage.php");
     ?>
