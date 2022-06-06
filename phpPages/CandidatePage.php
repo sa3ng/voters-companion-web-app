@@ -155,7 +155,7 @@ if ($candidate_basic["position_id"] == "P") {
                             <?php
                             if (isEditor()) {
                                 echo "<button class='button is-small is-info' name='editBirthday'>Edit</button> 
-                                <button class='button is-small is-success' name='done'>Done</button>";
+                                <button class='button is-small is-success' name='done' data-target-candidate='" . $candidate_basic["full_name"] . "'>Done</button>";
                             }
                             ?>
                         </dt><br>

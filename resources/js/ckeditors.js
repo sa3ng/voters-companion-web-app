@@ -153,12 +153,19 @@ $(function () {
 
         let formData = new FormData();
 
-        var ckNewBirthdayHTML = $.trim($(selectorContainer1).html());
-        var ckNewBirthplaceHTML = $.trim($(selectorContainer2).html());
-        var ckNewMaritalHTML = $.trim($(selectorContainer3).html());
-        var ckNewEducationHTML = $.trim($(selectorContainer4).html());
-        var ckNewWorkHTML = $.trim($(selectorContainer5).html());
-        var ckNewCriminalHTML = $.trim($(selectorContainer6).html());
+        let candidate = $("[name='done']").data("target-candidate");
+        formData.append
+            (
+                "candidate",
+                candidate
+            );
+
+        let ckNewBirthdayHTML = $.trim($(selectorContainer1).html());
+        let ckNewBirthplaceHTML = $.trim($(selectorContainer2).html());
+        let ckNewMaritalHTML = $.trim($(selectorContainer3).html());
+        let ckNewEducationHTML = $.trim($(selectorContainer4).html());
+        let ckNewWorkHTML = $.trim($(selectorContainer5).html());
+        let ckNewCriminalHTML = $.trim($(selectorContainer6).html());
 
         // CHECK CHANGES TO PREP FOR AJAX
         if (ckNewBirthdayHTML.valueOf()
