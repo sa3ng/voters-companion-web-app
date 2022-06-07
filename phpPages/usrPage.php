@@ -1,6 +1,7 @@
 
 <?php
 require_once '../phpScripts/usr_page_functions.php';
+require_once '../phpScripts/globals.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,6 +28,11 @@ require_once '../phpScripts/usr_page_functions.php';
 
     require_once 'footer-header/header.php';
 
+    //Fill up variables
+    $president_names = fetchCandidateNames($DB_CREDENTIALS,'P');
+    $vice_pres_names = fetchCandidateNames($DB_CREDENTIALS,'VP');
+    $senator_names = fetchCandidateNames($DB_CREDENTIALS,'S'); 
+
   ?>
 
  
@@ -40,16 +46,49 @@ require_once '../phpScripts/usr_page_functions.php';
         <div class="media">
             <div class="media-left">
             <figure class="image is-128x128">
-              <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png">
+                <?php
+                    $img_src = fetchPersonalInfo($DB_CREDENTIALS,'image_url');
+
+                    if (isLoggedIn()){
+                        echo  "
+                        <img>
+                        <object class='image is-128x128' data='../resources/images/user_images/".$img_src."' type='image/png'>
+                        <img src='http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png' />
+                       </object>
+                       </img> "; 
+                    }
+                    else{
+                      echo  "<img class='is-rounded' src='http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png'>"; 
+                    }
+                ?>
             </figure>
+        <br>
+        <?php if (isset($_GET['error'])): ?>
+		<p><?php echo "<p class='columns is-one-quarter'>". $_GET['error']."</p>"; ?></p>
+	    <?php endif ?>
+        <form action="../phpScripts/uploadImage.php"
+           method="post"
+           enctype="multipart/form-data">
+            <br>
+           <input class="input is-primary columns is-one-quarter is-small" type="file" 
+                  name="my_image">
+            
+           <input type="submit" 
+                  name="submit"
+                  value="Upload"
+                  class="button is-primary columns is-one-quarter">
+     	
+     </form>
           </div>
           <div class="media-content">
             <p class="title">
             &nbsp;
 
                 <?php
+                        $full_name = fetchPersonalInfo($DB_CREDENTIALS,"full_name");
+
                         if (isLoggedIn()) {
-                            echo "<h1 class='title is-1'>" . selectSelfNameCookie() . "</h1>";
+                            echo "<h1 class='title is-1'>" . $full_name . "</h1>";
                         } else {
                             echo "<h1 class='title is-1'>User Profile</h1>";
                         }
@@ -71,12 +110,7 @@ require_once '../phpScripts/usr_page_functions.php';
                     <span>Supported Candidates</span>
                 </a>
             </li>
-            <li data-target="pane-2" id="2">
-                <a>
-                    <span class="icon is-small"><i class="fa fa-briefcase"></i></span>
-                    <span>Thread History</span>
-                </a>
-            </li>
+         
             <li data-target="pane-3" id="3">
                 <a>
                     <span class="icon is-small"><i class="fa fa-user-plus"></i></span>
@@ -88,16 +122,24 @@ require_once '../phpScripts/usr_page_functions.php';
 
    
     <div class="tab-content">
-
             <div class="tab-pane is-active" id="pane-1">
              <!-- CONTAINER FOR THE CHOSEN CANDIDATES -->
+             <form action="" method="POST">
                 <div class="columns" >
                     <div class="column has-text-centered">
                         <h1 class="title is-2" style="color: black;">President</h1>
                         <figure class="image is-128x128 mx-auto">
                             <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                         </figure>
-                        <h2 class="title is-2" style="color: black;">Name</h2>
+                        <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <?php
+                            foreach($president_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
+                        </select>
+                        </h2>
                         <a href="">Learn More</a>
                     </div>
 
@@ -106,8 +148,15 @@ require_once '../phpScripts/usr_page_functions.php';
                         <figure class="image is-128x128 mx-auto">
                             <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                         </figure>
-                        <h2 class="title is-3" style="color: black;">Name</h2>
-                        <a href="">Learn More</a>
+                        <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <?php
+                            foreach($vice_pres_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
+                        </select>
+                        </h2>                        <a href="">Learn More</a>
                     </div>
                 </div>
         
@@ -127,8 +176,15 @@ require_once '../phpScripts/usr_page_functions.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
-                                <a href="">Learn More</a>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <?php
+                            foreach($senator_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
+                        </select>
+                        </h2>                                <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
@@ -137,8 +193,14 @@ require_once '../phpScripts/usr_page_functions.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
-                                <a href="">Learn More</a>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>                                <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
@@ -147,8 +209,14 @@ require_once '../phpScripts/usr_page_functions.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
-                                <a href="">Learn More</a>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>                                <a href="">Learn More</a>
                             </div>
                         </div>
                     </div>
@@ -163,8 +231,14 @@ require_once '../phpScripts/usr_page_functions.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
-                                <a href="">Learn More</a>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>                                <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
@@ -173,8 +247,14 @@ require_once '../phpScripts/usr_page_functions.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
-                                <a href="">Learn More</a>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>                                <a href="">Learn More</a>
                             </div>
 
                             <div class="column has-text-centered">
@@ -183,8 +263,14 @@ require_once '../phpScripts/usr_page_functions.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
-                                <a href="">Learn More</a>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>                                <a href="">Learn More</a>
                             </div>
                         </div>
                     </div>
@@ -199,7 +285,14 @@ require_once '../phpScripts/usr_page_functions.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>
                                 <a href="">Learn More</a>
                             </div>
 
@@ -209,7 +302,14 @@ require_once '../phpScripts/usr_page_functions.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>
                                 <a href="">Learn More</a>
                             </div>
 
@@ -219,7 +319,14 @@ require_once '../phpScripts/usr_page_functions.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>
                                 <a href="">Learn More</a>
                             </div>
                         </div>
@@ -235,7 +342,14 @@ require_once '../phpScripts/usr_page_functions.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>
                                 <a href="">Learn More</a>
                             </div>
 
@@ -245,7 +359,14 @@ require_once '../phpScripts/usr_page_functions.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>
                                 <a href="">Learn More</a>
                             </div>
 
@@ -255,19 +376,23 @@ require_once '../phpScripts/usr_page_functions.php';
                                     <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                                 </figure>
                                 <br>
-                                <h2 class="title is-3" style="color: black;">Name</h2>
+                                <h2 class="title is-2" style="color: black;">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        </h2>
                                 <a href="">Learn More</a>
                             </div>
                         </div>
                     </div>    
                 </div>
             </div>
+
+            </form> 
         
-        
-        <!--Thread History-->
-        <div class="tab-pane is-centered" id="pane-2">
-        
-        </div>
         
 
         <!--Personal Details-->
@@ -275,22 +400,65 @@ require_once '../phpScripts/usr_page_functions.php';
             <div class="content">
                 <dl>
                     <dt><strong>Name:</strong></dt> 
-                    <dd> Name Here</dd><br>
+                    <?php
+                        $full_name = fetchPersonalInfo($DB_CREDENTIALS,"full_name");
+                        
+                        if (isLoggedIn()) {
+                            echo "<dd>".$full_name."</dd><br>";
+                        } else {
+                            echo "<dd> Name Here</dd><br>";
+                        }
+
+                    ?>
+                    
 
                     <dt><strong>Bio:</strong></dt>
-                    <dd> Bio Here </dd><br>
+                    <?php
+                        $bio = fetchPersonalInfo($DB_CREDENTIALS,"bio");
+                        
+                        if (isLoggedIn()) {
+                            echo "<dd>".$bio."</dd><br>";
+                        } else {
+                            echo "<dd> Name Here</dd><br>";
+                        }
+
+                    ?>
 
                     <dt><strong>Birthday:</strong></dt> 
-                    <dd> Month Day, Year </dd> <br>
+                    <?php
+                        $bday = fetchPersonalInfo($DB_CREDENTIALS,"birthday");
+                        
+                        if (isLoggedIn()) {
+                            echo "<dd>".$bday."</dd><br>";
+                        } else {
+                            echo "<dd> Name Here</dd><br>";
+                        }
 
-                    <dt><strong>Birthplace:</strong></dt> 
-                    <dd> Birthplace Here </dd> <br>
+                    ?>
 
                     <dt><strong>Relgion:</strong></dt> 
-                    <dd> Religion Here </dd> <br>
+                    <?php
+                        $religion = fetchPersonalInfo($DB_CREDENTIALS,"religion_id");
+                        
+                        if (isLoggedIn()) {
+                            echo "<dd>".$religion."</dd><br>";
+                        } else {
+                            echo "<dd> Name Here</dd><br>";
+                        }
+
+                    ?>
 
                     <dt><strong>Marital Status:</strong></dt> 
-                    <dd> Status Here </dd> <br>
+                    <?php
+                        $status = fetchPersonalInfo($DB_CREDENTIALS,"status_id");
+                        
+                        if (isLoggedIn()) {
+                            echo "<dd>".$status."</dd><br>";
+                        } else {
+                            echo "<dd> Name Here</dd><br>";
+                        }
+
+                    ?>
                 </dl>
             </div>
         </div>

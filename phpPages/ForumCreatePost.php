@@ -45,10 +45,10 @@
     <div class="box content">
 
       <article class="specific-post">
-        <form  method="GET">
+        <form  action="../phpScripts/upload.php" method="POST">
           <div class="title-input-div media">
             <h4 class='media-left'>Title:</h4>
-            <input class="input is-hovered" name='title' type="text" placeholder="Enter your Title" value="b">
+            <input class="input is-hovered" name='title' type="text" placeholder="Enter your Title">
           </div>
           <div class="message-input-div media">
             <textarea class="textarea is-medium is-hovered" name='message-input' placeholder="Express yourself..."></textarea>
@@ -58,7 +58,7 @@
               (1000 Characters max)
             </div>
             <div class="media-right">
-              <a class="button " name='post' type="submit"> <strong> Post </strong></a>
+              <button class="button" name="post" type="submit"><strong> Post </strong></button>
             </div>
           </div>
         </form>

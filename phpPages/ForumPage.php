@@ -38,12 +38,14 @@
 
 
   //$post_id
-  //$post_messages
+  //$post_messagess
 
 
   
   //Initialize functions
   $post_headers = fetchHeaders($DB_CREDENTIALS);
+  $post_likes = fetchLikes($DB_CREDENTIALS);
+  $post_ids = fetchIDs($DB_CREDENTIALS);
   $user_name;
   
 
@@ -62,6 +64,14 @@
   .post-icons {
     padding-right: 10px;
   }
+
+  .transparent {
+        cursor: pointer;
+        border: 1px solid white;
+        background-color: transparent;
+        color: white;
+
+    }
 </style>
 
 <!-- Font Awesome  -->
@@ -95,13 +105,17 @@
 
       <?php
 
-      $num_of_posts = 1;
+      $num_of_posts = 0;
+      $index = 0;
       foreach ($post_headers as $headers) {
+        $user_tag_array = fetchTags($DB_CREDENTIALS, $post_ids, $num_of_posts);
 
         echo "
-        <a href='ForumPostPage.php'>
+      
+        <form action='ForumPostPage.php' method='POST'>
         <article class='post'>
-          <h4>" . $headers . "</h4>
+        <input type='hidden' name='post_header' value= '" . $headers. "'></input>
+          <button class='transparent' type='submit'><h3> " . $headers . "</h3></button>
           <div class='media'>
             <div class='media-left'>
               <p class='image is-32x32'>
@@ -111,18 +125,17 @@
             <div class='media-content'>
               <div class='content'>
                 <p>
-                  <a href='#'>@jsmith</a> posted 34 minutes ago 
+                  <a href='#'>" . $user_tag_array[0] . "</a> posted 34 minutes ago 
                   <span class='tag'>Question</span>
                 </p>
               </div>
             </div>
             <div class='media-right'>
-              <span class='post-icons has-text-grey-light'><i class='fa-solid fa-thumbs-up'></i> 1</span>
-              <span class='post-icons has-text-grey-light'><i class='fa fa-comments'></i> 1</span>
+              <span class='post-icons has-text-grey-light'><i class='fa-solid fa-thumbs-up'></i> " . $post_likes[$num_of_posts] . "</span>
             </div>
           </div>
         </article>
-        </a>
+        </form>
         ";
         $num_of_posts += 1;
       }

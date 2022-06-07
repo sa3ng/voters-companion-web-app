@@ -7,8 +7,8 @@
     <title>Home</title>
     <!-- Bulma Version 0.9.0-->
     <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
-    <link rel="stylesheet" type="text/css" href="../resources/css/home.css" />
-    <link rel="stylesheet" type="text/css" href="../resources/css/voterscompanion.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/home.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/voterscompanion.css" />
     <script
       src="https://kit.fontawesome.com/2828f7885a.js"
       integrity="sha384-WAsFbnLEQcpCk8lM1UTWesAf5rGTCvb2Y+8LvyjAAcxK1c3s5c0L+SYOgxvc6PWG"
@@ -35,7 +35,7 @@
     <!-- End Scroll Up Button -->
 
 <?php
-require_once '../phpScripts/usr_page_functions.php';
+require_once 'phpScripts/usr_page_functions.php';
 ?>
 <!--HEADER-->
 <section class="headerhero">
@@ -53,7 +53,7 @@ require_once '../phpScripts/usr_page_functions.php';
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="index.php">
-          <img src="../resources/images/VC-logo" width="112" height="25">
+          <img src="resources/images/VC-logo" width="112" height="25">
         </a>
     
         <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -156,7 +156,7 @@ require_once '../phpScripts/usr_page_functions.php';
             <div class="column is-6 right-image " data-aos="fade-left">
               <img
                 class="is-rounded"
-                src="../resources/images/home_images/vote.jpg"
+                src="resources/images/home_images/vote.jpg"
                 alt=""
               />
             </div>
@@ -169,7 +169,7 @@ require_once '../phpScripts/usr_page_functions.php';
             <div class="column is-6 left-image " data-aos="fade-right">
                 <img
                   class="is-rounded"
-                  src="../resources/images/home_images/talk.jpg"
+                  src="resources/images/home_images/talk.jpg"
                   alt=""
                 />
               </div>
@@ -310,7 +310,7 @@ require_once '../phpScripts/usr_page_functions.php';
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="../resources/js/home.js"></script>
+    <script src="resources/js/home.js"></script>
     <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
     <script>
