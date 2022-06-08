@@ -55,13 +55,9 @@ require_once '../phpScripts/candidates_page_functions.php';
   if (isEditor()) {
     echo
     "
-    
       <div class='container'>
       <button class='js-modal-trigger button is-success' data-target='modal-js-add'>
         Add Candidate
-      </button>
-      <button class='button is-link' name='done'>
-        Save Edits
       </button>
       <button class='js-modal-trigger button is-danger' data-target='modal-js-delete''>
         Delete Candidate
