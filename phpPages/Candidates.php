@@ -129,7 +129,7 @@ require_once '../phpScripts/candidates_page_functions.php';
 
     <div class='modal-content'>
       <div class='box'>
-        <form id='candidate-edit-modal-form'>
+        <form id='candidate-edit-modal-form' action="../phpScripts/candidate_overview_edit.php">
 
           <div class='field'>
             <label class='label'>Candidate Name</label>

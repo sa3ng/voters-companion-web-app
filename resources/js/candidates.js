@@ -101,7 +101,14 @@ $(function () {
     We have to get the candidate ID to be editted in the db through
     the 'Learn More' URL
     -------------------------------------------------------------------- */
-    let candidateLink = $("[name='candidate-link']").attr("href");
+    // let candidateLink = $("[name='candidate-link']").attr("href");
+    let candidateLink = $($(this)
+      .parent().parent().parent()
+      .children(".card-footer").children("p").children("span")
+      .children("a")).attr("href");
+
+    debugger;
+    console.log(candidateLink);
 
     /* 
     we only pass window.location here to make a decoy url to get the 
@@ -135,9 +142,35 @@ $(function () {
     let editModalCandidateDescription = "[name='e-cand-desc']";
     let editModalHiddenID = "[name='e-cand-num']";
 
-    formData.append("candidate_name", $(editModalCandidateName).val());
-    formData.append("candidate_desc", $(editModalCandidateDescription).val());
+    formData.append("candidate_name", $(editModalCandidateName).val().toUpperCase().trim());
+    formData.append("candidate_desc", $(editModalCandidateDescription).val().trim());
     formData.append("candidate_id", $(editModalHiddenID).val());
+
+    // Client-side validation
+    if (formData.get("candidate_name") == "") {
+      alert("Name must not be empty");
+    }
+    // else, submit to ajax
+    else {
+      $.ajax({
+        type: "POST",
+        url: $(this).attr("action"),
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+          if (response === "NAME_IN_DB")
+            alert("Name is already present in DB. Please input a different name or consider deleting that same name instance");
+          if (response === "OK") {
+            alert("Basic Candidate Info has been edited!");
+            window.location.reload();
+          } else {
+            alert("something went wrong");
+            console.log(response);
+          }
+        }
+      });
+    }
   });
 });
 
