@@ -87,82 +87,78 @@ function displayCandidates($db_credentials, $pos_id)
       echo "<div class='columns'>";
       $end_current_row = true;
 
-      echo "  <div class='column'>";
-      echo "    <div class='card hovereffect'>";
-      echo "      <div class='card-content'>";
-      echo "        <div class='media'>";
-      echo "          <div class='media-left'>";
-      echo "            <figure class='image is-128x128'>
-                          <img class='is-rounded' src='https://i.pinimg.com/originals/2a/3a/fe/2a3afea3b703dba502ae62b54e069f12.jpg'>
-                        </figure>";
-      echo "          </div>";
-      echo "          <div class='media-content'>";
-      echo "            <button class='button is-small is-info js-modal-trigger' data-target='modal-js-edit'>Edit Info</button>";        
-      echo "            <p class='title'>" . $candidate_objs[$candidates_displayed]->getName() . "</p>";
-      echo "            <p class='subtitle'>" . $candidate_objs[$candidates_displayed]->getDescription() . "</p>";
-      echo "          </div>";
-      echo "        </div>";
-      echo "      <footer class='card-footer'>";
-      echo "        <p class='card-footer-item'>";
-      echo "        <span>";
-      echo "          <a href='CandidatePage.php?cid=" . $candidate_objs[$candidates_displayed]->getCandidateId() . "'>Learn More</a>";
-      echo "        </span>";
-      echo "        </p>";
-      echo "      <footer>";
-      echo "      </div>";
-      echo "    </div>";
-      echo "  </div>";
 
+
+      displayOverviewCandidate($candidate_objs, $candidates_displayed);
       $candidates_displayed++;
     }
     /* 
     PRINT NEXT CARD
     */
     if (($candidates_displayed % 2 != 0) && $candidates_displayed < $candidates_max) {
-      echo "  <div class='column'>";
-      echo "    <div class='card hovereffect'>";
-      echo "      <div class='card-content'>";
-      echo "        <div class='media'>";
-      echo "          <div class='media-left'>";
-      echo "            <figure class='image is-128x128'>
-                          <img class='is-rounded' src='https://i.pinimg.com/originals/2a/3a/fe/2a3afea3b703dba502ae62b54e069f12.jpg'>
-                        </figure>";
-      echo "          </div>";
-      echo "          <div class='media-content'>";
-      echo "            <button class='button is-small is-info js-modal-trigger' data-target='modal-js-edit'>Edit Info</button>";        
-      echo "            <p class='title'>" . $candidate_objs[$candidates_displayed]->getName() . "</p>";
-      echo "            <p class='subtitle'>" . $candidate_objs[$candidates_displayed]->getDescription() . "</p>";
-      echo "          </div>";
-      echo "        </div>";
-      echo "      <footer class='card-footer'>";
-      echo "        <p class='card-footer-item'>";
-      echo "        <span>";
-      echo "          <a href='CandidatePage.php?cid=" . $candidate_objs[$candidates_displayed]->getCandidateId() . "'>Learn More</a>";
-      echo "        </span>";
-      echo "        </p>";
-      echo "      <footer>";
-      echo "      </div>";
-      echo "    </div>";
-      echo "  </div>";
+      displayOverviewCandidate($candidate_objs, $candidates_displayed);
 
       $candidates_displayed++;
     }
 
     if ($end_current_row) {
-      // BASE CONTAINER END TAG
+      // ENDING THE BASE CONTAINER HERE
       echo "</div>";
       $end_current_row = false;
     }
   }
 }
 
+/* ------------------------------------------------------------------------
+Helper funciton for displaying candidates on the candidate overview page
+-------------------------------------------------------------------------*/
+function displayOverviewCandidate(array $candidate_objs, int $candidates_displayed)
+{
+  echo "  <div class='column'>";
+  echo "    <div class='card hovereffect'>";
+  echo "      <div class='card-content'>";
+  echo "        <div class='media'>";
+  echo "          <div class='media-left'>";
+  echo "            <figure class='image is-128x128'>
+                      <img class='is-rounded' src='https://i.pinimg.com/originals/2a/3a/fe/2a3afea3b703dba502ae62b54e069f12.jpg'>
+                    </figure>";
+  echo "          </div>";
+  echo "          <div class='media-content'>";
+  /* ------------------------------------------------------------------
+   editing the candidate name and description should only be for 
+   editors
+  ------------------------------------------------------------------ */
+  if (isEditor()) {
+    echo "            
+      <button name='edit-candidate-button' class='button is-small is-info js-modal-trigger' 
+      data-target='modal-js-edit'>
+      Edit Info</button>
+        ";
+  }
+  // ------------------------------------------------------------------
+  echo "            <p class='title'>" . $candidate_objs[$candidates_displayed]->getName() . "</p>";
+  echo "            <p class='subtitle'>" . $candidate_objs[$candidates_displayed]->getDescription() . "</p>";
+  echo "          </div>";
+  echo "        </div>";
+  echo "      <footer class='card-footer'>";
+  echo "        <p class='card-footer-item'>";
+  echo "        <span>";
+  echo "          <a href='CandidatePage.php?cid=" . $candidate_objs[$candidates_displayed]->getCandidateId() . "'>Learn More</a>";
+  echo "        </span>";
+  echo "        </p>";
+  echo "      <footer>";
+  echo "      </div>";
+  echo "    </div>";
+  echo "  </div>";
+}
+// ------------------------------------------------------------------
+
+
 // CANDIDATE PAGE PROPER FUNCTIONS
-
-/* 
-this function should check if the user has passed the request to the server
-*/
-
-
+/* ------------------------------------------------------------------------
+these functions should check if the user has passed the request to the 
+server
+-------------------------------------------------------------------------*/
 function validateRequestType()
 {
   if (array_key_exists("REQUEST_METHOD", $_SERVER)) {
@@ -173,13 +169,14 @@ function validateRequestType()
   // default return
   return false;
 }
-
 function checkCandidateParamExist()
 {
   if (array_key_exists("cid", $_GET))
     return true;
   return false;
 }
+// ------------------------------------------------------------------------
+
 
 function returnToOverviewPage()
 {

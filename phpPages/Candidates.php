@@ -24,7 +24,7 @@ require_once '../phpScripts/candidates_page_functions.php';
 
   ?>
 
-
+  <!-- ?INTERNAL STYLING? -->
   <style>
     .hovereffect:hover {
       transform: translate3D(0, -1px, 0) scale(1.02);
@@ -91,7 +91,7 @@ require_once '../phpScripts/candidates_page_functions.php';
           <div class='field'>
             <label class='label'>Candidate Number</label>
             <div class='control'>
-              <input name='c-cand-num' class='input' type='number' required placeholder='Candidate Number' min='1' max='1000'>
+              <input name='c-cand-num' class='input' type='number' required placeholder='Candidate Number' min='1'>
             </div>
           </div>
 
@@ -134,28 +134,20 @@ require_once '../phpScripts/candidates_page_functions.php';
           <div class='field'>
             <label class='label'>Candidate Name</label>
             <div class='control'>
-              <input name='c-cand-name' class='input' type='text' required placeholder='Candidate Name'>
+              <input name='e-cand-name' class='input' type='text' required placeholder='Candidate Name'>
             </div>
-          </div>
-
-          <div class='select is-primary'>
-            <select name='c-cand-pos'>
-              <option value='P'>President</option>
-              <option value='VP'>Vice President</option>
-              <option value='S'>Senator</option>
-            </select>
           </div>
 
           <div class='field'>
             <label class='label'>Description</label>
             <div class='control'>
-              <textarea name='c-cand-desc' class='textarea' placeholder='Description'></textarea>
+              <textarea name='e-cand-desc' class='textarea' placeholder='Description'></textarea>
             </div>
           </div>
 
           <div class='field'>
             <div class='control'>
-              <input name='c-cand-num' class='input' type='hidden' required placeholder='Candidate Number' min='1' max='1000'>
+              <input name='e-cand-num' class='input' type='hidden' required placeholder='Candidate Number' min='1'>
             </div>
           </div>
 
@@ -174,53 +166,53 @@ require_once '../phpScripts/candidates_page_functions.php';
 
   <!-- MODAL FOR DELETING -->
   <div id="modal-js-delete" class="modal">
-  <div class="modal-background"></div>
+    <div class="modal-background"></div>
 
-  <div class="modal-content">
-    <div class="box">
-      <p>Choose a Candidate to Delete</p><br>
+    <div class="modal-content">
+      <div class="box">
+        <p>Choose a Candidate to Delete</p><br>
 
-      <!-- Candidate Card -->
-      <div class='card'>
-        <header class='card-header'>
-          <p class='card-header-title'>
-            Candidate Name Here
-          </p>
-        </header>
-        <div class='card-content'>
-          <div class='content'>
-            Candidate Number # 15
+        <!-- Candidate Card -->
+        <div class='card'>
+          <header class='card-header'>
+            <p class='card-header-title'>
+              Candidate Name Here
+            </p>
+          </header>
+          <div class='card-content'>
+            <div class='content'>
+              Candidate Number # 15
+            </div>
           </div>
+          <footer class='class-footer'>
+            <a href='#' class='card-footer-item' onclick='ConfirmDelete()'>Delete</a>
+          </footer>
         </div>
-        <footer class='class-footer'>
-          <a href='#' class='card-footer-item' onclick='ConfirmDelete()'>Delete</a>
-        </footer>
-      </div>
 
-    <br>
+        <br>
 
-    <div class='card'>
-        <header class='card-header'>
-          <p class='card-header-title'>
-            Candidate Name Here
-          </p>
-        </header>
-        <div class='card-content'>
-          <div class='content'>
-            Candidate Number # 15
+        <div class='card'>
+          <header class='card-header'>
+            <p class='card-header-title'>
+              Candidate Name Here
+            </p>
+          </header>
+          <div class='card-content'>
+            <div class='content'>
+              Candidate Number # 15
+            </div>
           </div>
+          <footer class='class-footer'>
+            <a href='#' class='card-footer-item' onclick='ConfirmDelete()'>Delete</a>
+          </footer>
         </div>
-        <footer class='class-footer'>
-          <a href='#' class='card-footer-item' onclick='ConfirmDelete()'>Delete</a>
-        </footer>
       </div>
-    </div>
 
     </div>
   </div>
 
   <button class="modal-close is-large" aria-label="close"></button>
-</div>
+  </div>
 
   <div class='container'>
 
@@ -237,12 +229,12 @@ require_once '../phpScripts/candidates_page_functions.php';
 
 </body>
 <script>
-function ConfirmDelete()
-{
-  return confirm("Are you sure you want to delete?");
-}
+  function ConfirmDelete() {
+    return confirm("Are you sure you want to delete?");
+  }
 </script>
 <script src="../resources/ckeditor/build/ckeditor.js"></script>
 <script src='../resources/js/candidates.js'></script>
 <script src='../resources/js/ckeditors.js'></script>
+
 </html>

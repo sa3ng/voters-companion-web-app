@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 $(function () {
-  let candidateModalForm = "#candidate-modal-form";
-  $(candidateModalForm).submit(function (e) {
+  let candidateCreateModalForm = "#candidate-modal-form";
+  $(candidateCreateModalForm).submit(function (e) {
 
     let formData = new FormData();
     formData.append("c-cand-name", $("[name='c-cand-name']").val());
@@ -84,6 +84,16 @@ $(function () {
         }
       }
     });
+  });
+
+  let candidateEditButtons = "[name='edit-candidate-button']";
+  $(candidateEditButtons).click(function (e) {
+    e.preventDefault();
+    console.log("Has been clicked");
+    console.log($(this));
+    console.log($(this).parent());
+    console.log($(this).parent().children('.title'));
+    console.log($(this).parent().children('.subtitle'));
   });
 });
 
