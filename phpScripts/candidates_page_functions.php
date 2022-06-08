@@ -143,7 +143,7 @@ function displayOverviewCandidate(array $candidate_objs, int $candidates_display
   echo "      <footer class='card-footer'>";
   echo "        <p class='card-footer-item'>";
   echo "        <span>";
-  echo "          <a href='CandidatePage.php?cid=" . $candidate_objs[$candidates_displayed]->getCandidateId() . "'>Learn More</a>";
+  echo "          <a name='candidate-link' href='CandidatePage.php?cid=" . $candidate_objs[$candidates_displayed]->getCandidateId() . "'>Learn More</a>";
   echo "        </span>";
   echo "        </p>";
   echo "      <footer>";

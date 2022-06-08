@@ -89,11 +89,55 @@ $(function () {
   let candidateEditButtons = "[name='edit-candidate-button']";
   $(candidateEditButtons).click(function (e) {
     e.preventDefault();
-    console.log("Has been clicked");
-    console.log($(this));
+
+    // Parent container of button and container for the target texts
     console.log($(this).parent());
-    console.log($(this).parent().children('.title'));
-    console.log($(this).parent().children('.subtitle'));
+    // Candidate Name Container
+    let candidateName = $(this).parent().children('.title');
+    // Candidate Description Container
+    let candidateDesc = $(this).parent().children('.subtitle');
+
+    /* -------------------------------------------------------------------- 
+    We have to get the candidate ID to be editted in the db through
+    the 'Learn More' URL
+    -------------------------------------------------------------------- */
+    let candidateLink = $("[name='candidate-link']").attr("href");
+
+    /* 
+    we only pass window.location here to make a decoy url to get the 
+    search param value of cid
+    */
+    let candidateLinkURL = new URL(
+      candidateLink,
+      window.location
+    );
+    let cid = candidateLinkURL.searchParams.get("cid");
+    //---------------------------------------------------------------------
+
+    // setting values to edit form
+    let editModalCandidateName = "[name='e-cand-name']";
+    $(editModalCandidateName).val($(candidateName).text());
+    let editModalCandidateDescription = "[name='e-cand-desc']";
+    $(editModalCandidateDescription).val($(candidateDesc).text());
+    let editModalHiddenID = "[name='e-cand-num']";
+    $(editModalHiddenID).val(cid);
+    //---------------------------------------------------------------------
+
+  });
+
+  let candidateEditModalForm = "#candidate-edit-modal-form";
+  $(candidateEditModalForm).submit(function (e) {
+    e.preventDefault();
+
+    let formData = new FormData();
+
+    let editModalCandidateName = "[name='e-cand-name']";
+    let editModalCandidateDescription = "[name='e-cand-desc']";
+    let editModalHiddenID = "[name='e-cand-num']";
+
+    formData.append("candidate_name", $(editModalCandidateName).val());
+    formData.append("candidate_desc", $(editModalCandidateDescription).val());
+    formData.append("candidate_id", $(editModalHiddenID).val());
   });
 });
 
