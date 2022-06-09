@@ -1,3 +1,4 @@
+<script src='../resources/js/ckeditors.js'></script>
 <?php
 // class to be utilized by fetchCandidates()
 
@@ -96,7 +97,8 @@ function displayCandidates($db_credentials, $pos_id)
                         </figure>";
       echo "          </div>";
       echo "          <div class='media-content'>";
-      echo "            <p class ='title'>" . $candidate_objs[$candidates_displayed]->getName() . "</p>";
+      echo "            <button class='button is-small is-info js-modal-trigger' data-target='modal-js-edit'>Edit Info</button>";        
+      echo "            <p class='title'>" . $candidate_objs[$candidates_displayed]->getName() . "</p>";
       echo "            <p class='subtitle'>" . $candidate_objs[$candidates_displayed]->getDescription() . "</p>";
       echo "          </div>";
       echo "        </div>";
@@ -127,7 +129,8 @@ function displayCandidates($db_credentials, $pos_id)
                         </figure>";
       echo "          </div>";
       echo "          <div class='media-content'>";
-      echo "            <p class ='title'>" . $candidate_objs[$candidates_displayed]->getName() . "</p>";
+      echo "            <button class='button is-small is-info js-modal-trigger' data-target='modal-js-edit'>Edit Info</button>";        
+      echo "            <p class='title'>" . $candidate_objs[$candidates_displayed]->getName() . "</p>";
       echo "            <p class='subtitle'>" . $candidate_objs[$candidates_displayed]->getDescription() . "</p>";
       echo "          </div>";
       echo "        </div>";

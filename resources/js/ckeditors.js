@@ -1,5 +1,10 @@
 var globaleditor = undefined;
 
+var candidateBtn = "[name='editCandidate']"
+var candidateName = "#CK-candidate"
+var candidateBtnDesc = "[name='editDesc']"
+var candidateDesc = "#CK-desc"
+
 var selectorBtn1 = "[name='editBirthday']"
 var selectorContainer1 = "#CK-birthday"
 
@@ -17,6 +22,16 @@ var selectorContainer5 = "#CK-work"
 
 var selectorBtn6 = "[name='editCR']"
 var selectorContainer6 = "#CK-criminal"
+
+var selectorBtn7 = "[name='editPlatform']"
+var selectorContainer7 = "#CK-platform"
+
+var selectorBtn8 = "[name='editAccomplishments']"
+var selectorContainer8 = "#CK-accomplishments"
+
+var selectorBtn9 = "[name='editOrgs']"
+var selectorContainer9 = "#CK-orgs"
+
 
 // ORIGINAL HTML STRINGS TO BE COMPARED WITH
 var ckOriginBirthdayHTML = $.trim($(selectorContainer1).html());
@@ -36,6 +51,43 @@ function newEdit($param) {
 }
 
 $(function () {
+
+    // CANDIDATES PAGE
+    $(candidateBtn).click(function (e)  {
+        e.preventDefault();
+        newEdit($(candidateName));
+
+        if (($(candidateName).is(":visible"))) {
+            ClassicEditor
+                .create(document.querySelector(candidateName))
+                .then(editor => {
+                    console.log("Created", editor);
+                    globaleditor = editor;
+                })
+                .catch(error => {
+                    console.log(error.stack);
+                })
+        }
+    });
+
+        $(candidateBtnDesc).click(function (e)  {
+            e.preventDefault();
+            newEdit($(candidateDesc));
+    
+            if (($(candidateDesc).is(":visible"))) {
+                ClassicEditor
+                    .create(document.querySelector(candidateDesc))
+                    .then(editor => {
+                        console.log("Created", editor);
+                        globaleditor = editor;
+                    })
+                    .catch(error => {
+                        console.log(error.stack);
+                    })
+            }
+        });
+    
+        
 
     $(selectorBtn1).click(function (e) {
         e.preventDefault();
@@ -130,6 +182,57 @@ $(function () {
         if (($(selectorContainer6).is(":visible"))) {
             ClassicEditor
                 .create(document.querySelector(selectorContainer6))
+                .then(editor => {
+                    console.log("Created", editor);
+                    globaleditor = editor;
+                })
+                .catch(error => {
+                    console.log(error.stack);
+                })
+        }
+    });
+
+    $(selectorBtn7).click(function (e) {
+        e.preventDefault();
+        newEdit($(selectorContainer7));
+
+        if (($(selectorContainer7).is(":visible"))) {
+            ClassicEditor
+                .create(document.querySelector(selectorContainer7))
+                .then(editor => {
+                    console.log("Created", editor);
+                    globaleditor = editor;
+                })
+                .catch(error => {
+                    console.log(error.stack);
+                })
+        }
+    });
+
+    $(selectorBtn8).click(function (e) {
+        e.preventDefault();
+        newEdit($(selectorContainer8));
+
+        if (($(selectorContainer8).is(":visible"))) {
+            ClassicEditor
+                .create(document.querySelector(selectorContainer8))
+                .then(editor => {
+                    console.log("Created", editor);
+                    globaleditor = editor;
+                })
+                .catch(error => {
+                    console.log(error.stack);
+                })
+        }
+    });
+    
+    $(selectorBtn9).click(function (e) {
+        e.preventDefault();
+        newEdit($(selectorContainer9));
+
+        if (($(selectorContainer9).is(":visible"))) {
+            ClassicEditor
+                .create(document.querySelector(selectorContainer9))
                 .then(editor => {
                     console.log("Created", editor);
                     globaleditor = editor;
