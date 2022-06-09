@@ -1,6 +1,6 @@
 <?php
 
-require_once '../phpScripts/globals.php';
+require_once 'globals.php';
 
 
 function isLoggedIn()

@@ -24,8 +24,8 @@
         <img src="img/preloader.gif" alt="" />
       </div>
     </div>
-    <!-- End Preloader-->
-    <!-- Begin Scroll Up Button -->
+    <!-- End Preloade
+    Begin Scroll Up Button -->
 
     <form action="#home">
       <button id="toTop" title="Go to top">
@@ -37,7 +37,7 @@
 <?php
 require_once 'phpScripts/usr_page_functions.php';
 ?>
-<!--HEADER-->
+<!-- HEADER -->
 <section class="headerhero">
         <div class="hero-body">
           <p class="headertitle" style="text-align: center;">
@@ -49,7 +49,7 @@ require_once 'phpScripts/usr_page_functions.php';
         </div>
       </section>
 
-    <!--NAV BAR-->
+    <!-- NAVBAR -->
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="index.php">
