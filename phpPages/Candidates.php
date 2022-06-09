@@ -2,6 +2,9 @@
 require_once '../phpScripts/globals.php';
 require_once '../phpScripts/candidates_page_functions.php';
 
+/* INIT CANDIDATE LIST FOR POS */
+$candidate_arr = fetchCandidates($DB_CREDENTIALS, $_GET['pos_id']);
+
 ?>
 
 
@@ -167,41 +170,9 @@ require_once '../phpScripts/candidates_page_functions.php';
     <div class="modal-content">
       <div class="box">
         <p>Choose a Candidate to Delete</p><br>
-
-        <!-- Candidate Card -->
-        <div class='card'>
-          <header class='card-header'>
-            <p class='card-header-title'>
-              Candidate Name Here
-            </p>
-          </header>
-          <div class='card-content'>
-            <div class='content'>
-              Candidate Number # 15
-            </div>
-          </div>
-          <footer class='class-footer'>
-            <a href='#' class='card-footer-item' onclick='ConfirmDelete()'>Delete</a>
-          </footer>
-        </div>
-
-        <br>
-
-        <div class='card'>
-          <header class='card-header'>
-            <p class='card-header-title'>
-              Candidate Name Here
-            </p>
-          </header>
-          <div class='card-content'>
-            <div class='content'>
-              Candidate Number # 15
-            </div>
-          </div>
-          <footer class='class-footer'>
-            <a href='#' class='card-footer-item' onclick='ConfirmDelete()'>Delete</a>
-          </footer>
-        </div>
+        <?php
+        displayCandidatesToDelete($candidate_arr);
+        ?>
       </div>
 
     </div>
@@ -213,7 +184,7 @@ require_once '../phpScripts/candidates_page_functions.php';
   <div class='container'>
 
     <?php
-    displayCandidates($DB_CREDENTIALS, $_GET['pos_id']);
+    displayCandidates($candidate_arr);
     ?>
 
   </div>

@@ -2,20 +2,20 @@
 <?php
 // class to be utilized by fetchCandidates()
 
-use LDAP\Result;
-
 class CandidateOverviewClass
 {
   private $name;
   private $candidate_id;
   private $description;
+  private $pos_num;
 
   // CONSTRUCTORS
-  function __construct($name, $candidate_id, $description)
+  function __construct($name, $candidate_id, $description, $pos_num)
   {
     $this->name = $name;
     $this->candidate_id = $candidate_id;
     $this->description = $description;
+    $this->pos_num = $pos_num;
   }
 
   // GETTERS
@@ -32,6 +32,11 @@ class CandidateOverviewClass
   function getDescription()
   {
     return $this->description;
+  }
+
+  function getPosNum()
+  {
+    return $this->pos_num;
   }
 }
 
@@ -57,23 +62,40 @@ function fetchCandidates($db_credentials, $pos_id)
 
   //Fill up Candidate Names
   while ($current_row = $results->fetch_assoc()) {
-    array_push($candidates_arr, new CandidateOverviewClass($current_row["full_name"], $current_row["candidate_id"], $current_row["bio"]));
+    $loc_stmt = $conn->prepare(
+      "SELECT candidate_num FROM candidatesInfoTBL 
+      WHERE candidate_id=?;"
+    );
+    $loc_stmt->bind_param("i", $current_row["candidate_id"]);
+    $loc_stmt->execute();
+
+    $loc_result = $loc_stmt->get_result()->fetch_assoc();
+
+    array_push(
+      $candidates_arr,
+      new CandidateOverviewClass(
+        $current_row["full_name"],
+        $current_row["candidate_id"],
+        $current_row["bio"],
+        $loc_result["candidate_num"]
+      )
+    );
   }
 
   $conn->close();
   $stmt->close();
+  $loc_stmt->close();
 
   return $candidates_arr;
 }
 
-function displayCandidates($db_credentials, $pos_id)
+
+function displayCandidates(array $candidates_arr)
 {
 
 
-  $candidate_objs = fetchCandidates($db_credentials, $pos_id);
-
   $candidates_displayed = 0;
-  $candidates_max = sizeof($candidate_objs);
+  $candidates_max = sizeof($candidates_arr);
   $end_current_row = false;
 
   // WHILE THERE ARE STILL CANDIDATES, DISPLAY THEM
@@ -89,14 +111,14 @@ function displayCandidates($db_credentials, $pos_id)
 
 
 
-      displayOverviewCandidate($candidate_objs, $candidates_displayed);
+      printCandidateCard($candidates_arr, $candidates_displayed);
       $candidates_displayed++;
     }
     /* 
     PRINT NEXT CARD
     */
     if (($candidates_displayed % 2 != 0) && $candidates_displayed < $candidates_max) {
-      displayOverviewCandidate($candidate_objs, $candidates_displayed);
+      printCandidateCard($candidates_arr, $candidates_displayed);
 
       $candidates_displayed++;
     }
@@ -108,11 +130,10 @@ function displayCandidates($db_credentials, $pos_id)
     }
   }
 }
-
 /* ------------------------------------------------------------------------
-Helper funciton for displaying candidates on the candidate overview page
+Helper function for displaying candidates on the candidate overview page
 -------------------------------------------------------------------------*/
-function displayOverviewCandidate(array $candidate_objs, int $candidates_displayed)
+function printCandidateCard(array $candidates_arr, int $candidates_displayed)
 {
   echo "  <div class='column'>";
   echo "    <div class='card hovereffect'>";
@@ -136,14 +157,14 @@ function displayOverviewCandidate(array $candidate_objs, int $candidates_display
         ";
   }
   // ------------------------------------------------------------------
-  echo "            <p class='title'>" . $candidate_objs[$candidates_displayed]->getName() . "</p>";
-  echo "            <p class='subtitle'>" . $candidate_objs[$candidates_displayed]->getDescription() . "</p>";
+  echo "            <p class='title'>" . $candidates_arr[$candidates_displayed]->getName() . "</p>";
+  echo "            <p class='subtitle'>" . $candidates_arr[$candidates_displayed]->getDescription() . "</p>";
   echo "          </div>";
   echo "        </div>";
   echo "      <footer class='card-footer'>";
   echo "        <p class='card-footer-item'>";
   echo "        <span>";
-  echo "          <a name='candidate-link' href='CandidatePage.php?cid=" . $candidate_objs[$candidates_displayed]->getCandidateId() . "'>Learn More</a>";
+  echo "          <a name='candidate-link' href='CandidatePage.php?cid=" . $candidates_arr[$candidates_displayed]->getCandidateId() . "'>Learn More</a>";
   echo "        </span>";
   echo "        </p>";
   echo "      <footer>";
@@ -151,7 +172,54 @@ function displayOverviewCandidate(array $candidate_objs, int $candidates_display
   echo "    </div>";
   echo "  </div>";
 }
-// ------------------------------------------------------------------
+// ------------------------------------------------------------------------
+
+
+/* ------------------------------------------------------------------------
+function for delete is seperated from upper methods for fetching data
+as it can't be instantly overloaded. Seperated functions for now, maybe
+code consolidation in the 
+-------------------------------------------------------------------------*/
+function displayCandidatesToDelete(array $candidates_arr)
+{
+  $candidates_displayed = 0;
+  $candidates_max = sizeof($candidates_arr);
+
+  while ($candidates_max > $candidates_displayed) {
+    printDeleteCard($candidates_arr, $candidates_displayed);
+    $candidates_displayed++;
+  }
+}
+
+function printDeleteCard(array $candidates_arr, int $candidates_displayed)
+{
+  echo
+  "
+  <div class='card'>
+  <header class='card-header'>
+    <p class='card-header-title'>" .
+    $candidates_arr[$candidates_displayed]->getName()
+    . "</p>
+  </header>
+  <div class='card-content'>
+    <div class='content'> 
+    Candidates is #" . $candidates_arr[$candidates_displayed]->getPosNum()
+    . "</div>
+  </div>
+  <footer class='class-footer'>
+    <a href='#'
+      class='card-footer-item' 
+      data-name='" . $candidates_arr[$candidates_displayed]->getName()
+    . "' onclick='ConfirmDelete()'>
+        Delete
+    </a>
+  </footer>
+  </div>
+  <br>
+  ";
+}
+
+// ------------------------------------------------------------------------
 
 
 // CANDIDATE PAGE PROPER FUNCTIONS
