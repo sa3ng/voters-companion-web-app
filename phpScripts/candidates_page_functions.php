@@ -80,11 +80,11 @@ function fetchCandidates($db_credentials, $pos_id)
         $loc_result["candidate_num"]
       )
     );
+    $loc_stmt->close();
   }
 
   $conn->close();
   $stmt->close();
-  $loc_stmt->close();
 
   return $candidates_arr;
 }
@@ -207,10 +207,12 @@ function printDeleteCard(array $candidates_arr, int $candidates_displayed)
     . "</div>
   </div>
   <footer class='class-footer'>
-    <a href='#'
+    <a 
+      href='#'
+      name = 'candidate-delete-link'
       class='card-footer-item' 
       data-name='" . $candidates_arr[$candidates_displayed]->getName()
-    . "' onclick='ConfirmDelete()'>
+    . "'>
         Delete
     </a>
   </footer>

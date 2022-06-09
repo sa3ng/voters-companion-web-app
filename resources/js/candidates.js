@@ -172,6 +172,26 @@ $(function () {
       });
     }
   });
+
+  let candidateDeleteLinks = "[name='candidate-delete-link']";
+  $(candidateDeleteLinks).click(function (e) {
+    e.preventDefault();
+    if (confirm("Are you sure you want to delete this candidate?")) {
+      let formData = new FormData();
+      formData.append("candidate_name", $(this).data("name"));
+
+      $.ajax({
+        type: "post",
+        url: "../phpScripts/candidate_delete.php",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+          window.location.reload();
+        }
+      });
+    }
+  });
 });
 
 

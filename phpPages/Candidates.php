@@ -2,7 +2,11 @@
 require_once '../phpScripts/globals.php';
 require_once '../phpScripts/candidates_page_functions.php';
 
-/* INIT CANDIDATE LIST FOR POS */
+/* 
+INIT CANDIDATE LIST FOR POS. 
+PUT IN PLACE TO PREVENT HAVING TO INVOKE MULTIPLE CONNECTIONS TO DB FOR
+CANDIDATES 
+*/
 $candidate_arr = fetchCandidates($DB_CREDENTIALS, $_GET['pos_id']);
 
 ?>
@@ -195,11 +199,6 @@ $candidate_arr = fetchCandidates($DB_CREDENTIALS, $_GET['pos_id']);
   </div>
 
 </body>
-<script>
-  function ConfirmDelete() {
-    return confirm("Are you sure you want to delete?");
-  }
-</script>
 <script src="../resources/ckeditor/build/ckeditor.js"></script>
 <script src='../resources/js/candidates.js'></script>
 <script src='../resources/js/ckeditors.js'></script>
