@@ -33,6 +33,12 @@ require_once '../phpScripts/globals.php';
     $vice_pres_names = fetchCandidateNames($DB_CREDENTIALS,'VP');
     $senator_names = fetchCandidateNames($DB_CREDENTIALS,'S'); 
 
+    //Fill up preferred Candidates
+    $president_pick;
+    $vice_pres_pick;
+    $senator_picks;
+    
+
   ?>
 
  
@@ -132,7 +138,7 @@ require_once '../phpScripts/globals.php';
                             <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                         </figure>
                         <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" >
                             <?php
                             foreach($president_names as $names){
                               echo "<option value='".$names."'>".$names."</option>";
@@ -149,7 +155,7 @@ require_once '../phpScripts/globals.php';
                             <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                         </figure>
                         <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" >
                             <?php
                             foreach($vice_pres_names as $names){
                               echo "<option value='".$names."'>".$names."</option>";
@@ -177,12 +183,13 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
+                        <select class="input is-primary" type="dr" placeholder="Primary input" >
                             <?php
                             foreach($senator_names as $names){
                               echo "<option value='".$names."'>".$names."</option>";
                             }
                             ?>
+                            <option value="fiat" >ABSTAIN</option>
                         </select>
                         </h2>                                <a href="">Learn More</a>
                             </div>
@@ -194,11 +201,13 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
-                            <option value="fiat" selected>Fiat</option>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="audi">Audi</option>
+                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                        <?php
+                            foreach($senator_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
+                            <option value="fiat" >ABSTAIN</option>
                         </select>
                         </h2>                                <a href="">Learn More</a>
                             </div>
@@ -210,11 +219,13 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
-                            <option value="fiat" selected>Fiat</option>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="audi">Audi</option>
+                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                        <?php
+                            foreach($senator_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
+                            <option value="fiat" >ABSTAIN</option>
                         </select>
                         </h2>                                <a href="">Learn More</a>
                             </div>
@@ -232,11 +243,13 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
-                            <option value="fiat" selected>Fiat</option>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="audi">Audi</option>
+                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                        <?php
+                            foreach($senator_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
+                            <option value="fiat" >ABSTAIN</option>
                         </select>
                         </h2>                                <a href="">Learn More</a>
                             </div>
@@ -248,11 +261,13 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
-                            <option value="fiat" selected>Fiat</option>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="audi">Audi</option>
+                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                        <?php
+                            foreach($senator_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
+                            <option value="fiat" >ABSTAIN</option>
                         </select>
                         </h2>                                <a href="">Learn More</a>
                             </div>
@@ -264,11 +279,9 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
-                            <option value="fiat" selected>Fiat</option>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="audi">Audi</option>
+                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                            <option value="fiat" selected>ABSTAIN</option>
+                            
                         </select>
                         </h2>                                <a href="">Learn More</a>
                             </div>
@@ -286,11 +299,9 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
-                            <option value="fiat" selected>Fiat</option>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="audi">Audi</option>
+                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                            <option value="fiat" selected>ABSTAIN</option>
+                            
                         </select>
                         </h2>
                                 <a href="">Learn More</a>
@@ -303,11 +314,9 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
-                            <option value="fiat" selected>Fiat</option>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="audi">Audi</option>
+                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                            <option value="fiat" selected>ABSTAIN</option>
+                            
                         </select>
                         </h2>
                                 <a href="">Learn More</a>
@@ -320,11 +329,9 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
-                            <option value="fiat" selected>Fiat</option>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="audi">Audi</option>
+                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                            <option value="fiat" selected>ABSTAIN</option>
+                            
                         </select>
                         </h2>
                                 <a href="">Learn More</a>
@@ -343,11 +350,9 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
-                            <option value="fiat" selected>Fiat</option>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="audi">Audi</option>
+                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                            <option value="fiat" selected>ABSTAIN</option>
+                            
                         </select>
                         </h2>
                                 <a href="">Learn More</a>
@@ -360,11 +365,9 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
-                            <option value="fiat" selected>Fiat</option>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="audi">Audi</option>
+                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                            <option value="fiat" selected>ABSTAIN</option>
+                           
                         </select>
                         </h2>
                                 <a href="">Learn More</a>
@@ -377,11 +380,9 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" value="Name">
-                            <option value="fiat" selected>Fiat</option>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="audi">Audi</option>
+                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                            <option value="fiat" selected>ABSTAIN</option>
+                            
                         </select>
                         </h2>
                                 <a href="">Learn More</a>

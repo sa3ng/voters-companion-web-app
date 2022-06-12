@@ -120,3 +120,34 @@ function fetchCandidateNames($db_credentials, $position_id)
         $stmt->close();
     }
 
+function fetchPreferedNames($db_credentials, $position_id)
+    {
+        $conn = new mysqli(
+            $db_credentials["server"],
+            $db_credentials["user"],
+            $db_credentials["pass"],
+            $db_credentials["db_name"],
+            $db_credentials["port"]
+        );
+    
+        // preparation of prepared statement
+        $stmt = $conn->prepare("SELECT * FROM candidatesTBL WHERE position_id ='".$position_id."'");
+        // execution
+        $stmt->execute();
+        // result retrieval
+        $results = $stmt->get_result();
+        
+        //define arrayVariables as an array
+        $candidate_names = array();
+
+        //Fill up Arrays 
+        while($names = mysqli_fetch_assoc($results)){
+            array_push($candidate_names , $names['full_name']);
+            
+        }
+        
+        return $candidate_names;
+
+        $conn->close();
+        $stmt->close();
+    }
