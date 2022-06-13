@@ -3,13 +3,7 @@ require_once 'globals.php';
 
 $candidate_name = $_POST["candidate"];
 
-$conn = new mysqli(
-    $DB_CREDENTIALS["server"],
-    $DB_CREDENTIALS["user"],
-    $DB_CREDENTIALS["pass"],
-    $DB_CREDENTIALS["db_name"],
-    $DB_CREDENTIALS["port"]
-);
+$conn = connectDB($DB_CREDENTIALS);
 
 $candidate_id;
 $stmt =  $conn->prepare(

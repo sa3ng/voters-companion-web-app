@@ -59,7 +59,7 @@ function newEdit($param) {
 $(function () {
 
     // CANDIDATES PAGE
-    $(candidateBtn).click(function (e)  {
+    $(candidateBtn).click(function (e) {
         e.preventDefault();
         newEdit($(candidateName));
 
@@ -76,24 +76,24 @@ $(function () {
         }
     });
 
-        $(candidateBtnDesc).click(function (e)  {
-            e.preventDefault();
-            newEdit($(candidateDesc));
-    
-            if (($(candidateDesc).is(":visible"))) {
-                ClassicEditor
-                    .create(document.querySelector(candidateDesc))
-                    .then(editor => {
-                        console.log("Created", editor);
-                        globaleditor = editor;
-                    })
-                    .catch(error => {
-                        console.log(error.stack);
-                    })
-            }
-        });
-    
-        
+    $(candidateBtnDesc).click(function (e) {
+        e.preventDefault();
+        newEdit($(candidateDesc));
+
+        if (($(candidateDesc).is(":visible"))) {
+            ClassicEditor
+                .create(document.querySelector(candidateDesc))
+                .then(editor => {
+                    console.log("Created", editor);
+                    globaleditor = editor;
+                })
+                .catch(error => {
+                    console.log(error.stack);
+                })
+        }
+    });
+
+
 
     $(selectorBtn1).click(function (e) {
         e.preventDefault();
@@ -231,7 +231,7 @@ $(function () {
                 })
         }
     });
-    
+
     $(selectorBtn9).click(function (e) {
         e.preventDefault();
         newEdit($(selectorContainer9));

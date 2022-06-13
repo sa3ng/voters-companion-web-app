@@ -318,6 +318,7 @@ if ($candidate_basic["position_id"] == "P") {
             <!--Accomplishments-->
             <div class="tab-pane is-center" id="pane-2">
                 <div class="content">
+<<<<<<< HEAD
                     <?php
                     if (isEditor()) {
                     echo "<button class='button is-small is-info' name='editAccomplishments'>Edit</button> ";
@@ -327,10 +328,25 @@ if ($candidate_basic["position_id"] == "P") {
                         <?php
                         echo $candidate_extra["accomplishments_txt"];
                         ?>
+=======
+                    <button class='button is-small is-info' name='editBirthday'>Edit</button>
+                    <div>
+                        <h3>Accomplishment</h3>
+                        <p>Quisque ante lacus, malesuada ac auctor vitae, congue. Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.</p>
+                        <ol>
+                            <li>Donec blandit a lorem id convallis.</li>
+                            <li>Cras gravida arcu at diam gravida gravida.</li>
+                            <li>Integer in volutpat libero.</li>
+                            <li>Donec a diam tellus.</li>
+                            <li>Aenean nec tortor orci.</li>
+                            <li>Quisque aliquam cursus urna, non bibendum massa viverra eget.</li>
+                            <li>Vivamus maximus ultricies pulvinar.</li>
+                        </ol>
+
+>>>>>>> e31d9a5bc8d446ee85c1b15ff33a45b0859ef7c1
                     </div>
                 </div>
             </div>
-        </div>
     </section>
     <script src="../resources/ckeditor/build/ckeditor.js"></script>
     <script src="../resources/js/ckeditors.js"></script>
