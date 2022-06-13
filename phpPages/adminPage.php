@@ -1,5 +1,6 @@
 <?php
 require_once '../phpScripts/admin_functions.php';
+require_once '../phpScripts/globals.php';
 ?>
 
 
@@ -83,36 +84,7 @@ require_once '../phpScripts/admin_functions.php';
             <tbody>
 
               <?php
-              echo
-              "
-              <tr>
-                <td data-label='ID'>1</td>
-                <td data-label='Username'>user123</td>
-                <td data-label='Role'>Admin</td>
-                <td data-label='UpdateRole'>
-                  <div class='buttons are-small'>
-                    <button class='button is-info is-light'>User</button>
-                    <button class='button is-warning is-light'>Editor</button>
-                    <button class='button is-danger is-light'>Admin</button>
-                  </div>
-                </td>
-                <td data-label='Created'>
-                  <small class='has-text-grey is-abbr-like'>June 9, 2022</small>
-                </td>
-
-                <!-- BUTTONS FOR VIEW AND DELETE (can remove view button not 100% necessary) -->
-                <td class='is-actions-cell'>
-                  <div class='buttons is-right'>
-                    <button class='button is-small is-primary' type='button'>
-                      <span class='icon'><i class='fa fa-eye'></i></span>
-                    </button>
-                    <button class='button is-small is-danger jb-modal' data-target='sample-modal' type='button' onclick='ConfirmDelete()'>
-                      <i class='fa fa-trash'></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              ";
+              fetchUsers($DB_CREDENTIALS);
               ?>
 
               <tr>
