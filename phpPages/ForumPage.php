@@ -45,14 +45,15 @@
   //Initialize functions
   $post_headers = fetchHeaders($DB_CREDENTIALS);
   $post_likes = fetchLikes($DB_CREDENTIALS);
-  $post_ids = fetchPostID($DB_CREDENTIALS);
+  $post_acc_ids = fetchPostAccID($DB_CREDENTIALS);
 
-  $posts_pending_headers = fetchPendingPosts($DB_CREDENTIALS);
- 
+  $posts_pending_headers = fetchPendingPosts($DB_CREDENTIALS, 'header');
+
+  $posts_not_approved = fetchNonApprovedPosts($DB_CREDENTIALS);
+
+  $post_acc_type = fetchAccTBL($DB_CREDENTIALS, 'type');
 
   
-  
-
 
   ?>
 </head>
@@ -110,64 +111,83 @@
 
   <div class="column is-10 is-offset-1">
       <div class="content"><h2>My Pending Posts</h2></div>
-      <button class="button mb-4" onclick="showEditorDiv()">Show Editor Div</button>
+      <button class="button mb-4" >Show Editor Div</button>
     <div class="box content mb-6">
 
     <?php
 
 
-    foreach($posts_pending_headers as $pending_headers){
-    echo "
-    <article class='post'>
-          <button class='transparent' type='submit'><h3>".$pending_headers."</h3></button>
-          <div class='media'>
-            <div class='media-left'>
-              <p class='image is-32x32'>
-                <img src='http://bulma.io/images/placeholders/128x128.png'>
-              </p>
-            </div>
-            <div class='media-content'>
-              <div class='content'>
-                <p>
-                  posted 34 minutes ago 
-                  <span class='tag'>Question</span>
-                </p>
+
+    if(strcmp($post_acc_type,"editor") == 0){
+
+      foreach($posts_not_approved as $posts){
+        echo "
+        <form action='../phpScripts/approve_post.php' method='POST'>
+        <input type='hidden' value='$posts' name='post_approval_header'>
+        <article class='post' id='editorTestDiv'>
+              <button class='transparent' type='submit'><h3>".$posts."</h3></button>
+              <div class='media'>
+                <div class='media-left'>
+                  <p class='image is-32x32'>
+                    <img src='http://bulma.io/images/placeholders/128x128.png'>
+                  </p>
+                </div>
+                <div class='media-content'>
+                  <div class='content'>
+                    <p>
+                      <a href='#'>@user</a> posted 34 minutes ago 
+                      <span class='tag'>Question</span>
+                    </p>
+                  </div>
+                </div>
+                <div class='media-right'>
+                  <button class='button is-success' type='submit'><i class='fa-solid fa-check'></i>&nbsp; Approve</button>
+                  <button class='button is-danger' type='submit' formaction='../phpScripts/delete_post.php'><i class='fa-solid fa-trash'></i>&nbsp; Reject</button>
+                </div>
               </div>
-            </div>
-            <div class='media-right'>
-              <button class='button is-danger'><i class='fa-solid fa-xmark'></i>&nbsp; Cancel</button>
-            </div>
-          </div>
-        </article>";
-    } 
+            </article>
+            </form>
+            
+        ";
+        }
 
+    }
 
-    ?>
-      
+    else{
 
-        <article class='post hidden' id='editorTestDiv'>
-          <button class='transparent' type='submit'><h3> Test Title</h3></button>
-          <div class='media'>
-            <div class='media-left'>
-              <p class='image is-32x32'>
-                <img src='http://bulma.io/images/placeholders/128x128.png'>
-              </p>
-            </div>
-            <div class='media-content'>
-              <div class='content'>
-                <p>
-                  <a href='#'>@user</a> posted 34 minutes ago 
-                  <span class='tag'>Question</span>
-                </p>
+      foreach($posts_pending_headers as $pending_headers){
+        echo "
+        <article class='post'>
+              <button class='transparent' type='submit'><h3>".$pending_headers."</h3></button>
+              <div class='media'>
+                <div class='media-left'>
+                  <p class='image is-32x32'>
+                    <img src='http://bulma.io/images/placeholders/128x128.png'>
+                  </p>
+                </div>
+                <div class='media-content'>
+                  <div class='content'>
+                    <p>
+                      posted 34 minutes ago 
+                      <span class='tag'>Question</span>
+                    </p>
+                  </div>
+                </div>
+                <div class='media-right'>
+                  <button class='button is-danger'><i class='fa-solid fa-xmark'></i>&nbsp; Cancel</button>
+                </div>
               </div>
-            </div>
-            <div class='media-right'>
-              <button class="button is-success"><i class="fa-solid fa-check"></i>&nbsp; Approve</button>
-              <button class="button is-danger"><i class="fa-solid fa-trash"></i>&nbsp; Reject</button>
-            </div>
-          </div>
-        </article>
+            </article>";
+        } 
+    }
 
+    
+
+
+
+        
+        ?>
+<!-- 
         <script>
             function showEditorDiv() {
             var x = document.getElementById("editorTestDiv");
@@ -177,7 +197,7 @@
                 x.style.display = "none";
             
             }
-        </script>
+        </script> -->
 
     </div>
 
@@ -192,7 +212,7 @@
       $num_of_posts = 0;
       $index = 0;
       foreach ($post_headers as $headers) {
-        $user_tag_array = fetchTags($DB_CREDENTIALS, $post_ids, $num_of_posts);
+        $user_tag_array = fetchTags($DB_CREDENTIALS, $post_acc_ids, $num_of_posts);
 
         echo "
       

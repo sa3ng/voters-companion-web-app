@@ -64,7 +64,7 @@ function fetchPostInfo($db_credentials, $info, $post_header){
         $stmt->close();
     }
 
-    function fetchPendingPosts($db_credentials){
+    function fetchPendingPosts($db_credentials, $column){
         $conn = new mysqli(
             $db_credentials["server"],
             $db_credentials["user"],
@@ -87,7 +87,7 @@ function fetchPostInfo($db_credentials, $info, $post_header){
 
         //Fill up Arrays 
         while($posts = mysqli_fetch_assoc($results)){
-            array_push($post_headers , $posts['header']);
+            array_push($post_headers , $posts[$column]);
             
         }
         
@@ -130,7 +130,7 @@ function fetchPostInfo($db_credentials, $info, $post_header){
         $stmt->close();
     }
 
-    function fetchPostID($db_credentials)
+    function fetchPostAccID($db_credentials)
     {
         $conn = new mysqli(
             $db_credentials["server"],
@@ -270,5 +270,38 @@ function fetchPostInfo($db_credentials, $info, $post_header){
         
         return $result;
         
+    }
+
+    function fetchNonApprovedPosts($db_credentials){
+        $conn = new mysqli(
+            $db_credentials["server"],
+            $db_credentials["user"],
+            $db_credentials["pass"],
+            $db_credentials["db_name"],
+            $db_credentials["port"]
+        );
+
+
+        // preparation of prepared statement
+        $stmt = $conn->prepare("SELECT * FROM postsTBL WHERE is_reply = 0 AND approved = 0");
+        // execution
+        $stmt->execute();
+        // result retrieval
+        $results = $stmt->get_result();
+        
+        //define arrayVariables as an array
+        $post_headers = array();
+
+        //Fill up Arrays 
+        while($posts = mysqli_fetch_assoc($results)){
+            array_push($post_headers , $posts['header']);
+            
         }
+        
+        return $post_headers;
+
+        $conn->close();
+        $stmt->close();
+
+    }
 ?>
