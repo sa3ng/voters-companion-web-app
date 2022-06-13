@@ -93,7 +93,7 @@ function displayUsers(array $users)
             <small class='has-text-grey is-abbr-like'>June 9, 2022</small>
             </td>
 
-            
+
             <td class='is-actions-cell'>
             <div class='buttons is-right'>
                 <button class='button is-small is-primary' type='button'>
