@@ -20,7 +20,7 @@
   <?php
 
   require_once 'footer-header/header.php';
-  require '../phpScripts/globals.php';
+  require_once '../phpScripts/globals.php';
   require '../phpScripts/forum_processor.php';
 
 

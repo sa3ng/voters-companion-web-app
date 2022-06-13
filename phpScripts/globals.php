@@ -26,3 +26,14 @@ $LOCALHOST_CREDENTIALS =
         "server" => "localhost",
         "port" => 3306
     ];
+
+function connectDB(array $db_credentials)
+{
+    return new mysqli(
+        $db_credentials["server"],
+        $db_credentials["user"],
+        $db_credentials["pass"],
+        $db_credentials["db_name"],
+        $db_credentials["port"]
+    );
+}
