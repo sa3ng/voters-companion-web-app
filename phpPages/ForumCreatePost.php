@@ -46,6 +46,7 @@
 
       <article class="specific-post">
         <form  action="../phpScripts/upload.php" method="POST">
+        <input type="hidden" name="is_reply" value="0"> 
           <div class="title-input-div media">
             <h4 class='media-left'>Title:</h4>
             <input class="input is-hovered" name='title' type="text" placeholder="Enter your Title">

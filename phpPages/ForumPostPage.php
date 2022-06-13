@@ -9,6 +9,21 @@
     <?php
 
     require_once 'footer-header/header.php';
+    require '../phpScripts/globals.php';
+    require '../phpScripts/forum_processor.php';
+
+    //initialize variables
+    $post_header = $_POST['post_header'];
+    $post_user = $_POST['post_user'];
+    $post_likes = $_POST['post_likes'];
+    
+    $post_message = fetchPostInfo($DB_CREDENTIALS, 'message', $post_header);
+    $post_id = fetchPostInfo($DB_CREDENTIALS,'post_id', $post_header);
+    
+    //replies
+    $reply_messages = fetchReplyElement($DB_CREDENTIALS, $post_id, 'message');
+
+
   
     ?>
   </head>
@@ -43,76 +58,76 @@
       <div class="box content">
         
         <article class="specific-post">
-          <h4 class="post_header">Bulma: How do you center a button in a box?</h4>
-          <p class = "post-message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore molestiae unde eveniet excepturi accusantium assumenda adipisci alias, quia, magnam aliquid ea repellat nemo provident, minima rerum deleniti officiis aut repellendus.</p>
-          <div class="media">
-            <div class="media-left">
-              <p class="image is-32x32">
-                <img src="http://bulma.io/images/placeholders/128x128.png">
+          <?php
+
+            echo "<h4 class='post_header'>".$post_header."</h4>
+                  <p class = 'post-message'>".$post_message ."</p>
+
+                  <div class='media'>
+            <div class='media-left'>
+              <p class='image is-32x32'>
+                <img src='http://bulma.io/images/placeholders/128x128.png'>
               </p>
             </div>
-            <div class="media-content">
-              <div class="content">
+            <div class='media-content'>
+              <div class='content'>
                 <p>
-                  <a href="#">@adamson</a> posted 34 minutes ago 
-                  <span class="tag">Question</span>
+                  <a href='#'>".$post_user. "</a> posted 34 minutes ago 
+                  <span class='tag'>Question</span>
                 </p>
               </div>
             </div>
-            <div class="media-right">
-              <span class="post-icons has-text-grey-light"><i class="fa-solid fa-thumbs-up"></i> 1</span>
+            <div class='media-right'>
+              <span class='post-icons has-text-grey-light'><i class='fa-solid fa-thumbs-up'></i> 1</span>
             </div>
           </div>
-        </article>
+            ";
 
-        <article class="reply column is-offset-1">
+          ?>
          
-          <p class = "reply">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore molestiae unde eveniet excepturi accusantium assumenda adipisci alias, quia, magnam aliquid ea repellat nemo provident, minima rerum deleniti officiis aut repellendus.</p>
-          <div class="media">
-            <div class="media-left">
-              <p class="image is-32x32">
-                <img src="http://bulma.io/images/placeholders/128x128.png">
-              </p>
-            </div>
-            <div class="media-content">
-              <div class="content">
-                <p>
-                  <a href="#">@red</a> replied 40 minutes ago 
-                  <span class="tag">Question</span>
-                </p>
-              </div>
-            </div>
-            <div class="media-right">
-              <span class="post-icons has-text-grey-light"><i class="fa-solid fa-thumbs-up"></i> 1</span>
-            </div>
-          </div>
-        </article>
-        <article class="reply column is-offset-1">
-          
-          <p class = "reply">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore molestiae unde eveniet excepturi accusantium assumenda adipisci alias, quia, magnam aliquid ea repellat nemo provident, minima rerum deleniti officiis aut repellendus.</p>
-          <div class="media">
-            <div class="media-left">
-              <p class="image is-32x32">
-                <img src="http://bulma.io/images/placeholders/128x128.png">
-              </p>
-            </div>
-            <div class="media-content">
-              <div class="content">
-                <p>
-                  <a href="#">@red</a> replied 40 minutes ago 
-                  <span class="tag">Question</span>
-                </p>
-              </div>
-            </div>
-            <div class="media-right">
-              <span class="post-icons has-text-grey-light"><i class="fa-solid fa-thumbs-up"></i> 1</span>
-            </div>
-          </div>
         </article>
 
+        <?php
+        echo "<article class='reply column is-offset-1'>";
+
+        foreach($reply_messages as $replies){
+        echo " <p class = 'reply'>".$replies."</p>
+        <div class='media'>
+          <div class='media-left'>
+            <p class='image is-32x32'>
+              <img src='http://bulma.io/images/placeholders/128x128.png'>
+            </p>
+          </div>
+          <div class='media-content'>
+            <div class='content'>
+              <p>
+                <a href='#'>@red</a> replied 40 minutes ago 
+                <span class='tag'>Reply</span>
+              </p>
+            </div>
+          </div>
+          <div class='media-right'>
+            <span class='post-icons has-text-grey-light'><i class='fa-solid fa-thumbs-up'></i> 1</span>
+          </div>
+        </div>
+      </article>";
+
+      }
+        
+
+        ?>
+
+        
+
         <article class="reply column is-offset-1">
-        <form  method="GET">
+        <form action="../phpScripts/upload.php"  method="POST">
+          <input type="hidden" name="is_reply" value="1"> 
+          <?php
+          echo "<input type='hidden' name='post_id' value='".$post_id."'>
           
+          ";
+          ?>
+
           <div class="message-input-div media">
             <textarea class="textarea is-medium is-hovered" name='message-input' placeholder="Express yourself..."></textarea>
           </div>
@@ -121,7 +136,7 @@
               (1000 Characters max)
             </div>
             <div class="media-right">
-              <a class="button " name='post' type="submit"> <strong> Post </strong></a>
+            <button class="button" name="post" type="submit"><strong> Post </strong></button>
             </div>
           </div>
         </form>

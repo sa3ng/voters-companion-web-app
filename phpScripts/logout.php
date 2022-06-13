@@ -9,6 +9,6 @@ function logOut()
 
 if (isLoggedIn()) {
     logOut();
-    header("Location: ../phpPages/usrPage.php");
+    header("Location: ../index.php");
     die();
 }

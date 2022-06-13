@@ -45,8 +45,12 @@
   //Initialize functions
   $post_headers = fetchHeaders($DB_CREDENTIALS);
   $post_likes = fetchLikes($DB_CREDENTIALS);
-  $post_ids = fetchIDs($DB_CREDENTIALS);
-  $user_name;
+  $post_ids = fetchPostID($DB_CREDENTIALS);
+
+  $posts_pending_headers = fetchPendingPosts($DB_CREDENTIALS);
+ 
+
+  
   
 
 
@@ -71,7 +75,11 @@
         background-color: transparent;
         color: white;
 
-    }
+  }
+
+  .hidden{
+      display: none;
+  }
 </style>
 
 <!-- Font Awesome  -->
@@ -101,6 +109,82 @@
   <a class="button  box is-medium is-primary column is-4 is-offset-4" href='ForumCreatePost.php'>Create a Post</a>
 
   <div class="column is-10 is-offset-1">
+      <div class="content"><h2>My Pending Posts</h2></div>
+      <button class="button mb-4" onclick="showEditorDiv()">Show Editor Div</button>
+    <div class="box content mb-6">
+
+    <?php
+
+
+    foreach($posts_pending_headers as $pending_headers){
+    echo "
+    <article class='post'>
+          <button class='transparent' type='submit'><h3>".$pending_headers."</h3></button>
+          <div class='media'>
+            <div class='media-left'>
+              <p class='image is-32x32'>
+                <img src='http://bulma.io/images/placeholders/128x128.png'>
+              </p>
+            </div>
+            <div class='media-content'>
+              <div class='content'>
+                <p>
+                  posted 34 minutes ago 
+                  <span class='tag'>Question</span>
+                </p>
+              </div>
+            </div>
+            <div class='media-right'>
+              <button class='button is-danger'><i class='fa-solid fa-xmark'></i>&nbsp; Cancel</button>
+            </div>
+          </div>
+        </article>";
+    } 
+
+
+    ?>
+      
+
+        <article class='post hidden' id='editorTestDiv'>
+          <button class='transparent' type='submit'><h3> Test Title</h3></button>
+          <div class='media'>
+            <div class='media-left'>
+              <p class='image is-32x32'>
+                <img src='http://bulma.io/images/placeholders/128x128.png'>
+              </p>
+            </div>
+            <div class='media-content'>
+              <div class='content'>
+                <p>
+                  <a href='#'>@user</a> posted 34 minutes ago 
+                  <span class='tag'>Question</span>
+                </p>
+              </div>
+            </div>
+            <div class='media-right'>
+              <button class="button is-success"><i class="fa-solid fa-check"></i>&nbsp; Approve</button>
+              <button class="button is-danger"><i class="fa-solid fa-trash"></i>&nbsp; Reject</button>
+            </div>
+          </div>
+        </article>
+
+        <script>
+            function showEditorDiv() {
+            var x = document.getElementById("editorTestDiv");
+            if (x.style.display === "none") 
+                x.style.display = "block";
+             else 
+                x.style.display = "none";
+            
+            }
+        </script>
+
+    </div>
+
+    <div class="column is-7 ">
+      <div class="content"><h2>Active Posts</h2></div>
+    </div>
+    
     <div class="box content">
 
       <?php
@@ -115,7 +199,9 @@
         <form action='ForumPostPage.php' method='POST'>
         <article class='post'>
         <input type='hidden' name='post_header' value= '" . $headers. "'></input>
-          <button class='transparent' type='submit'><h3> " . $headers . "</h3></button>
+        <input type='hidden' name='post_user' value= '" .$user_tag_array[0]. "'></input>
+        <input type='hidden' name='post_likes' value= '" .$post_likes[$num_of_posts]. "'></input>
+          <button class='transparent' type='submit'><h3> " . $headers . "</h3> </button>
           <div class='media'>
             <div class='media-left'>
               <p class='image is-32x32'>
