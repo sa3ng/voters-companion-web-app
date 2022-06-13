@@ -1,6 +1,9 @@
 <?php
 require_once '../phpScripts/admin_functions.php';
 require_once '../phpScripts/globals.php';
+
+// INIT USERS TO DISPPLAY
+$users = fetchUsers($DB_CREDENTIALS);
 ?>
 
 
@@ -84,11 +87,14 @@ require_once '../phpScripts/globals.php';
             <tbody>
 
               <?php
-              fetchUsers($DB_CREDENTIALS);
+              if (!(empty($users))) {
+                displayUsers($users);
+              }
               ?>
 
+              <!-- Some Sample Data (can delete later) -->
               <tr>
-                <td data-label='ID'>1</td>
+                <td data-label='ID'>XXX</td>
                 <td data-label='Username'>user123</td>
                 <td data-label='Role'>Admin</td>
                 <td data-label='UpdateRole'>
@@ -115,38 +121,10 @@ require_once '../phpScripts/globals.php';
                 </td>
               </tr>
 
-              <!-- Some Sample Data (can delete later) -->
               <tr>
-                <td data-label="ID">2</td>
+                <td data-label="ID">XXX</td>
                 <td data-label="Username">ryanrenolds22</td>
                 <td data-label="Role">Editor</td>
-                <td data-label='UpdateRole'>
-                  <div class="buttons are-small">
-                    <button class="button is-info is-light">User</button>
-                    <button class="button is-warning is-light">Editor</button>
-                    <button class="button is-danger is-light">Admin</button>
-                  </div>
-                </td>
-                <td data-label="Created">
-                  <small class="has-text-grey is-abbr-like">June 9, 2022</small>
-                </td>
-
-                <td class="is-actions-cell">
-                  <div class="buttons is-right">
-                    <button class="button is-small is-primary" type='button'>
-                      <span class="icon"><i class="fa fa-eye"></i></span>
-                    </button>
-                    <button class='button is-small is-danger jb-modal' data-target='sample-modal' type='button' onclick='ConfirmDelete()'>
-                      <i class="fa fa-trash"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td data-label="ID">3</td>
-                <td data-label="Username">GO_BBM5ever</td>
-                <td data-label="Role">User</td>
                 <td data-label='UpdateRole'>
                   <div class="buttons are-small">
                     <button class="button is-info is-light">User</button>

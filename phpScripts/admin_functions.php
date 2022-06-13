@@ -73,6 +73,38 @@ function fetchUsers(array $db_credentials)
     return $return;
 }
 
-function displayUser()
+function displayUsers(array $users)
 {
+    foreach ($users as $value) {
+        echo
+        "
+        <tr>
+            <td data-label='ID'>" . $value->getAccID() . "</td>
+            <td data-label='Username'>" . $value->getName() . "</td>
+            <td data-label='Role'>" . $value->getType() . "</td>
+            <td data-label='UpdateRole'>
+            <div class='buttons are-small'>
+                <button class='button is-info is-light'>User</button>
+                <button class='button is-warning is-light'>Editor</button>
+                <button class='button is-danger is-light'>Admin</button>
+            </div>
+            </td>
+            <td data-label='Created'>
+            <small class='has-text-grey is-abbr-like'>June 9, 2022</small>
+            </td>
+
+            
+            <td class='is-actions-cell'>
+            <div class='buttons is-right'>
+                <button class='button is-small is-primary' type='button'>
+                <span class='icon'><i class='fa fa-eye'></i></span>
+                </button>
+                <button class='button is-small is-danger jb-modal' data-target='sample-modal' type='button' onclick='ConfirmDelete()'>
+                <i class='fa fa-trash'></i>
+                </button>
+            </div>
+            </td>
+        </tr>
+        ";
+    }
 }
