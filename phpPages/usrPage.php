@@ -37,6 +37,8 @@ require_once '../phpScripts/globals.php';
     $president_pick;
     $vice_pres_pick;
     $senator_picks;
+
+    $acc_id = fetchAccId($DB_CREDENTIALS);
     
 
   ?>
@@ -76,6 +78,12 @@ require_once '../phpScripts/globals.php';
            method="post"
            enctype="multipart/form-data">
             <br>
+            <?php
+
+                echo "<input type='hidden' name='acc_id' value='$acc_id'>";
+
+            ?>
+            
            <input class="input is-primary columns is-one-quarter is-small" type="file" 
                   name="my_image">
             

@@ -111,7 +111,6 @@
 
   <div class="column is-10 is-offset-1">
       <div class="content"><h2>My Pending Posts</h2></div>
-      <button class="button mb-4" >Show Editor Div</button>
     <div class="box content mb-6">
 
     <?php

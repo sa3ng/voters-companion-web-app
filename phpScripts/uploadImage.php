@@ -1,5 +1,7 @@
 <?php 
 
+$acc_id = $_POST['acc_id'];
+
 if (isset($_POST['submit']) && isset($_FILES['my_image'])) {
 	include "db_conn.php";
 
@@ -30,7 +32,7 @@ if (isset($_POST['submit']) && isset($_FILES['my_image'])) {
 				// Insert into Database
 				$sql = "UPDATE accProfileTBL
 				        SET image_url = '$new_img_name'
-						WHERE acc_id = 1";
+						WHERE acc_id = $acc_id";
 				mysqli_query($conn, $sql);
 				header("Location: ../phpPages/usrPage.php");
 			}else {
