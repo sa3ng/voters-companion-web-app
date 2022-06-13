@@ -95,7 +95,7 @@ if ($candidate_basic["position_id"] == "P") {
                     <div class="media-content">
                         <p class="title">
                             <?php
-                            echo $candidate_basic["full_name"]; 
+                            echo $candidate_basic["full_name"];
                             ?>
                         </p>
                         <p class="subtitle">
@@ -103,9 +103,9 @@ if ($candidate_basic["position_id"] == "P") {
                             echo $pos_string . " Candidate #" . $candidate_extra["candidate_num"];
                             echo "<br>";
                             echo $candidate_basic["bio"];
-                            if(isEditor()){
+                            if (isEditor()) {
                                 echo "<br><button class='button is-small is-success' name='done' data-target-candidate='" . $candidate_basic["full_name"] . "'>Save Edits</button>";
-                                }
+                            }
                             ?>
                         </p>
                     </div>
@@ -266,32 +266,32 @@ if ($candidate_basic["position_id"] == "P") {
 
             <!--Affiliated Party-->
             <div class="tab-pane is-center" id="pane-3">
-                
-             <div class="content">
-                <?php
-                if (isEditor()) {
-                echo "<button class='button is-small is-info' name='editOrg'>Edit</button> 
+
+                <div class="content">
+                    <?php
+                    if (isEditor()) {
+                        echo "<button class='button is-small is-info' name='editOrg'>Edit</button> 
                 <button class='button is-small is-success' name='done' data-target-candidate='" . $candidate_basic["full_name"] . "'>Done</button>";
-                }
-                ?><br><br>
-                <div id="CK-org">
-                <?php
-                echo $candidate_extra["org_txt"];
-                ?>
+                    }
+                    ?><br><br>
+                    <div id="CK-org">
+                        <?php
+                        echo $candidate_extra["org_txt"];
+                        ?>
+                    </div>
+
                 </div>
-                                
-             </div>
-             <br><br><br><br><br>
+                <br><br><br><br><br>
             </div>
-               
+
 
 
             <!--Platform-->
             <div class="tab-pane is-center" id="pane-4">
                 <div class="content">
-                <?php
+                    <?php
                     if (isEditor()) {
-                    echo "<button class='button is-small is-info' name='editPlatform'>Edit</button> 
+                        echo "<button class='button is-small is-info' name='editPlatform'>Edit</button> 
                     <button class='button is-small is-success' name='done' data-target-candidate='" . $candidate_basic["full_name"] . "'>Done</button>";
                     }
                     ?><br><br>
@@ -300,7 +300,7 @@ if ($candidate_basic["position_id"] == "P") {
                         echo $candidate_extra["platform_txt"];
                         ?>
                     </div>
-                <br><br><br><br><br>
+                    <br><br><br><br><br>
                 </div>
             </div>
 
@@ -318,32 +318,15 @@ if ($candidate_basic["position_id"] == "P") {
             <!--Accomplishments-->
             <div class="tab-pane is-center" id="pane-2">
                 <div class="content">
-<<<<<<< HEAD
                     <?php
                     if (isEditor()) {
-                    echo "<button class='button is-small is-info' name='editAccomplishments'>Edit</button> ";
+                        echo "<button class='button is-small is-info' name='editAccomplishments'>Edit</button> ";
                     }
                     ?><br><br>
                     <div id="CK-accomplishments">
                         <?php
                         echo $candidate_extra["accomplishments_txt"];
                         ?>
-=======
-                    <button class='button is-small is-info' name='editBirthday'>Edit</button>
-                    <div>
-                        <h3>Accomplishment</h3>
-                        <p>Quisque ante lacus, malesuada ac auctor vitae, congue. Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.</p>
-                        <ol>
-                            <li>Donec blandit a lorem id convallis.</li>
-                            <li>Cras gravida arcu at diam gravida gravida.</li>
-                            <li>Integer in volutpat libero.</li>
-                            <li>Donec a diam tellus.</li>
-                            <li>Aenean nec tortor orci.</li>
-                            <li>Quisque aliquam cursus urna, non bibendum massa viverra eget.</li>
-                            <li>Vivamus maximus ultricies pulvinar.</li>
-                        </ol>
-
->>>>>>> e31d9a5bc8d446ee85c1b15ff33a45b0859ef7c1
                     </div>
                 </div>
             </div>

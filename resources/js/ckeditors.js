@@ -26,7 +26,6 @@ var selectorContainer6 = "#CK-criminal"
 var selectorBtn7 = "[name='editPlatform']"
 var selectorContainer7 = "#CK-platform"
 
-debugger;
 var selectorBtn8 = "[name='editAccomplishments']"
 var selectorContainer8 = "#CK-accomplishments"
 
