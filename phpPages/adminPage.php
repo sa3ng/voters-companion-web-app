@@ -15,8 +15,10 @@ $users = fetchUsers($DB_CREDENTIALS);
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>About Us</title>
+  <!-- JQ -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <!-- Bulma Version 0.9.0-->
-  <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <link rel="stylesheet" type="text/css" href="../resources/css/home.css" />
   <link rel="stylesheet" type="text/css" href="../resources/css/voterscompanion.css" />
   <link rel="icon" type="image/png" href="favicon.png" />
