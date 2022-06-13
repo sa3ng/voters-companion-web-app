@@ -95,7 +95,7 @@ if ($candidate_basic["position_id"] == "P") {
                     <div class="media-content">
                         <p class="title">
                             <?php
-                            echo $candidate_basic["full_name"];
+                            echo $candidate_basic["full_name"]; 
                             ?>
                         </p>
                         <p class="subtitle">
@@ -103,6 +103,9 @@ if ($candidate_basic["position_id"] == "P") {
                             echo $pos_string . " Candidate #" . $candidate_extra["candidate_num"];
                             echo "<br>";
                             echo $candidate_basic["bio"];
+                            if(isEditor()){
+                                echo "<br><button class='button is-small is-success' name='done' data-target-candidate='" . $candidate_basic["full_name"] . "'>Save Edits</button>";
+                                }
                             ?>
                         </p>
                     </div>
@@ -157,8 +160,7 @@ if ($candidate_basic["position_id"] == "P") {
                         <dt><strong>Birthday:</strong>
                             <?php
                             if (isEditor()) {
-                                echo "<button class='button is-small is-info' name='editBirthday'>Edit</button> 
-                                <button class='button is-small is-success' name='done' data-target-candidate='" . $candidate_basic["full_name"] . "'>Done</button>";
+                                echo "<button class='button is-small is-info' name='editBirthday'>Edit</button> ";
                             }
                             ?>
                         </dt><br>
@@ -263,98 +265,43 @@ if ($candidate_basic["position_id"] == "P") {
 
 
             <!--Affiliated Party-->
-            <div class="tab-pane" id="pane-3">
-                <div class="columns">
-                    <div class="container">
-                        <div class="content">
-                            <h2>Affliated Party and Organizations</h2>
-                        </div>
-                        <div class="columns">
-                            <div class="column">
-                                <article class="media">
-                                    <div class="media-left">
-                                        <figure class="image is-96x96">
-                                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Liberal_Party_of_the_Philippines_%28LP%29.svg/640px-Liberal_Party_of_the_Philippines_%28LP%29.svg.png">
-                                        </figure>
-                                    </div>
-                                    <div class="media-content">
-                                        <div class="content">
-                                            <p>
-                                                <strong>Liberal Party</strong>
-                                                <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article class="media">
-                                    <div class="media-left">
-                                        <figure class="image is-96x96">
-                                            <img src="https://bulma.io/images/placeholders/96x96.png">
-                                        </figure>
-                                    </div>
-                                    <div class="media-content">
-                                        <div class="content">
-                                            <p>
-                                                <strong>Example Org</strong>
-                                                <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                            <div class="column">
-                                <article class="media">
-                                    <div class="media-left">
-                                        <figure class="image is-96x96">
-                                            <img src="https://bulma.io/images/placeholders/96x96.png">
-                                        </figure>
-                                    </div>
-                                    <div class="media-content">
-                                        <div class="content">
-                                            <p>
-                                                <strong>Example Org</strong>
-                                                <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article class="media">
-                                    <div class="media-left">
-                                        <figure class="image is-96x96">
-                                            <img src="https://bulma.io/images/placeholders/96x96.png">
-                                        </figure>
-                                    </div>
-                                    <div class="media-content">
-                                        <div class="content">
-                                            <p>
-                                                <strong>Example Org</strong>
-                                                <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis. ╳
-                                            </p>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                        </div>
-                    </div>
+            <div class="tab-pane is-center" id="pane-3">
+                
+             <div class="content">
+                <?php
+                if (isEditor()) {
+                echo "<button class='button is-small is-info' name='editOrg'>Edit</button> 
+                <button class='button is-small is-success' name='done' data-target-candidate='" . $candidate_basic["full_name"] . "'>Done</button>";
+                }
+                ?><br><br>
+                <div id="CK-org">
+                <?php
+                echo $candidate_extra["org_txt"];
+                ?>
                 </div>
-                <br><br><br><br><br>
+                                
+             </div>
+             <br><br><br><br><br>
             </div>
+               
 
 
             <!--Platform-->
             <div class="tab-pane is-center" id="pane-4">
                 <div class="content">
-                    <h1>Platforms</h1>
-                    <h2>Platform 1</h2>
-                    <p>Curabitur accumsan turpis pharetra blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.</p>
-                    <ul>
-                        <li>In fermentum leo eu lectus mollis, quis dictum mi aliquet.</li>
-                        <li>Morbi eu nulla lobortis, lobortis est in, fringilla felis.</li>
-                        <li>Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.</li>
-                        <li>Ut non enim metus.</li>
-                    </ul>
-                </div>
+                <?php
+                    if (isEditor()) {
+                    echo "<button class='button is-small is-info' name='editPlatform'>Edit</button> 
+                    <button class='button is-small is-success' name='done' data-target-candidate='" . $candidate_basic["full_name"] . "'>Done</button>";
+                    }
+                    ?><br><br>
+                    <div id="CK-platform">
+                        <?php
+                        echo $candidate_extra["platform_txt"];
+                        ?>
+                    </div>
                 <br><br><br><br><br>
+                </div>
             </div>
 
             <!--interview-->
@@ -371,20 +318,16 @@ if ($candidate_basic["position_id"] == "P") {
             <!--Accomplishments-->
             <div class="tab-pane is-center" id="pane-2">
                 <div class="content">
-                    <button class='button is-small is-info' name='editBirthday'>Edit</button> 
-                    <div>
-                    <h3>Accomplishment</h3>
-                    <p>Quisque ante lacus, malesuada ac auctor vitae, congue. Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.</p>
-                    <ol>
-                        <li>Donec blandit a lorem id convallis.</li>
-                        <li>Cras gravida arcu at diam gravida gravida.</li>
-                        <li>Integer in volutpat libero.</li>
-                        <li>Donec a diam tellus.</li>
-                        <li>Aenean nec tortor orci.</li>
-                        <li>Quisque aliquam cursus urna, non bibendum massa viverra eget.</li>
-                        <li>Vivamus maximus ultricies pulvinar.</li>
-                    </ol>
-                    
+                    <?php
+                    if (isEditor()) {
+                    echo "<button class='button is-small is-info' name='editAccomplishments'>Edit</button> ";
+                    }
+                    ?><br><br>
+                    <div id="CK-accomplishments">
+                        <?php
+                        echo $candidate_extra["accomplishments_txt"];
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>

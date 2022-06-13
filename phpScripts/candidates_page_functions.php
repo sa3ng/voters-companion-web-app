@@ -387,6 +387,9 @@ class CandidateInformationClass
       $this->extra_info["experience_txt"] = $user["experience_txt"];
       $this->extra_info["criminal_txt"] = $user["criminal_txt"];
       $this->extra_info["advocacies_txt"] = $user["advocacies_txt"];
+      $this->extra_info["accomplishments_txt"] = $user["accomplishments_txt"];
+      $this->extra_info["org_txt"] = $user["org_txt"];
+      $this->extra_info["platform_txt"] = $user["platform_txt"];
 
       // GET THE STRING LITERAL INSTEAD OF THE REL_CODE ASSOC WITH CANDID
       $this->extra_info["religion_id"] = $user["religion_id"];

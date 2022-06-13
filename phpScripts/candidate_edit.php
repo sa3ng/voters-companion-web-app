@@ -88,6 +88,43 @@ if (array_key_exists("criminal", $_POST)) {
     $stmt->close();
 }
 
+if (array_key_exists("accomplishments", $_POST)) {
+    $stmt = $conn->prepare(
+        "UPDATE candidatesInfoTBL 
+        SET accomplishments_txt=? 
+        WHERE candidate_id = ?;"
+    );
+
+    $stmt->bind_param("si", $_POST["accomplishments"], $candidate_id);
+    $stmt->execute();
+    $stmt->close();
+}
+
+if (array_key_exists("platform", $_POST)) {
+    $stmt = $conn->prepare(
+        "UPDATE candidatesInfoTBL 
+        SET platform_txt=? 
+        WHERE candidate_id = ?;"
+    );
+
+    $stmt->bind_param("si", $_POST["platform"], $candidate_id);
+    $stmt->execute();
+    $stmt->close();
+}
+
+if (array_key_exists("org", $_POST)) {
+    $stmt = $conn->prepare(
+        "UPDATE candidatesInfoTBL 
+        SET org_txt=? 
+        WHERE candidate_id = ?;"
+    );
+
+    $stmt->bind_param("si", $_POST["org"], $candidate_id);
+    $stmt->execute();
+    $stmt->close();
+}
+
+
 if (array_key_exists("religion", $_POST)) {
     $stmt = $conn->prepare(
         "UPDATE candidatesInfoTBL 

@@ -26,11 +26,13 @@ var selectorContainer6 = "#CK-criminal"
 var selectorBtn7 = "[name='editPlatform']"
 var selectorContainer7 = "#CK-platform"
 
+debugger;
 var selectorBtn8 = "[name='editAccomplishments']"
 var selectorContainer8 = "#CK-accomplishments"
 
-var selectorBtn9 = "[name='editOrgs']"
-var selectorContainer9 = "#CK-orgs"
+var selectorBtn9 = "[name='editOrg']"
+var selectorContainer9 = "#CK-org"
+
 
 
 // ORIGINAL HTML STRINGS TO BE COMPARED WITH
@@ -40,6 +42,10 @@ var ckOriginMaritalHTML = $.trim($(selectorContainer3).html());
 var ckOriginEducationHTML = $.trim($(selectorContainer4).html());
 var ckOriginWorkHTML = $.trim($(selectorContainer5).html());
 var ckOriginCriminalHTML = $.trim($(selectorContainer6).html());
+//other tabs
+var ckOriginPlatformHTML = $.trim($(selectorContainer7).html());
+var ckOriginAccomplishmentsHTML = $.trim($(selectorContainer8).html());
+var ckOriginOrgHTML = $.trim($(selectorContainer9).html());
 
 function newEdit($param) {
     if (globaleditor) {
@@ -272,6 +278,7 @@ $(function () {
         let ckNewWorkHTML = $.trim($(selectorContainer5).html());
         let ckNewCriminalHTML = $.trim($(selectorContainer6).html());
 
+        let ckNewAccomplishmentsHTML = $.trim($(selectorContainer8).html());
         /* ----------------------------------------------------------------
         CHECK CHANGES TO PREP FOR AJAX; SEND ONES THAT ARE ACTUALLY CHANGED 
         ---------------------------------------------------------------- */
@@ -305,6 +312,23 @@ $(function () {
             != ckOriginCriminalHTML.valueOf()) {
             formData.append("criminal", ckNewCriminalHTML);
         }
+
+        if (ckNewAccomplishmentsHTML.valueOf()
+            != ckOriginAccomplishmentsHTML.valueOf()) {
+            formData.append("accomplishments", ckNewAccomplishmentsHTML);
+        }
+
+        if (ckNewPlatformHTML.valueOf()
+            != ckOriginPlatformHTML.valueOf()) {
+            formData.append("platform", ckNewPlatformHTML);
+        }
+
+        if (ckNewOrgHTML.valueOf()
+            != ckOriginOrgHTML.valueOf()) {
+            formData.append("org", ckNewOrgHTML);
+        }
+
+
 
         if ($("[name='religion-select'] option:selected").text()
             != $("[name='religion-text']").text()) {
