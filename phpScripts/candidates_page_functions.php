@@ -2,20 +2,20 @@
 <?php
 // class to be utilized by fetchCandidates()
 
-use LDAP\Result;
-
 class CandidateOverviewClass
 {
   private $name;
   private $candidate_id;
   private $description;
+  private $pos_num;
 
   // CONSTRUCTORS
-  function __construct($name, $candidate_id, $description)
+  function __construct($name, $candidate_id, $description, $pos_num)
   {
     $this->name = $name;
     $this->candidate_id = $candidate_id;
     $this->description = $description;
+    $this->pos_num = $pos_num;
   }
 
   // GETTERS
@@ -32,6 +32,11 @@ class CandidateOverviewClass
   function getDescription()
   {
     return $this->description;
+  }
+
+  function getPosNum()
+  {
+    return $this->pos_num;
   }
 }
 
@@ -57,7 +62,25 @@ function fetchCandidates($db_credentials, $pos_id)
 
   //Fill up Candidate Names
   while ($current_row = $results->fetch_assoc()) {
-    array_push($candidates_arr, new CandidateOverviewClass($current_row["full_name"], $current_row["candidate_id"], $current_row["bio"]));
+    $loc_stmt = $conn->prepare(
+      "SELECT candidate_num FROM candidatesInfoTBL 
+      WHERE candidate_id=?;"
+    );
+    $loc_stmt->bind_param("i", $current_row["candidate_id"]);
+    $loc_stmt->execute();
+
+    $loc_result = $loc_stmt->get_result()->fetch_assoc();
+
+    array_push(
+      $candidates_arr,
+      new CandidateOverviewClass(
+        $current_row["full_name"],
+        $current_row["candidate_id"],
+        $current_row["bio"],
+        $loc_result["candidate_num"]
+      )
+    );
+    $loc_stmt->close();
   }
 
   $conn->close();
@@ -66,14 +89,13 @@ function fetchCandidates($db_credentials, $pos_id)
   return $candidates_arr;
 }
 
-function displayCandidates($db_credentials, $pos_id)
+
+function displayCandidates(array $candidates_arr)
 {
 
 
-  $candidate_objs = fetchCandidates($db_credentials, $pos_id);
-
   $candidates_displayed = 0;
-  $candidates_max = sizeof($candidate_objs);
+  $candidates_max = sizeof($candidates_arr);
   $end_current_row = false;
 
   // WHILE THERE ARE STILL CANDIDATES, DISPLAY THEM
@@ -87,82 +109,126 @@ function displayCandidates($db_credentials, $pos_id)
       echo "<div class='columns'>";
       $end_current_row = true;
 
-      echo "  <div class='column'>";
-      echo "    <div class='card hovereffect'>";
-      echo "      <div class='card-content'>";
-      echo "        <div class='media'>";
-      echo "          <div class='media-left'>";
-      echo "            <figure class='image is-128x128'>
-                          <img class='is-rounded' src='https://i.pinimg.com/originals/2a/3a/fe/2a3afea3b703dba502ae62b54e069f12.jpg'>
-                        </figure>";
-      echo "          </div>";
-      echo "          <div class='media-content'>";
-      echo "            <button class='button is-small is-info js-modal-trigger' data-target='modal-js-edit'>Edit Info</button>";        
-      echo "            <p class='title'>" . $candidate_objs[$candidates_displayed]->getName() . "</p>";
-      echo "            <p class='subtitle'>" . $candidate_objs[$candidates_displayed]->getDescription() . "</p>";
-      echo "          </div>";
-      echo "        </div>";
-      echo "      <footer class='card-footer'>";
-      echo "        <p class='card-footer-item'>";
-      echo "        <span>";
-      echo "          <a href='CandidatePage.php?cid=" . $candidate_objs[$candidates_displayed]->getCandidateId() . "'>Learn More</a>";
-      echo "        </span>";
-      echo "        </p>";
-      echo "      <footer>";
-      echo "      </div>";
-      echo "    </div>";
-      echo "  </div>";
 
+
+      printCandidateCard($candidates_arr, $candidates_displayed);
       $candidates_displayed++;
     }
     /* 
     PRINT NEXT CARD
     */
     if (($candidates_displayed % 2 != 0) && $candidates_displayed < $candidates_max) {
-      echo "  <div class='column'>";
-      echo "    <div class='card hovereffect'>";
-      echo "      <div class='card-content'>";
-      echo "        <div class='media'>";
-      echo "          <div class='media-left'>";
-      echo "            <figure class='image is-128x128'>
-                          <img class='is-rounded' src='https://i.pinimg.com/originals/2a/3a/fe/2a3afea3b703dba502ae62b54e069f12.jpg'>
-                        </figure>";
-      echo "          </div>";
-      echo "          <div class='media-content'>";
-      echo "            <button class='button is-small is-info js-modal-trigger' data-target='modal-js-edit'>Edit Info</button>";        
-      echo "            <p class='title'>" . $candidate_objs[$candidates_displayed]->getName() . "</p>";
-      echo "            <p class='subtitle'>" . $candidate_objs[$candidates_displayed]->getDescription() . "</p>";
-      echo "          </div>";
-      echo "        </div>";
-      echo "      <footer class='card-footer'>";
-      echo "        <p class='card-footer-item'>";
-      echo "        <span>";
-      echo "          <a href='CandidatePage.php?cid=" . $candidate_objs[$candidates_displayed]->getCandidateId() . "'>Learn More</a>";
-      echo "        </span>";
-      echo "        </p>";
-      echo "      <footer>";
-      echo "      </div>";
-      echo "    </div>";
-      echo "  </div>";
+      printCandidateCard($candidates_arr, $candidates_displayed);
 
       $candidates_displayed++;
     }
 
     if ($end_current_row) {
-      // BASE CONTAINER END TAG
+      // ENDING THE BASE CONTAINER HERE
       echo "</div>";
       $end_current_row = false;
     }
   }
 }
+/* ------------------------------------------------------------------------
+Helper function for displaying candidates on the candidate overview page
+-------------------------------------------------------------------------*/
+function printCandidateCard(array $candidates_arr, int $candidates_displayed)
+{
+  echo "  <div class='column'>";
+  echo "    <div class='card hovereffect'>";
+  echo "      <div class='card-content'>";
+  echo "        <div class='media'>";
+  echo "          <div class='media-left'>";
+  echo "            <figure class='image is-128x128'>
+                      <img class='is-rounded' src='https://i.pinimg.com/originals/2a/3a/fe/2a3afea3b703dba502ae62b54e069f12.jpg'>
+                    </figure>";
+  echo "          </div>";
+  echo "          <div class='media-content'>";
+  /* ------------------------------------------------------------------
+   editing the candidate name and description should only be for 
+   editors
+  ------------------------------------------------------------------ */
+  if (isEditor()) {
+    echo "            
+      <button name='edit-candidate-button' class='button is-small is-info js-modal-trigger' 
+      data-target='modal-js-edit'>
+      Edit Info</button>
+        ";
+  }
+  // ------------------------------------------------------------------
+  echo "            <p class='title'>" . $candidates_arr[$candidates_displayed]->getName() . "</p>";
+  echo "            <p class='subtitle'>" . $candidates_arr[$candidates_displayed]->getDescription() . "</p>";
+  echo "          </div>";
+  echo "        </div>";
+  echo "      <footer class='card-footer'>";
+  echo "        <p class='card-footer-item'>";
+  echo "        <span>";
+  echo "          <a name='candidate-link' href='CandidatePage.php?cid=" . $candidates_arr[$candidates_displayed]->getCandidateId() . "'>Learn More</a>";
+  echo "        </span>";
+  echo "        </p>";
+  echo "      <footer>";
+  echo "      </div>";
+  echo "    </div>";
+  echo "  </div>";
+}
+// ------------------------------------------------------------------------
+
+
+/* ------------------------------------------------------------------------
+function for delete is seperated from upper methods for fetching data
+as it can't be instantly overloaded. Seperated functions for now, maybe
+code consolidation in the 
+-------------------------------------------------------------------------*/
+function displayCandidatesToDelete(array $candidates_arr)
+{
+  $candidates_displayed = 0;
+  $candidates_max = sizeof($candidates_arr);
+
+  while ($candidates_max > $candidates_displayed) {
+    printDeleteCard($candidates_arr, $candidates_displayed);
+    $candidates_displayed++;
+  }
+}
+
+function printDeleteCard(array $candidates_arr, int $candidates_displayed)
+{
+  echo
+  "
+  <div class='card'>
+  <header class='card-header'>
+    <p class='card-header-title'>" .
+    $candidates_arr[$candidates_displayed]->getName()
+    . "</p>
+  </header>
+  <div class='card-content'>
+    <div class='content'> 
+    Candidates is #" . $candidates_arr[$candidates_displayed]->getPosNum()
+    . "</div>
+  </div>
+  <footer class='class-footer'>
+    <a 
+      href='#'
+      name = 'candidate-delete-link'
+      class='card-footer-item' 
+      data-name='" . $candidates_arr[$candidates_displayed]->getName()
+    . "'>
+        Delete
+    </a>
+  </footer>
+  </div>
+  <br>
+  ";
+}
+
+// ------------------------------------------------------------------------
+
 
 // CANDIDATE PAGE PROPER FUNCTIONS
-
-/* 
-this function should check if the user has passed the request to the server
-*/
-
-
+/* ------------------------------------------------------------------------
+these functions should check if the user has passed the request to the 
+server
+-------------------------------------------------------------------------*/
 function validateRequestType()
 {
   if (array_key_exists("REQUEST_METHOD", $_SERVER)) {
@@ -173,13 +239,14 @@ function validateRequestType()
   // default return
   return false;
 }
-
 function checkCandidateParamExist()
 {
   if (array_key_exists("cid", $_GET))
     return true;
   return false;
 }
+// ------------------------------------------------------------------------
+
 
 function returnToOverviewPage()
 {
