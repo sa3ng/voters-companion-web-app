@@ -371,7 +371,7 @@ if ($candidate_basic["position_id"] == "P") {
             <!--Accomplishments-->
             <div class="tab-pane is-center" id="pane-2">
                 <div class="content">
-                    <button class='button is-small is-info' name='editBirthday'>Edit</button>
+                    <button class='button is-small is-info' name='editAccomplishment'>Edit</button>
                     <div>
                         <h3>Accomplishment</h3>
                         <p>Quisque ante lacus, malesuada ac auctor vitae, congue. Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.</p>
