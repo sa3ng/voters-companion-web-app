@@ -341,20 +341,22 @@ if ($candidate_basic["position_id"] == "P") {
             </div>
 
 
-            <!--Platform-->
-            <div class="tab-pane is-center" id="pane-4">
-                <div class="content">
-                    <h1>Platforms</h1>
-                    <h2>Platform 1</h2>
-                    <p>Curabitur accumsan turpis pharetra blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.</p>
-                    <ul>
-                        <li>In fermentum leo eu lectus mollis, quis dictum mi aliquet.</li>
-                        <li>Morbi eu nulla lobortis, lobortis est in, fringilla felis.</li>
-                        <li>Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.</li>
-                        <li>Ut non enim metus.</li>
-                    </ul>
+            <!--Accomplishments-->
+            <div class="tab-pane" id="pane-4">
+                <div class="columns is-centered">
+                    <div class="content">
+                    <button class='button is-small is-info' name='editAccomplishment'>Edit</button>
+                        <div>
+                            <h3>Platform</h3>
+                            <p>Quisque ante lacus, malesuada ac auctor vitae, congue. Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.</p>
+                            <ol>
+                                <li>Donec blandit a lorem id convallis.</li>
+                                <li>Cras gravida arcu at diam gravida gravida.</li>
+                                <li>Integer in volutpat libero.</li>
+                            </ol>
+                        </div>
+                    </div>
                 </div>
-                <br><br><br><br><br>
             </div>
 
             <!--interview-->
@@ -369,22 +371,23 @@ if ($candidate_basic["position_id"] == "P") {
             </div>
 
             <!--Accomplishments-->
-            <div class="tab-pane is-center" id="pane-2">
-                <div class="content">
+            <div class="tab-pane" id="pane-2">
+                <div class="columns is-centered">
+                    <div class="content">
                     <button class='button is-small is-info' name='editAccomplishment'>Edit</button>
-                    <div>
-                        <h3>Accomplishment</h3>
-                        <p>Quisque ante lacus, malesuada ac auctor vitae, congue. Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.</p>
-                        <ol>
-                            <li>Donec blandit a lorem id convallis.</li>
-                            <li>Cras gravida arcu at diam gravida gravida.</li>
-                            <li>Integer in volutpat libero.</li>
-                            <li>Donec a diam tellus.</li>
-                            <li>Aenean nec tortor orci.</li>
-                            <li>Quisque aliquam cursus urna, non bibendum massa viverra eget.</li>
-                            <li>Vivamus maximus ultricies pulvinar.</li>
-                        </ol>
-
+                        <div>
+                            <h3>Accomplishment</h3>
+                            <p>Quisque ante lacus, malesuada ac auctor vitae, congue. Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.</p>
+                            <ol>
+                                <li>Donec blandit a lorem id convallis.</li>
+                                <li>Cras gravida arcu at diam gravida gravida.</li>
+                                <li>Integer in volutpat libero.</li>
+                                <li>Donec a diam tellus.</li>
+                                <li>Aenean nec tortor orci.</li>
+                                <li>Quisque aliquam cursus urna, non bibendum massa viverra eget.</li>
+                                <li>Vivamus maximus ultricies pulvinar.</li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
             </div>
