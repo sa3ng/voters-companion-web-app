@@ -171,12 +171,20 @@ $candidate_arr = fetchCandidates($DB_CREDENTIALS, $_GET['pos_id']);
             </div>
           </div>
 
+          <div class='field'>
+            <div class='control'>
+              <label class="checkbox">
+                <input name="e-cand-name-check" type="checkbox">
+                Don't Edit Candidate Name
+              </label>
+            </div>
+          </div>
+
           <div class='field is-grouped'>
             <div class='control'>
               <input type='submit' class='button is-link' value='Submit'>
             </div>
           </div>
-
         </form>
       </div>
     </div>

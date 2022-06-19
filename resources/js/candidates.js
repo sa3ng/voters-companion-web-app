@@ -146,17 +146,32 @@ $(function () {
     let editModalCandidateName = "[name='e-cand-name']";
     let editModalCandidateDescription = "[name='e-cand-desc']";
     let editModalHiddenID = "[name='e-cand-num']";
+    let editModalImgIn = "[name='e-cand-img-in']";
 
-    formData.append("candidate_name", $(editModalCandidateName).val().toUpperCase().trim());
+
     formData.append("candidate_desc", $(editModalCandidateDescription).val().trim());
     formData.append("candidate_id", $(editModalHiddenID).val());
 
-    // Client-side validation
-    if (formData.get("candidate_name") == "") {
-      alert("Name must not be empty");
+
+    if ($(editModalImgIn).prop('files').length > 0) {
+      if (checkImage($(editModalImgIn))) {
+        formData.append("candidate_image", $(editModalImgIn).prop('files')[0]);
+      }
     }
-    // else, submit to ajax
-    else {
+
+    let alerted = 0;
+    if (!($(editModalCandidateName).attr("disabled"))) {
+      if ($(editModalCandidateName).val().toUpperCase().trim() != "") {
+        formData.append("candidate_name", $(editModalCandidateName).val().toUpperCase().trim());
+      }
+      else {
+        alert("Name must not be empty");
+        alerted = 1;
+      }
+    }
+
+    if (alerted == 0) {
+      //submit to ajax
       $.ajax({
         type: "POST",
         url: $(this).attr("action"),
@@ -164,17 +179,31 @@ $(function () {
         contentType: false,
         processData: false,
         success: function (response) {
-          if (response === "NAME_IN_DB")
-            alert("Name is already present in DB. Please input a different name or consider deleting that same name instance");
           if (response === "OK") {
             alert("Basic Candidate Info has been edited!");
             window.location.reload();
-          } else {
+          } else if (response === "NAME_IN_DB")
+            alert("Name is already present in DB. Please input a different name or consider deleting that same name instance");
+          else {
             alert("something went wrong");
             console.log(response);
           }
         }
       });
+    } else {
+      alerted = 0;
+    }
+
+  });
+
+  let editModalCheckBoxName = "[name='e-cand-name-check']";
+  $(editModalCheckBoxName).change(function (e) {
+    e.preventDefault();
+    let editModalCandidateName = "[name='e-cand-name']";
+    if ($(this).is(":checked")) {
+      $(editModalCandidateName).attr("disabled", true);
+    } else {
+      $(editModalCandidateName).removeAttr("disabled");
     }
   });
 
