@@ -96,6 +96,8 @@ $(function () {
     let candidateName = $(this).parent().children('.title');
     // Candidate Description Container
     let candidateDesc = $(this).parent().children('.subtitle');
+    // Candidate Image Container
+    let candidateImage = $(this).parent().parent().children('div').children('figure').children('img');
 
     /* -------------------------------------------------------------------- 
     We have to get the candidate ID to be editted in the db through
@@ -127,6 +129,10 @@ $(function () {
     $(editModalCandidateDescription).val($(candidateDesc).text());
     let editModalHiddenID = "[name='e-cand-num']";
     $(editModalHiddenID).val(cid);
+
+    let = editModalImgOut = "[name='e-cand-img-out']";
+    let editModalImgIn = "[name='e-cand-img-in']";
+    $(editModalImgOut).attr('src', $(candidateImage).attr('src'));
     //---------------------------------------------------------------------
 
   });
@@ -171,6 +177,37 @@ $(function () {
       });
     }
   });
+
+  let candidateImgInput = "[name='e-cand-img-in']";
+  $(candidateImgInput).change(function (e) {
+    e.preventDefault();
+    // container for what you should see when something is uploaded
+    let = candidateImgOutput = "[name='e-cand-img-out']";
+    if (checkImage($(this)))
+      $(candidateImgOutput).attr('src', URL.createObjectURL($(this).prop('files')[0]));
+    else {
+      alert("Invalid File! Upload a valid image file");
+      $(candidateImgOutput).attr('src', "../resources/images/candidate_generic/generic.png");
+    }
+  });
+
+  /*-----------------------------------------------------------------------
+  Helper functions for 'candidateImgInput' selector
+  -----------------------------------------------------------------------*/
+  /*
+    check the file type using this function; 
+    The context should be a selector that directs to a HTMLInputElement
+   */
+  function checkImage(context) {
+    if (
+      context.prop('files')[0].type === "image/png"
+      || context.prop('files')[0].type === "image/jpg"
+      || context.prop('files')[0].type === "image/jpeg"
+    ) return true;
+
+    return false;
+  }
+  //-----------------------------------------------------------------------
 
   let candidateDeleteLinks = "[name='candidate-delete-link']";
   $(candidateDeleteLinks).click(function (e) {

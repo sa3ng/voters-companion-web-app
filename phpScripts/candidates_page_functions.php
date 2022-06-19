@@ -81,7 +81,6 @@ function fetchCandidates($db_credentials, $pos_id)
     /* --------------------------------------------------------------------
     We need to fetch the image of the candidate of the user to display
     -------------------------------------------------------------------- */
-
     $fetched_img_url = '';
 
     if (is_null($current_row['image_url'])) {
