@@ -8,14 +8,16 @@ class CandidateOverviewClass
   private $candidate_id;
   private $description;
   private $pos_num;
+  private $img_url;
 
   // CONSTRUCTORS
-  function __construct($name, $candidate_id, $description, $pos_num)
+  function __construct($name, $candidate_id, $description, $pos_num, $img_url)
   {
     $this->name = $name;
     $this->candidate_id = $candidate_id;
     $this->description = $description;
     $this->pos_num = $pos_num;
+    $this->img_url = $img_url;
   }
 
   // GETTERS
@@ -37,6 +39,11 @@ class CandidateOverviewClass
   function getPosNum()
   {
     return $this->pos_num;
+  }
+
+  function getImgUrl()
+  {
+    return $this->img_url;
   }
 }
 
@@ -71,13 +78,29 @@ function fetchCandidates($db_credentials, $pos_id)
 
     $loc_result = $loc_stmt->get_result()->fetch_assoc();
 
+    /* --------------------------------------------------------------------
+    We need to fetch the image of the candidate of the user to display
+    -------------------------------------------------------------------- */
+
+    $fetched_img_url = '';
+
+    if (is_null($current_row['image_url'])) {
+      $fetched_img_url = "../resources/images/candidate_generic/generic.png";
+    } else {
+      $fetched_img_url = $current_row['image_url'];
+    }
+
+    //--------------------------------------------------------------------
+
+
     array_push(
       $candidates_arr,
       new CandidateOverviewClass(
         $current_row["full_name"],
         $current_row["candidate_id"],
         $current_row["bio"],
-        $loc_result["candidate_num"]
+        $loc_result["candidate_num"],
+        $fetched_img_url
       )
     );
     $loc_stmt->close();
@@ -141,7 +164,7 @@ function printCandidateCard(array $candidates_arr, int $candidates_displayed)
   echo "        <div class='media'>";
   echo "          <div class='media-left'>";
   echo "            <figure class='image is-128x128'>
-                      <img class='is-rounded' src='https://i.pinimg.com/originals/2a/3a/fe/2a3afea3b703dba502ae62b54e069f12.jpg'>
+                      <img class='is-rounded' src='" . $candidates_arr[$candidates_displayed]->getImgUrl() . "'>
                     </figure>";
   echo "          </div>";
   echo "          <div class='media-content'>";
