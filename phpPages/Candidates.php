@@ -137,7 +137,7 @@ $candidate_arr = fetchCandidates($DB_CREDENTIALS, $_GET['pos_id']);
           <div class='field'>
             <label class='label'>Candidate Name</label>
             <div class='control'>
-              <input name='e-cand-name' class='input' type='text' required placeholder='Candidate Name'>
+              <input name='e-cand-name' class='input' type='text' placeholder='Candidate Name'>
             </div>
           </div>
 

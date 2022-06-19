@@ -107,7 +107,6 @@ $(function () {
       .children(".card-footer").children("p").children("span")
       .children("a")).attr("href");
 
-    debugger;
     console.log(candidateLink);
 
     /* 
