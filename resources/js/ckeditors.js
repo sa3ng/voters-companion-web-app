@@ -276,8 +276,9 @@ $(function () {
         let ckNewEducationHTML = $.trim($(selectorContainer4).html());
         let ckNewWorkHTML = $.trim($(selectorContainer5).html());
         let ckNewCriminalHTML = $.trim($(selectorContainer6).html());
-
+        let ckNewPlatformHTML = $.trim($(selectorContainer7).html());
         let ckNewAccomplishmentsHTML = $.trim($(selectorContainer8).html());
+        let ckNewOrgHTML = $.trim($(selectorContainer9).html());
         /* ----------------------------------------------------------------
         CHECK CHANGES TO PREP FOR AJAX; SEND ONES THAT ARE ACTUALLY CHANGED 
         ---------------------------------------------------------------- */
@@ -317,15 +318,15 @@ $(function () {
             formData.append("accomplishments", ckNewAccomplishmentsHTML);
         }
 
-        // if (ckNewPlatformHTML.valueOf()
-        //     != ckOriginPlatformHTML.valueOf()) {
-        //     formData.append("platform", ckNewPlatformHTML);
-        // }
+        if (ckNewPlatformHTML.valueOf()
+            != ckOriginPlatformHTML.valueOf()) {
+            formData.append("platform", ckNewPlatformHTML);
+        }
 
-        // if (ckNewOrgHTML.valueOf()
-        //     != ckOriginOrgHTML.valueOf()) {
-        //     formData.append("org", ckNewOrgHTML);
-        // }
+        if (ckNewOrgHTML.valueOf()
+            != ckOriginOrgHTML.valueOf()) {
+            formData.append("org", ckNewOrgHTML);
+        }
 
 
 
