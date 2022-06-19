@@ -30,9 +30,7 @@ function fetchPostInfo($db_credentials, $info, $post_header){
 }
 
 
-
-
-    function fetchHeaders($db_credentials)
+function fetchHeaders($db_credentials)
     {
         $conn = new mysqli(
             $db_credentials["server"],

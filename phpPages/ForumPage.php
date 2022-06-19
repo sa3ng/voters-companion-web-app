@@ -156,6 +156,8 @@
 
       foreach($posts_pending_headers as $pending_headers){
         echo "
+        <form action='../phpScripts/delete_post.php' method='POST'>
+        <input type='hidden' value='$pending_headers' name='post_approval_header'>
         <article class='post'>
               <button class='transparent' type='submit'><h3>".$pending_headers."</h3></button>
               <div class='media'>
@@ -173,10 +175,11 @@
                   </div>
                 </div>
                 <div class='media-right'>
-                  <button class='button is-danger'><i class='fa-solid fa-xmark'></i>&nbsp; Cancel</button>
+                  <button class='button is-danger' type='submit'><i class='fa-solid fa-xmark'></i>&nbsp; Cancel</button>
                 </div>
               </div>
-            </article>";
+            </article>
+            </form>";
         } 
     }
 
