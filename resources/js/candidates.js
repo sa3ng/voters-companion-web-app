@@ -65,18 +65,14 @@ $(function () {
 
       success: function (response) {
         console.log(response);
-        if (response == "BAD_NAME") {
+        if (response == "BAD_NAME")
           alert("Invalid Name. Have a valid name for the candidate");
-        }
 
-        if (response == "NAME_IN_DB") {
+        if (response == "NAME_IN_DB")
           alert("Name is present in DB. Edit that instance instead or consider deleting that same name instance");
-        }
 
-        if (response == "CANDIDATE_NUM_EXISTS_IN_POSITION") {
+        if (response == "CANDIDATE_NUM_EXISTS_IN_POSITION")
           alert("Candidate Number is already used in selected position.");
-        }
-
 
         if (response == "OK") {
           alert("Basic Candidate Info has been registered!");
@@ -134,7 +130,6 @@ $(function () {
     let editModalImgIn = "[name='e-cand-img-in']";
     $(editModalImgOut).attr('src', $(candidateImage).attr('src'));
     //---------------------------------------------------------------------
-
   });
 
   let candidateEditModalForm = "#candidate-edit-modal-form";
@@ -190,8 +185,10 @@ $(function () {
             window.location.reload();
           } else if (response === "NAME_IN_DB")
             alert("Name is already present in DB. Please input a different name or consider deleting that same name instance");
+          else if (response == "ERROR_UPLOAD")
+            alert("There was an error uploading the file. Try again later");
           else {
-            alert("something went wrong");
+            alert("UNEXPECTED ERROR: SOMETHING WENT WRONG");
             console.log(response);
           }
         }
