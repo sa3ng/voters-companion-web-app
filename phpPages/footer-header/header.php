@@ -1,5 +1,6 @@
 <?php
 require_once '../phpScripts/usr_page_functions.php';
+require_once '../phpScripts/globals.php';
 ?>
 <!--HEADER-->
 <section class="headerhero">
@@ -51,18 +52,36 @@ require_once '../phpScripts/usr_page_functions.php';
 
         </div>
       </div>
-
-      <a class="navbar-item" href="ForumPage.php">
-        Forums
-      </a>
-
-
       <a class="navbar-item" href="AboutUs.php">
         About Us
       </a>
+
+      <?php
+
+      if (isLoggedIn())
+      {
+        
+      $acc_type = fetchAccTBL($DB_CREDENTIALS, 'type');
+      echo
+      "<a class='navbar-item' href='ForumPage.php'>
+        Forums $acc_type
+        
+      </a>";
+
+
+      if(strcmp($acc_type,"admin") == 0){
+      echo
+      "<a class='navbar-item' href='adminPage.php'>
+       <strong style='color: blue;'> Manage Accounts </strong>
+      </a>";
+      }
+
+      }
+      ?>
     </div>
 
     <div class="navbar-end">
+
       <div class="navbar-item">
         <div class="buttons">
           <?php

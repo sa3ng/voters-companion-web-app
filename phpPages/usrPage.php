@@ -1,6 +1,5 @@
 
 <?php
-require_once '../phpScripts/usr_page_functions.php';
 require_once '../phpScripts/globals.php';
 ?>
 <!DOCTYPE html>
