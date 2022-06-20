@@ -159,6 +159,11 @@ $(function () {
       }
     }
 
+    /*--------------------------------------------------------------------- 
+    Need to check if the name part of the form is disabled;
+    if disabled, do not submit name for validation,
+    else, submit for client and server sided validation
+    ---------------------------------------------------------------------*/
     let alerted = 0;
     if (!($(editModalCandidateName).attr("disabled"))) {
       if ($(editModalCandidateName).val().toUpperCase().trim() != "") {
@@ -169,8 +174,9 @@ $(function () {
         alerted = 1;
       }
     }
+    //---------------------------------------------------------------------
 
-    if (alerted == 0) {
+    if (alerted == 0) { //if no alert was present, do AJAX
       //submit to ajax
       $.ajax({
         type: "POST",
