@@ -61,7 +61,7 @@ require_once '../phpScripts/globals.php';
       if (isLoggedIn())
       {
         
-      $acc_type = fetchAccTBL($DB_CREDENTIALS, 'type');
+      $acc_type = "admin";
       echo
       "<a class='navbar-item' href='ForumPage.php'>
         Forums $acc_type
