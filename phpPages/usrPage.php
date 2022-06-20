@@ -43,6 +43,11 @@ require_once '../phpScripts/globals.php';
 
   ?>
 
+<script>
+
+
+</script>
+
  
 <body>
 
@@ -57,13 +62,8 @@ require_once '../phpScripts/globals.php';
                 <?php
                     $img_src = fetchPersonalInfo($DB_CREDENTIALS,'image_url');
 
-                    if (isLoggedIn()){
-                        echo  "
-                        <img>
-                        <object class='image is-128x128' data='../resources/images/user_images/".$img_src."' type='image/png'>
-                        <img src='http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png' />
-                       </object>
-                       </img> "; 
+                    if ($img_src != null){
+                        echo  "<img class='is-rounded' src='../resources/images/user_images/$img_src'>";
                     }
                     else{
                       echo  "<img class='is-rounded' src='http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png'>"; 
@@ -146,7 +146,7 @@ require_once '../phpScripts/globals.php';
                             <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                         </figure>
                         <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                        <select id="president_id_input" name="president_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
                             <?php
                             foreach($president_names as $names){
                               echo "<option value='".$names."'>".$names."</option>";
@@ -154,7 +154,7 @@ require_once '../phpScripts/globals.php';
                             ?>
                         </select>
                         </h2>
-                        <a href="">Learn More</a>
+                        
                     </div>
 
                     <div class="column has-text-centered" >
@@ -163,14 +163,14 @@ require_once '../phpScripts/globals.php';
                             <img class="is-rounded" src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="usrProfilePicture">
                         </figure>
                         <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                        <select id="v_president_id_input" name="v_president_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
                             <?php
                             foreach($vice_pres_names as $names){
                               echo "<option value='".$names."'>".$names."</option>";
                             }
                             ?>
                         </select>
-                        </h2>                        <a href="">Learn More</a>
+                        </h2>                        
                     </div>
                 </div>
         
@@ -180,7 +180,7 @@ require_once '../phpScripts/globals.php';
                     <h2 class="title" style="color: black;"> <em>Senatorial Candidates</em></h2>
                 </div>
 
-                <div class="column">
+                <div class="column" style="padding-bottom: 3em;">
                     <!-- ROW 1 -->
                     <div class="column">
                         <div class="columns">
@@ -191,7 +191,7 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                        <select id="sen1_id_input" name="sen1_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
                             <?php
                             foreach($senator_names as $names){
                               echo "<option value='".$names."'>".$names."</option>";
@@ -199,7 +199,7 @@ require_once '../phpScripts/globals.php';
                             ?>
                             <option value="fiat" >ABSTAIN</option>
                         </select>
-                        </h2>                                <a href="">Learn More</a>
+                        </h2>                                
                             </div>
 
                             <div class="column has-text-centered">
@@ -209,7 +209,7 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                        <select id="sen2_id_input" name="sen2_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
                         <?php
                             foreach($senator_names as $names){
                               echo "<option value='".$names."'>".$names."</option>";
@@ -217,7 +217,7 @@ require_once '../phpScripts/globals.php';
                             ?>
                             <option value="fiat" >ABSTAIN</option>
                         </select>
-                        </h2>                                <a href="">Learn More</a>
+                        </h2>                                
                             </div>
 
                             <div class="column has-text-centered">
@@ -227,7 +227,7 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                        <select id="sen3_id_input" name="sen3_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
                         <?php
                             foreach($senator_names as $names){
                               echo "<option value='".$names."'>".$names."</option>";
@@ -235,7 +235,7 @@ require_once '../phpScripts/globals.php';
                             ?>
                             <option value="fiat" >ABSTAIN</option>
                         </select>
-                        </h2>                                <a href="">Learn More</a>
+                        </h2>                                
                             </div>
                         </div>
                     </div>
@@ -251,7 +251,7 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                        <select id="sen4_id_input" name="sen4_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
                         <?php
                             foreach($senator_names as $names){
                               echo "<option value='".$names."'>".$names."</option>";
@@ -259,7 +259,7 @@ require_once '../phpScripts/globals.php';
                             ?>
                             <option value="fiat" >ABSTAIN</option>
                         </select>
-                        </h2>                                <a href="">Learn More</a>
+                        </h2>                                
                             </div>
 
                             <div class="column has-text-centered">
@@ -269,7 +269,7 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" >
+                        <select id="sen5_id_input" name="sen5_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
                         <?php
                             foreach($senator_names as $names){
                               echo "<option value='".$names."'>".$names."</option>";
@@ -277,7 +277,7 @@ require_once '../phpScripts/globals.php';
                             ?>
                             <option value="fiat" >ABSTAIN</option>
                         </select>
-                        </h2>                                <a href="">Learn More</a>
+                        </h2>                                
                             </div>
 
                             <div class="column has-text-centered">
@@ -287,11 +287,16 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" >
-                            <option value="fiat" selected>ABSTAIN</option>
+                        <select id="sen6_id_input" name="sen6_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
+                            <?php
+                            foreach($senator_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?> 
+                            <option value="fiat">ABSTAIN</option>
                             
                         </select>
-                        </h2>                                <a href="">Learn More</a>
+                        </h2>                                
                             </div>
                         </div>
                     </div>
@@ -307,12 +312,17 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" >
-                            <option value="fiat" selected>ABSTAIN</option>
+                        <select id="sen7_id_input" name="sen7_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
+                        <?php
+                            foreach($senator_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
+                            <option value="fiat">ABSTAIN</option>
                             
                         </select>
                         </h2>
-                                <a href="">Learn More</a>
+                                
                             </div>
 
                             <div class="column has-text-centered">
@@ -322,12 +332,17 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" >
-                            <option value="fiat" selected>ABSTAIN</option>
+                        <select id="sen8_id_input" name="sen8_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
+                        <?php
+                            foreach($senator_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
+                            <option value="fiat">ABSTAIN</option>
                             
                         </select>
                         </h2>
-                                <a href="">Learn More</a>
+                                
                             </div>
 
                             <div class="column has-text-centered">
@@ -337,12 +352,17 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" >
-                            <option value="fiat" selected>ABSTAIN</option>
+                        <select id="sen9_id_input" name="sen9_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
+                        <?php
+                            foreach($senator_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
+                            <option value="fiat">ABSTAIN</option>
                             
                         </select>
                         </h2>
-                                <a href="">Learn More</a>
+                                
                             </div>
                         </div>
                     </div>
@@ -358,12 +378,17 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" >
-                            <option value="fiat" selected>ABSTAIN</option>
+                        <select id="sen10_id_input" name="sen10_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
+                        <?php
+                            foreach($senator_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
+                            <option value="fiat">ABSTAIN</option>
                             
                         </select>
                         </h2>
-                                <a href="">Learn More</a>
+                                
                             </div>
 
                             <div class="column has-text-centered">
@@ -373,12 +398,17 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" >
-                            <option value="fiat" selected>ABSTAIN</option>
+                        <select id="sen11_id_input" name="sen11_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
+                        <?php
+                            foreach($senator_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
+                            <option value="fiat">ABSTAIN</option>
                            
                         </select>
                         </h2>
-                                <a href="">Learn More</a>
+                                
                             </div>
 
                             <div class="column has-text-centered">
@@ -388,16 +418,30 @@ require_once '../phpScripts/globals.php';
                                 </figure>
                                 <br>
                                 <h2 class="title is-2" style="color: black;">
-                        <select class="input is-primary" type="dr" placeholder="Primary input" >
-                            <option value="fiat" selected>ABSTAIN</option>
+                        <select id="sen12_id_input" name="sen12_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
+                        <?php
+                            foreach($senator_names as $names){
+                              echo "<option value='".$names."'>".$names."</option>";
+                            }
+                            ?>
+                            <option value="fiat">ABSTAIN</option>
                             
                         </select>
                         </h2>
-                                <a href="">Learn More</a>
+                                
                             </div>
                         </div>
                     </div>    
                 </div>
+                
+                <div class="columns is-centered"> 
+                    <button class="button is-primary is-large columns">Save Changes</button>
+                </div>
+
+                <?php
+                    // if(isset($president_id_input))
+                    //         echo "<h1> ANG LUPET MO!! $president_id_input"; 
+                ?>
             </div>
 
             </form> 
