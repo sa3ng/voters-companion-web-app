@@ -65,18 +65,14 @@ $(function () {
 
       success: function (response) {
         console.log(response);
-        if (response == "BAD_NAME") {
+        if (response == "BAD_NAME")
           alert("Invalid Name. Have a valid name for the candidate");
-        }
 
-        if (response == "NAME_IN_DB") {
+        if (response == "NAME_IN_DB")
           alert("Name is present in DB. Edit that instance instead or consider deleting that same name instance");
-        }
 
-        if (response == "CANDIDATE_NUM_EXISTS_IN_POSITION") {
+        if (response == "CANDIDATE_NUM_EXISTS_IN_POSITION")
           alert("Candidate Number is already used in selected position.");
-        }
-
 
         if (response == "OK") {
           alert("Basic Candidate Info has been registered!");
@@ -96,6 +92,8 @@ $(function () {
     let candidateName = $(this).parent().children('.title');
     // Candidate Description Container
     let candidateDesc = $(this).parent().children('.subtitle');
+    // Candidate Image Container
+    let candidateImage = $(this).parent().parent().children('div').children('figure').children('img');
 
     /* -------------------------------------------------------------------- 
     We have to get the candidate ID to be editted in the db through
@@ -107,7 +105,6 @@ $(function () {
       .children(".card-footer").children("p").children("span")
       .children("a")).attr("href");
 
-    debugger;
     console.log(candidateLink);
 
     /* 
@@ -128,8 +125,11 @@ $(function () {
     $(editModalCandidateDescription).val($(candidateDesc).text());
     let editModalHiddenID = "[name='e-cand-num']";
     $(editModalHiddenID).val(cid);
-    //---------------------------------------------------------------------
 
+    let = editModalImgOut = "[name='e-cand-img-out']";
+    let editModalImgIn = "[name='e-cand-img-in']";
+    $(editModalImgOut).attr('src', $(candidateImage).attr('src'));
+    //---------------------------------------------------------------------
   });
 
   let candidateEditModalForm = "#candidate-edit-modal-form";
@@ -141,17 +141,38 @@ $(function () {
     let editModalCandidateName = "[name='e-cand-name']";
     let editModalCandidateDescription = "[name='e-cand-desc']";
     let editModalHiddenID = "[name='e-cand-num']";
+    let editModalImgIn = "[name='e-cand-img-in']";
 
-    formData.append("candidate_name", $(editModalCandidateName).val().toUpperCase().trim());
+
     formData.append("candidate_desc", $(editModalCandidateDescription).val().trim());
     formData.append("candidate_id", $(editModalHiddenID).val());
 
-    // Client-side validation
-    if (formData.get("candidate_name") == "") {
-      alert("Name must not be empty");
+
+    if ($(editModalImgIn).prop('files').length > 0) {
+      if (checkImage($(editModalImgIn))) {
+        formData.append("candidate_image", $(editModalImgIn).prop('files')[0]);
+      }
     }
-    // else, submit to ajax
-    else {
+
+    /*--------------------------------------------------------------------- 
+    Need to check if the name part of the form is disabled;
+    if disabled, do not submit name for validation,
+    else, submit for client and server sided validation
+    ---------------------------------------------------------------------*/
+    let alerted = 0;
+    if (!($(editModalCandidateName).attr("disabled"))) {
+      if ($(editModalCandidateName).val().toUpperCase().trim() != "") {
+        formData.append("candidate_name", $(editModalCandidateName).val().toUpperCase().trim());
+      }
+      else {
+        alert("Name must not be empty");
+        alerted = 1;
+      }
+    }
+    //---------------------------------------------------------------------
+
+    if (alerted == 0) { //if no alert was present, do AJAX
+      //submit to ajax
       $.ajax({
         type: "POST",
         url: $(this).attr("action"),
@@ -159,19 +180,66 @@ $(function () {
         contentType: false,
         processData: false,
         success: function (response) {
-          if (response === "NAME_IN_DB")
-            alert("Name is already present in DB. Please input a different name or consider deleting that same name instance");
           if (response === "OK") {
             alert("Basic Candidate Info has been edited!");
             window.location.reload();
-          } else {
-            alert("something went wrong");
+          } else if (response === "NAME_IN_DB")
+            alert("Name is already present in DB. Please input a different name or consider deleting that same name instance");
+          else if (response == "ERROR_UPLOAD")
+            alert("There was an error uploading the file. Try again later");
+          else {
+            alert("UNEXPECTED ERROR: SOMETHING WENT WRONG");
             console.log(response);
           }
         }
       });
+    } else {
+      alerted = 0;
+    }
+
+  });
+
+  let editModalCheckBoxName = "[name='e-cand-name-check']";
+  $(editModalCheckBoxName).change(function (e) {
+    e.preventDefault();
+    let editModalCandidateName = "[name='e-cand-name']";
+    if ($(this).is(":checked")) {
+      $(editModalCandidateName).attr("disabled", true);
+    } else {
+      $(editModalCandidateName).removeAttr("disabled");
     }
   });
+
+  let candidateImgInput = "[name='e-cand-img-in']";
+  $(candidateImgInput).change(function (e) {
+    e.preventDefault();
+    // container for what you should see when something is uploaded
+    let = candidateImgOutput = "[name='e-cand-img-out']";
+    if (checkImage($(this)))
+      $(candidateImgOutput).attr('src', URL.createObjectURL($(this).prop('files')[0]));
+    else {
+      alert("Invalid File! Upload a valid image file");
+      $(candidateImgOutput).attr('src', "../resources/images/candidate_generic/generic.png");
+    }
+  });
+
+  /*-----------------------------------------------------------------------
+  Helper functions for 'candidateImgInput' selector
+  -----------------------------------------------------------------------*/
+  /*
+    check the file type using this function; 
+    The context should be a selector that directs to a HTMLInputElement
+   */
+  function checkImage(context) {
+    if (
+      context.prop('files')[0].type === "image/png"
+      || context.prop('files')[0].type === "image/jpg"
+      || context.prop('files')[0].type === "image/jpeg"
+    ) return true;
+
+    return false;
+  }
+  //-----------------------------------------------------------------------
 
   let candidateDeleteLinks = "[name='candidate-delete-link']";
   $(candidateDeleteLinks).click(function (e) {

@@ -47,6 +47,11 @@ $candidate_arr = fetchCandidates($DB_CREDENTIALS, $_GET['pos_id']);
       height: min-content;
 
     }
+
+    img.file-name {
+      height: auto;
+      padding: 0;
+    }
   </style>
 </head>
 
@@ -135,12 +140,24 @@ $candidate_arr = fetchCandidates($DB_CREDENTIALS, $_GET['pos_id']);
         <form id='candidate-edit-modal-form' action="../phpScripts/candidate_overview_edit.php">
 
           <div class='field'>
-            <label class='label'>Candidate Name</label>
-            <div class='control'>
-              <input name='e-cand-name' class='input' type='text' required placeholder='Candidate Name'>
+            <div class="file has-name is-boxed is-centered is-medium">
+              <label class="file-label">
+                <!-- accept attribute dictates only what it should accept -->
+                <input accept=".png, .jpg, .jpeg" name="e-cand-img-in" class="file-input" type="file">
+                <span class="file-cta">
+                  <span class="file-label">Choose an image...</span>
+                </span>
+                <img name='e-cand-img-out' class="image file-name" src="https://lolapug.files.wordpress.com/2013/04/dsc_00181.jpg">
+              </label>
             </div>
           </div>
 
+          <div class='field'>
+            <label class='label'>Candidate Name</label>
+            <div class='control'>
+              <input name='e-cand-name' class='input' type='text' placeholder='Candidate Name'>
+            </div>
+          </div>
           <div class='field'>
             <label class='label'>Description</label>
             <div class='control'>
@@ -154,12 +171,20 @@ $candidate_arr = fetchCandidates($DB_CREDENTIALS, $_GET['pos_id']);
             </div>
           </div>
 
+          <div class='field'>
+            <div class='control'>
+              <label class="checkbox">
+                <input name="e-cand-name-check" type="checkbox">
+                Don't Edit Candidate Name
+              </label>
+            </div>
+          </div>
+
           <div class='field is-grouped'>
             <div class='control'>
               <input type='submit' class='button is-link' value='Submit'>
             </div>
           </div>
-
         </form>
       </div>
     </div>
