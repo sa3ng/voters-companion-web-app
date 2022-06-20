@@ -75,27 +75,46 @@ require_once 'phpScripts/usr_page_functions.php';
             </a>
     
             <div class="navbar-dropdown">
-              <a class="navbar-item" href="phpPages/Candidates.php">
-                Presidential
-              </a>
-              <a class="navbar-item">
-                Vice Presidential
-              </a>
-              <a class="navbar-item">
-                Senatorial
-              </a>
+            <a class="navbar-item" href="Candidates.php?pos_id=P">
+            Presidential
+          </a>
+          <a class="navbar-item" href="Candidates.php?pos_id=VP">
+            Vice Presidential
+          </a>
+          <a class="navbar-item" href="Candidates.php?pos_id=S">
+            Senatorial
+          </a>
        
             </div>
              </div>
-
-          <a class="navbar-item" href="phpPages/ForumPage.php">
-            Forums
-          </a>
 
           
           <a class="navbar-item" href="phpPages/AboutUs.php">
             About Us
           </a>
+
+          <?php
+
+      if (isLoggedIn())
+      {
+        
+      $acc_type = "admin";
+      echo
+      "<a class='navbar-item' href='phpPages/ForumPage.php'>
+        Forums $acc_type
+        
+      </a>";
+
+
+      if(strcmp($acc_type,"admin") == 0){
+      echo
+      "<a class='navbar-item' href='phpPages/adminPage.php'>
+       <strong style='color: blue;'> Manage Accounts </strong>
+      </a>";
+      }
+
+      }
+      ?>
         </div>
     
         <div class="navbar-end">
