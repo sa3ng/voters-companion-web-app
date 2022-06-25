@@ -75,13 +75,13 @@ require_once 'phpScripts/usr_page_functions.php';
             </a>
     
             <div class="navbar-dropdown">
-            <a class="navbar-item" href="Candidates.php?pos_id=P">
+            <a class="navbar-item" href="phpPages/Candidates.php?pos_id=P">
             Presidential
           </a>
-          <a class="navbar-item" href="Candidates.php?pos_id=VP">
+          <a class="navbar-item" href="phpPages/Candidates.php?pos_id=VP">
             Vice Presidential
           </a>
-          <a class="navbar-item" href="Candidates.php?pos_id=S">
+          <a class="navbar-item" href="phpPages/Candidates.php?pos_id=S">
             Senatorial
           </a>
        
@@ -98,7 +98,7 @@ require_once 'phpScripts/usr_page_functions.php';
       if (isLoggedIn())
       {
         
-      $acc_type = "admin";
+      $acc_type = (string) fetchAccTBL($DB_CREDENTIALS, "type");
       echo
       "<a class='navbar-item' href='phpPages/ForumPage.php'>
         Forums $acc_type

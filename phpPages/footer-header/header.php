@@ -1,6 +1,7 @@
 <?php
 require_once '../phpScripts/usr_page_functions.php';
 require_once '../phpScripts/globals.php';
+
 ?>
 <!--HEADER-->
 <section class="headerhero">
@@ -61,15 +62,15 @@ require_once '../phpScripts/globals.php';
       if (isLoggedIn())
       {
         
-      $acc_type = "admin";
+      //$acc_type = fetchAccTBL($DB_CREDENTIALS, "type");
       echo
       "<a class='navbar-item' href='ForumPage.php'>
-        Forums $acc_type
+        Forums
         
       </a>";
 
 
-      if(strcmp($acc_type,"admin") == 0){
+      if(isAdmin($DB_CREDENTIALS)){
       echo
       "<a class='navbar-item' href='adminPage.php'>
        <strong style='color: blue;'> Manage Accounts </strong>

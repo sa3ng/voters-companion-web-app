@@ -74,6 +74,37 @@ function fetchAccTBL($db_credentials, $column)
     return $user[$column];
 } 
 
+function isAdmin($db_credentials)
+{
+    $conn = new mysqli(
+        $db_credentials["server"],
+        $db_credentials["user"],
+        $db_credentials["pass"],
+        $db_credentials["db_name"],
+        $db_credentials["port"]
+    );
+
+    // preparation of prepared statement
+    $stmt = $conn->prepare("SELECT type FROM accTBL WHERE name=?");
+    $stmt->bind_param("s", $_COOKIE["acc_name"]);
+
+    // execution
+    $stmt->execute();
+    // result retrieval
+    $results = $stmt->get_result();
+    // should only have one result; No need to have a while iterator here
+    $user = $results->fetch_assoc();
+
+    if (empty($user))
+        die;
+
+    
+        if(strcmp($user["type"],"admin")  == 0)
+            return true;
+        else
+            return false;
+} 
+
 
 function fetchPersonalInfo($db_credentials, $info){
     $conn = new mysqli(
