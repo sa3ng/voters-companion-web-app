@@ -39,7 +39,12 @@ require_once '../phpScripts/globals.php';
 
     $acc_id = fetchAccId($DB_CREDENTIALS);
     
-
+    //Personal Info
+    $full_name = fetchPersonalInfo($DB_CREDENTIALS,"full_name");
+    $bio = fetchPersonalInfo($DB_CREDENTIALS,"bio");
+    $bday = fetchPersonalInfo($DB_CREDENTIALS,"birthday");
+    $religion = fetchPersonalInfo($DB_CREDENTIALS,"religion_id");
+    $status = fetchPersonalInfo($DB_CREDENTIALS,"status_id");
   ?>
 
 <script>
@@ -453,7 +458,6 @@ require_once '../phpScripts/globals.php';
                 <dl>
                     <dt><strong>Name:</strong></dt> 
                     <?php
-                        $full_name = fetchPersonalInfo($DB_CREDENTIALS,"full_name");
                         
                         if (isLoggedIn()) {
                             echo "<dd>".$full_name."</dd><br>";
@@ -466,7 +470,6 @@ require_once '../phpScripts/globals.php';
 
                     <dt><strong>Bio:</strong></dt>
                     <?php
-                        $bio = fetchPersonalInfo($DB_CREDENTIALS,"bio");
                         
                         if (isLoggedIn()) {
                             echo "<dd>".$bio."</dd><br>";
@@ -478,7 +481,6 @@ require_once '../phpScripts/globals.php';
 
                     <dt><strong>Birthday:</strong></dt> 
                     <?php
-                        $bday = fetchPersonalInfo($DB_CREDENTIALS,"birthday");
                         
                         if (isLoggedIn()) {
                             echo "<dd>".$bday."</dd><br>";
@@ -490,7 +492,6 @@ require_once '../phpScripts/globals.php';
 
                     <dt><strong>Relgion:</strong></dt> 
                     <?php
-                        $religion = fetchPersonalInfo($DB_CREDENTIALS,"religion_id");
                         
                         if (isLoggedIn()) {
                             echo "<dd>".$religion."</dd><br>";
@@ -502,7 +503,7 @@ require_once '../phpScripts/globals.php';
 
                     <dt><strong>Marital Status:</strong></dt> 
                     <?php
-                        $status = fetchPersonalInfo($DB_CREDENTIALS,"status_id");
+                       
                         
                         if (isLoggedIn()) {
                             echo "<dd>".$status."</dd><br>";

@@ -238,8 +238,15 @@
                 </p>
               </div>
             </div>
-            <div class='media-right'>
-              <span class='post-icons has-text-grey-light'><i class='fa-solid fa-thumbs-up'></i> " . $post_likes[$num_of_posts] . "</span>
+            <div class='media-right'>";
+
+            if(strcmp($post_acc_type,"editor") == 0){
+              echo"<button class='button is-danger' type='submit'><i class='fa-solid fa-xmark'></i>&nbsp; Cancel</button>";
+            }
+            
+
+          echo 
+            "
             </div>
           </div>
         </article>
