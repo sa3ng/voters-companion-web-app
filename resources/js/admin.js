@@ -1,5 +1,5 @@
 $(function () {
-  $("[name='role-edit']").click(function (e) {
+  $("[name='edit-role']").click(function (e) {
     e.preventDefault();
     let roleText = $(this).text();
 

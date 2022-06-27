@@ -73,6 +73,9 @@ if ($candidate_basic["position_id"] == "P") {
 
     <?php
     include_once '../phpPages/footer-header/header.php'
+
+   
+
     ?>
 
 </head>
