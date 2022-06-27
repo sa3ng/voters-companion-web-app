@@ -1,5 +1,6 @@
 <?php
 require_once 'globals.php';
+require_once 'usr_page_functions.php';
 
 class UserModel
 {
@@ -56,15 +57,32 @@ function fetchUsers(array $db_credentials)
 
     $result = $stmt->get_result();
     while ($current = $result->fetch_assoc()) {
-        array_push(
-            $return,
-            new UserModel(
-                $current['acc_id'],
-                $current['name'],
-                $current['email'],
-                $current['type']
-            )
-        );
+
+        if (isLoggedIn()) {
+            if (!(isAdmin($db_credentials))) {
+                array_push(
+                    $return,
+                    new UserModel(
+                        $current['acc_id'],
+                        $current['name'],
+                        $current['email'],
+                        $current['type']
+                    )
+                );
+            }
+        } else { //temporary else to catch if not logged in; Mainly for debug
+            if (!(isAdmin($db_credentials))) {
+                array_push(
+                    $return,
+                    new UserModel(
+                        $current['acc_id'],
+                        $current['name'],
+                        $current['email'],
+                        $current['type']
+                    )
+                );
+            }
+        }
     }
 
     $stmt->close();
