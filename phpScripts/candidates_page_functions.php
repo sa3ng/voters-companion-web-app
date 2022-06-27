@@ -1,7 +1,9 @@
 <script src='../resources/js/ckeditors.js'></script>
 <?php
-// class to be utilized by fetchCandidates()
 
+include_once 'globals.php'; // used by: isEditor()
+
+// class to be utilized by fetchCandidates()
 class CandidateOverviewClass
 {
   private $name;
@@ -373,6 +375,10 @@ function queryReligionforEditor($db_credentials, $candidate_id)
 
 function isEditor()
 {
+  global $DB_CREDENTIALS;
+
+  $conn = connectDB($DB_CREDENTIALS);
+
   return true;
 }
 
