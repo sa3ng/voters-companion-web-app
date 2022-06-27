@@ -439,7 +439,7 @@ require_once '../phpScripts/globals.php';
                 </div>
                 
                 <div class="columns is-centered"> 
-                    <button class="button is-primary is-large columns">Save Changes</button>
+                    <button class="button is-primary is-large columns">Change Preferences</button>
                 </div>
 
                 <?php

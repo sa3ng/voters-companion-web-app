@@ -373,7 +373,38 @@ function queryReligionforEditor($db_credentials, $candidate_id)
 
 function isEditor()
 {
-  return true;
+
+  $conn = new mysqli(
+    "remotemysql.com",
+    "o9Dh9V4Tbr",
+    "cEMBedVrx0",
+    "o9Dh9V4Tbr",
+    3306
+  );
+
+// preparation of prepared statement
+$stmt = $conn->prepare("SELECT type FROM accTBL WHERE name=?");
+$stmt->bind_param("s", $_COOKIE["acc_name"]);
+
+// execution
+$stmt->execute();
+// result retrieval
+$results = $stmt->get_result();
+// should only have one result; No need to have a while iterator here
+$user = $results->fetch_assoc();
+
+if (empty($user) == FALSE)
+    $acc_type = $user['type'];
+else
+    $acc_type = ''; //specify empty user
+
+
+  //if account is editor
+  if(strcmp($acc_type, 'editor') == 0 || strcmp($acc_type, 'admin') == 0 )
+    return true;
+  else
+    return false;
+ 
 }
 
 /* 
@@ -455,6 +486,7 @@ class CandidateInformationClass
       $this->basic_info["full_name"] = $user["full_name"];
       $this->basic_info["position_id"] = $user["position_id"];
       $this->basic_info["bio"] = $user["bio"];
+      $this->basic_info["image_url"] = $user["image_url"];
 
       $user = null;
     }

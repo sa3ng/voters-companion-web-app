@@ -95,26 +95,26 @@ require_once 'phpScripts/usr_page_functions.php';
 
           <?php
 
-      if (isLoggedIn())
-      {
-        
-      $acc_type = (string) fetchAccTBL($DB_CREDENTIALS, "type");
-      echo
-      "<a class='navbar-item' href='phpPages/ForumPage.php'>
-        Forums $acc_type
-        
-      </a>";
+if (isLoggedIn())
+{
+  
+//$acc_type = fetchAccTBL($DB_CREDENTIALS, "type");
+echo
+"<a class='navbar-item' href='phpPages/ForumPage.php'>
+  Forums
+  
+</a>";
 
 
-      if(strcmp($acc_type,"admin") == 0){
-      echo
-      "<a class='navbar-item' href='phpPages/adminPage.php'>
-       <strong style='color: blue;'> Manage Accounts </strong>
-      </a>";
-      }
+if(isAdmin($DB_CREDENTIALS)){
+echo
+"<a class='navbar-item' href='phpPages/adminPage.php'>
+ <strong style='color: blue;'> Manage Accounts </strong>
+</a>";
+}
 
-      }
-      ?>
+}
+?>
         </div>
     
         <div class="navbar-end">
