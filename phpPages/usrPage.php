@@ -56,7 +56,7 @@ require_once '../phpScripts/globals.php';
 <body>
 
 
-  <!--Tabs-->
+<!--Tabs-->
 <section class="hero is-link">
     <div class="hero-body">
         <div class="container">
@@ -129,7 +129,7 @@ require_once '../phpScripts/globals.php';
                 </a>
             </li>
          
-            <li data-target="pane-3" id="3">
+            <li data-target="pane-2" id="2">
                 <a>
                     <span class="icon is-small"><i class="fa fa-user-plus"></i></span>
                     <span>Personal Information</span>
@@ -451,22 +451,18 @@ require_once '../phpScripts/globals.php';
             </form> 
         
         
-
         <!--Personal Details-->
-        <div class="tab-pane is-active" id="pane-3">
+        <div class="tab-pane is-active" id="pane-2">
             <div class="content">
                 <dl>
-                    <dt><strong>Name:</strong></dt> 
+                    <button class='button is-small is-success' name='done'>Done</button>
+                    <dt><strong>Name:</strong> <button class='button is-small is-info' name='editName'>Edit</button></dt> 
+                   
                     <?php
-                        
                         if (isLoggedIn()) {
-                            echo "<dd>".$full_name."</dd><br>";
-                        } else {
-                            echo "<dd> Name Here</dd><br>";
-                        }
-
+                            echo "<div id='CK-name'>".$full_name."</div><br>";
+                        } 
                     ?>
-                    
 
                     <dt><strong>Bio:</strong></dt>
                     <?php
@@ -520,6 +516,8 @@ require_once '../phpScripts/globals.php';
     </div>
 </div>
 </section>
+<script src="../resources/ckeditor/build/ckeditor.js"></script>
+<script src="../resources/js/usersckeditors.js"></script>
 <script src="../resources/js/bulma.js"></script>
 <script src="../resources/js/tabs.js"></script>
 <script src="../resources/js/platform.js"></script>

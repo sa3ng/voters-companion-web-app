@@ -32,6 +32,8 @@ var selectorContainer8 = "#CK-accomplishments"
 var selectorBtn9 = "[name='editOrgs']"
 var selectorContainer9 = "#CK-orgs"
 
+var selectorBtn10 = "[name='editName']"
+var selectorContainer10 = "#CK-name"
 
 // ORIGINAL HTML STRINGS TO BE COMPARED WITH
 var ckOriginBirthdayHTML = $.trim($(selectorContainer1).html());
@@ -233,6 +235,23 @@ $(function () {
         if (($(selectorContainer9).is(":visible"))) {
             ClassicEditor
                 .create(document.querySelector(selectorContainer9))
+                .then(editor => {
+                    console.log("Created", editor);
+                    globaleditor = editor;
+                })
+                .catch(error => {
+                    console.log(error.stack);
+                })
+        }
+    });
+
+    $(selectorBtn10).click(function (e) {
+        e.preventDefault();
+        newEdit($(selectorContainer10));
+
+        if (($(selectorContainer10).is(":visible"))) {
+            ClassicEditor
+                .create(document.querySelector(selectorContainer10))
                 .then(editor => {
                     console.log("Created", editor);
                     globaleditor = editor;
