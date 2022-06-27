@@ -27,7 +27,7 @@
     
         $stmt->close();
     
-        $stmt2 = $conn->prepare("INSERT INTO postsTBL(acc_id,message, is_reply, is_reply_of, likes, approved) VALUES('" . $name["acc_id"] . "','". $message . "', 1 ,".$post_id.", 0,1)");
+        $stmt2 = $conn->prepare("INSERT INTO postsTBL(acc_id,message, is_reply, is_reply_of, likes, approved, date) VALUES('" . $name["acc_id"] . "','". $message . "', 1 ,".$post_id.", 0,1, DATE_FORMAT(NOW(), '%M %d %Y')))");
         $stmt2->execute();
         $stmt2->close();
     
@@ -62,7 +62,7 @@
 
     $stmt->close();
 
-    $stmt2 = $conn->prepare("INSERT INTO postsTBL(acc_id,header,message, is_reply, likes, approved) VALUES('" . $name["acc_id"] . "','". $header ."','". $message . "', 0, 0,0)");
+    $stmt2 = $conn->prepare("INSERT INTO postsTBL(acc_id,header,message, is_reply, likes, approved, date) VALUES('" . $name["acc_id"] . "','". $header ."','". $message . "', 0, 0,0, DATE_FORMAT(NOW(), '%M %d %Y'))");
     $stmt2->execute();
     $stmt2->close();
 

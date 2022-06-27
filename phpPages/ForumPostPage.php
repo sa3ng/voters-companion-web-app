@@ -14,9 +14,16 @@
 
     //initialize variables
     $post_header = $_POST['post_header'];
-    $post_user = $_POST['post_user'];
-    $post_likes = $_POST['post_likes'];
-    
+
+
+    if(isset($_POST['post_user'])){
+      $post_user = $_POST['post_user'];
+      $post_likes = $_POST['post_likes'];
+    }
+    else{
+      $post_user = '';
+    }
+      
     $post_message = fetchPostInfo($DB_CREDENTIALS, 'message', $post_header);
     $post_id = fetchPostInfo($DB_CREDENTIALS,'post_id', $post_header);
     
@@ -117,30 +124,34 @@
 
         ?>
 
-        
+        <?php
 
-        <article class="reply column is-offset-1">
-        <form action="../phpScripts/upload.php"  method="POST">
-          <input type="hidden" name="is_reply" value="1"> 
-          <?php
-          echo "<input type='hidden' name='post_id' value='".$post_id."'>
+        if(strcmp($post_user, '') != 0){
+        echo "
+        <article class='reply column is-offset-1'>
+        <form action='../phpScripts/upload.php'  method='POST'>
+          <input type= 'hidden' name='is_reply' value='1'> 
           
-          ";
-          ?>
-
-          <div class="message-input-div media">
-            <textarea class="textarea is-medium is-hovered" name='message-input' placeholder="Express yourself..."></textarea>
+          <input type='hidden' name='post_id' value='".$post_id."'>
+         
+          <div class='message-input-div media'>
+            <textarea class='textarea is-medium is-hovered' name='message-input' placeholder='Express yourself...'></textarea>
           </div>
-          <div class="media">
-            <div class="media-content">
+          <div class='media'>
+            <div class='media-content'>
               (1000 Characters max)
             </div>
-            <div class="media-right">
-            <button class="button" name="post" type="submit"><strong> Post </strong></button>
+            <div class='media-right'>
+            <button class='button' name='post' type='submit'><strong> Post </strong></button>
             </div>
           </div>
         </form>
         </article>
+        ";
+        }
+
+
+        ?>
       </div>
     </div>
     </div>

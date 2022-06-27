@@ -2,7 +2,7 @@
 
 require_once 'globals.php';
 
-$post_approval_header = $_POST['post_approval_header'];
+$post_approval_header = $_POST['post_header'];
 
 $conn = new mysqli(
     $DB_CREDENTIALS["server"],

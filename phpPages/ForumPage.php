@@ -46,10 +46,15 @@
   $post_headers = fetchHeaders($DB_CREDENTIALS);
   $post_likes = fetchLikes($DB_CREDENTIALS);
   $post_acc_ids = fetchPostAccID($DB_CREDENTIALS);
+  $post_dates = fetchDates($DB_CREDENTIALS, 1);
 
+  //Pending Posts - Users
   $posts_pending_headers = fetchPendingPosts($DB_CREDENTIALS, 'header');
+  $posts_pending_dates = fetchPendingPosts($DB_CREDENTIALS, 'date');
 
-  $posts_not_approved = fetchNonApprovedPosts($DB_CREDENTIALS);
+  //For-approval posts - Editors
+  $posts_not_approved = fetchNonApprovedPosts($DB_CREDENTIALS, 'header');
+  $posts_not_app_dates = fetchNonApprovedPosts($DB_CREDENTIALS, 'date');
 
   $post_acc_type = fetchAccTBL($DB_CREDENTIALS, 'type');
 
@@ -100,29 +105,29 @@
   </section>
 
 
-  <div class="search-bar box content media">
+  <!-- <div class="search-bar box content media">
     <input class="search-bar input is-primary column is-half is-offset-one-quarter" type="text" placeholder="Search Forum">
     <p class="image is-48x48 ">
       <img src="https://preview.pixlr.com/images/800wm/100/1/1001451331.jpg">
     </p>
-  </div>
+  </div> -->
+  <br>
+  <br>
 
   <a class="button  box is-medium is-primary column is-4 is-offset-4" href='ForumCreatePost.php'>Create a Post</a>
 
-  <div class="column is-10 is-offset-1">
-      <div class="content"><h2>My Pending Posts</h2></div>
-    <div class="box content mb-6">
-
     <?php
-
-
-
     if(strcmp($post_acc_type,"editor") == 0){
 
+      echo "<div class='column is-10 is-offset-1'>
+      <div class='content'><h2>For Approval:</h2></div>
+      <div class='box content mb-6'>";
+
+      $index = 0;
       foreach($posts_not_approved as $posts){
         echo "
-        <form action='../phpScripts/approve_post.php' method='POST'>
-        <input type='hidden' value='$posts' name='post_approval_header'>
+        <form action='ForumPostPage.php' method='POST'>
+        <input type='hidden' value='$posts' name='post_header'>
         <article class='post' id='editorTestDiv'>
               <button class='transparent' type='submit'><h3>".$posts."</h3></button>
               <div class='media'>
@@ -133,14 +138,14 @@
                 </div>
                 <div class='media-content'>
                   <div class='content'>
-                    <p>
-                      <a href='#'>@user</a> posted 34 minutes ago 
+                    <p> 
+                      posted on $posts_not_app_dates[$index]
                       <span class='tag'>Question</span>
                     </p>
                   </div>
                 </div>
                 <div class='media-right'>
-                  <button class='button is-success' type='submit'><i class='fa-solid fa-check'></i>&nbsp; Approve</button>
+                  <button class='button is-success' formaction='../phpScripts/approve_post.php' type='submit'><i class='fa-solid fa-check'></i>&nbsp; Approve</button>
                   <button class='button is-danger' type='submit' formaction='../phpScripts/delete_post.php'><i class='fa-solid fa-trash'></i>&nbsp; Reject</button>
                 </div>
               </div>
@@ -148,16 +153,23 @@
             </form>
             
         ";
+        $index += 1;
         }
 
     }
 
     else{
+      $index = 0;
+      echo "<div class='column is-10 is-offset-1'>
+      <div class='content'><h2>My Pending Posts</h2></div>
+      <div class='box content mb-6'>";
 
       foreach($posts_pending_headers as $pending_headers){
+
         echo "
-        <form action='../phpScripts/delete_post.php' method='POST'>
-        <input type='hidden' value='$pending_headers' name='post_approval_header'>
+
+        <form action='ForumPostPage.php' method='POST'>
+        <input type='hidden' value='$pending_headers' name='post_header'>
         <article class='post'>
               <button class='transparent' type='submit'><h3>".$pending_headers."</h3></button>
               <div class='media'>
@@ -169,18 +181,19 @@
                 <div class='media-content'>
                   <div class='content'>
                     <p>
-                      posted 34 minutes ago 
+                      posted on $posts_pending_dates[$index]
                       <span class='tag'>Question</span>
                     </p>
                   </div>
                 </div>
                 <div class='media-right'>
-                  <button class='button is-danger' type='submit'><i class='fa-solid fa-xmark'></i>&nbsp; Cancel</button>
+                  <button class='button is-danger' formaction='../phpScripts/delete_post.php' type='submit'><i class='fa-solid fa-xmark'></i>&nbsp; Cancel</button>
                 </div>
               </div>
             </article>
             </form>";
-        } 
+          $index += 1;
+      } 
     }
 
     
@@ -223,6 +236,7 @@
         <input type='hidden' name='post_header' value= '" . $headers. "'></input>
         <input type='hidden' name='post_user' value= '" .$user_tag_array[0]. "'></input>
         <input type='hidden' name='post_likes' value= '" .$post_likes[$num_of_posts]. "'></input>
+        <input type='hidden' name='post_date' value= '" .$post_dates[$num_of_posts]. "'></input>
           <button class='transparent' type='submit'><h3> " . $headers . "</h3> </button>
           <div class='media'>
             <div class='media-left'>
@@ -233,7 +247,7 @@
             <div class='media-content'>
               <div class='content'>
                 <p>
-                  <a href='#'>" . $user_tag_array[0] . "</a> posted 34 minutes ago 
+                  <a href='#'>" . $user_tag_array[0] . "</a> posted on $post_dates[$num_of_posts]
                   <span class='tag'>Question</span>
                 </p>
               </div>
@@ -241,7 +255,7 @@
             <div class='media-right'>";
 
             if(strcmp($post_acc_type,"editor") == 0){
-              echo"<button class='button is-danger' type='submit'><i class='fa-solid fa-xmark'></i>&nbsp; Cancel</button>";
+              echo"<button class='button is-danger' formaction='../phpScripts/delete_post.php' type='submit'><i class='fa-solid fa-xmark'></i>&nbsp; Remove</button>";
             }
             
 
