@@ -382,8 +382,9 @@ function isEditor()
 
 
   if (isLoggedIn()) {
-    
   }
+
+  return false;
 }
 
 /* 
