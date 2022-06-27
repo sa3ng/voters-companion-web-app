@@ -71,17 +71,15 @@ function fetchUsers(array $db_credentials)
                 );
             }
         } else { //temporary else to catch if not logged in; Mainly for debug
-            if (!(isAdmin($db_credentials))) {
-                array_push(
-                    $return,
-                    new UserModel(
-                        $current['acc_id'],
-                        $current['name'],
-                        $current['email'],
-                        $current['type']
-                    )
-                );
-            }
+            array_push(
+                $return,
+                new UserModel(
+                    $current['acc_id'],
+                    $current['name'],
+                    $current['email'],
+                    $current['type']
+                )
+            );
         }
     }
 
