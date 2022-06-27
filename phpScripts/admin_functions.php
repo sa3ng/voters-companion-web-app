@@ -59,16 +59,18 @@ function fetchUsers(array $db_credentials)
     while ($current = $result->fetch_assoc()) {
 
         if (isLoggedIn()) {
-            if (!(isAdmin($db_credentials))) {
-                array_push(
-                    $return,
-                    new UserModel(
-                        $current['acc_id'],
-                        $current['name'],
-                        $current['email'],
-                        $current['type']
-                    )
-                );
+            if ((isAdmin($db_credentials))) {
+                if (!($_COOKIE['acc_name'] == $current['name'])) {
+                    array_push(
+                        $return,
+                        new UserModel(
+                            $current['acc_id'],
+                            $current['name'],
+                            $current['email'],
+                            $current['type']
+                        )
+                    );
+                }
             }
         } else { //temporary else to catch if not logged in; Mainly for debug
             array_push(
