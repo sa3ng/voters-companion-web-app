@@ -2,6 +2,7 @@
 <?php
 
 include_once 'globals.php'; // used by: isEditor()
+include_once 'usr_page_functions.php'; // used by: isEditor()
 
 // class to be utilized by fetchCandidates()
 class CandidateOverviewClass
@@ -379,7 +380,10 @@ function isEditor()
 
   $conn = connectDB($DB_CREDENTIALS);
 
-  return true;
+
+  if (isLoggedIn()) {
+    
+  }
 }
 
 /* 
