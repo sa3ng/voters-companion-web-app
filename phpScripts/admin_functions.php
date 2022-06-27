@@ -84,9 +84,9 @@ function displayUsers(array $users)
             <td data-label='Role'>" . $value->getType() . "</td>
             <td data-label='UpdateRole'>
             <div class='buttons are-small'>
-                <button class='button is-info is-light'>user</button>
-                <button class='button is-warning is-light'>editor</button>
-                <button class='button is-danger is-light'>admin</button>
+                <button name='edit-role' class='button is-info is-light'>user</button>
+                <button name='edit-role' class='button is-warning is-light'>editor</button>
+                <button name='edit-role' class='button is-danger is-light'>admin</button>
             </div>
             </td>
             <td data-label='Created'>
@@ -99,7 +99,7 @@ function displayUsers(array $users)
                 <button class='button is-small is-primary' type='button'>
                 <span class='icon'><i class='fa fa-eye'></i></span>
                 </button>
-                <button class='button is-small is-danger jb-modal' data-target='sample-modal' type='button' onclick='ConfirmDelete()'>
+                <button name='delete-user' class='button is-small is-danger jb-modal' data-target='sample-modal' type='button'>
                 <i class='fa fa-trash'></i>
                 </button>
             </div>

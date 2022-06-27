@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
 
-<!-- TODO: CREATE THE 'DONE' EDITING FUNCTIONALITY TO COMPLETE THE CREATION PROCESS  -->
-<!-- TODO: AFTER CREATING A CANDIDATE, CREATE FUNCTIONALITY THAT'LL PRINT THE SET DATA FROM THE DATABASE -->
-
 <?php
 include_once '../phpScripts/candidates_page_functions.php';
 include_once '../phpScripts/globals.php';
@@ -88,8 +85,21 @@ if ($candidate_basic["position_id"] == "P") {
             <div class="container">
                 <div class="media">
                     <div class="media-left">
-                        <figure class="image is-128x128">
-                            <img class="is-rounded" src="https://i.pinimg.com/originals/2a/3a/fe/2a3afea3b703dba502ae62b54e069f12.jpg">
+                        <figure class='image is-128x128'>
+                            <?php
+                            if (!(is_null($candidate_basic['image_url']))) {
+                                echo
+                                "<img 
+                                class='is-rounded'
+                                src={$candidate_basic['image_url']}>";
+                            } else {
+                                echo
+                                "<img 
+                                class='is-rounded' 
+                                src='../resources/images/candidate_generic/generic.png'>";
+                            }
+
+                            ?>
                         </figure>
                     </div>
                     <div class="media-content">
@@ -345,7 +355,7 @@ if ($candidate_basic["position_id"] == "P") {
             <div class="tab-pane" id="pane-4">
                 <div class="columns is-centered">
                     <div class="content">
-                    <button class='button is-small is-info' name='editAccomplishment'>Edit</button>
+                        <button class='button is-small is-info' name='editAccomplishment'>Edit</button>
                         <div>
                             <h3>Platform</h3>
                             <p>Quisque ante lacus, malesuada ac auctor vitae, congue. Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.</p>
@@ -374,7 +384,7 @@ if ($candidate_basic["position_id"] == "P") {
             <div class="tab-pane" id="pane-2">
                 <div class="columns is-centered">
                     <div class="content">
-                    <button class='button is-small is-info' name='editAccomplishment'>Edit</button>
+                        <button class='button is-small is-info' name='editAccomplishment'>Edit</button>
                         <div>
                             <h3>Accomplishment</h3>
                             <p>Quisque ante lacus, malesuada ac auctor vitae, congue. Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.</p>

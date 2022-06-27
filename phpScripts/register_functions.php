@@ -1,12 +1,9 @@
 <?php
+require_once 'globals.php';
+
 function registerUser($db_credentials, $user_credentials, $user_db_tbl, $email_column, $user_column)
 {
-    $conn = new mysqli(
-        $db_credentials['server'],
-        $db_credentials['user'],
-        $db_credentials['pass'],
-        $db_credentials['db_name']
-    );
+    $conn = connectDB($db_credentials);
 
     if (checkForSimilarEmail($conn, $user_credentials, $user_db_tbl, $email_column)) {
         // displayAlertAndRedirect("EMAIL IS ALREADY TAKEN!");
@@ -24,7 +21,7 @@ function registerUser($db_credentials, $user_credentials, $user_db_tbl, $email_c
 }
 
 // HELPER FUNCTIONS
-function checkForSimilarEmail($conn, $user_credentials, $target_tbl, $target_column)
+function checkForSimilarEmail(mysqli $conn, $user_credentials, $target_tbl, $target_column)
 {
     $stmt = $conn->prepare("SELECT * FROM " .  $target_tbl . " WHERE " . $target_column . "=?");
     $stmt->bind_param("s", $user_credentials["email_register"]);
@@ -68,14 +65,18 @@ function checkForSimilarUsername($conn, $user_credentials, $target_tbl, $target_
     return true;
 }
 
-function createAccount($conn, $user_credentials, $user_db_tbl)
+function createAccount(mysqli $conn, array $user_credentials, $user_db_tbl)
 {
-    $stmt = $conn->prepare("INSERT INTO `" .  $user_db_tbl . "` (`user_id`, `user_email`, `user_name`, `user_password`) VALUES (NULL, ?, ?, ?)");
+    $default_user_type = "user";
+    $stmt = $conn->prepare(
+        "INSERT INTO " . $user_db_tbl . "(name, pass, email, type) VALUES(?, ?, ?, ?);"
+    );
     $stmt->bind_param(
-        "sss",
-        $user_credentials["email_register"],
+        "ssss",
         $user_credentials["user_register"],
-        $user_credentials["pass_register"]
+        $user_credentials["pass_register"],
+        $user_credentials["email_register"],
+        $default_user_type
     );
 
     $stmt->execute();

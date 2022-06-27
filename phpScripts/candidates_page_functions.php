@@ -455,6 +455,7 @@ class CandidateInformationClass
       $this->basic_info["full_name"] = $user["full_name"];
       $this->basic_info["position_id"] = $user["position_id"];
       $this->basic_info["bio"] = $user["bio"];
+      $this->basic_info["image_url"] = $user["image_url"];
 
       $user = null;
     }
