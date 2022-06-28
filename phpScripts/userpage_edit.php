@@ -6,51 +6,45 @@ $conn = connectDB($DB_CREDENTIALS);
 
 // Server-side validation prep
 $stmt =  $conn->prepare(
-    "SELECT full_name
-    FROM candidatesTBL;"
+    "SELECT acc_id
+    FROM accTBL
+    WHERE name = ?;"
 );
+
+$stmt->bind_param("s", $_COOKIE["acc_name"]);
+
 $stmt->execute();
+
+
 //server-side name validation
-if (isset($_POST["candidate_name"])) {
+if (isset($_COOKIE["acc_name"])) {
     $result = $stmt->get_result();
-    while ($current_row = $result->fetch_assoc()) {
-        if ($_POST["candidate_name"] == $current_row["full_name"]) {
-            echo "NAME_IN_DB";
-            die();
-        }
-    }
+    $fetchname = $result->fetch_assoc();
+    if(!(empty($fetchname)))
+    $user = $fetchname["acc_id"];
+    else die();
 }
 $stmt->close();
 
 
 // if script reaches this far, ok to do edits
 
-if (isset($_POST["candidate_name"])) {
+if (isset($_POST["full_name"])) {
     $stmt =  $conn->prepare(
-        "UPDATE candidatesTBL 
+        "UPDATE accProfileTBL
         SET full_name=?
-        WHERE candidate_id = ?;"
+        WHERE acc_id = ?;"
     );
 
     $stmt->bind_param(
         "si",
-        $_POST["candidate_desc"],
-        $_POST["candidate_id"]
+        $_POST["full_name"],
+        $user
     );
     $stmt->execute();
 }
 
-$stmt =  $conn->prepare(
-    "UPDATE candidatesTBL 
-        SET bio=?
-        WHERE candidate_id = ?;"
-);
 
-$stmt->bind_param(
-    "si",
-    $_POST["candidate_desc"],
-    $_POST["candidate_id"]
-);
 $stmt->execute();
 $stmt->close();
 

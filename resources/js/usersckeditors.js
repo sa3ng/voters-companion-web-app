@@ -10,19 +10,16 @@ var selectorContainer2 = "#CK-bio"
 var selectorBtn3 = "[name='editBirthday']"
 var selectorContainer3 = "#CK-birthday"
 
-var selectorBtn4 = "[name='editReligion']"
-var selectorContainer4 = "#CK-religion"
+var selectorBtn4 = "[name='editUsertag']"
+var selectorContainer4 = "#CK-usertag"
 
-var selectorBtn5 = "[name='editMarital']"
-var selectorContainer5 = "#CK-marital"
 
 
 // ORIGINAL HTML STRINGS TO BE COMPARED WITH
 var ckOriginNameHTML = $.trim($(selectorContainer1).html());
 var ckOriginBioHTML = $.trim($(selectorContainer2).html());
 var ckOriginBirthdayHTML = $.trim($(selectorContainer3).html());
-var ckOriginReligionHTML = $.trim($(selectorContainer4).html());
-var ckOriginMaritalHTML = $.trim($(selectorContainer5).html());
+var ckOriginUsertagHTML = $.trim($(selectorContainer4).html());
 
 
 function newEdit($param) {
@@ -105,23 +102,6 @@ $(function () {
         }
     });
 
-    $(selectorBtn5).click(function (e) {
-        e.preventDefault();
-        newEdit($(selectorContainer5));
-
-        if (($(selectorContainer5).is(":visible"))) {
-            ClassicEditor
-                .create(document.querySelector(selectorContainer5))
-                .then(editor => {
-                    console.log("Created", editor);
-                    globaleditor = editor;
-                })
-                .catch(error => {
-                    console.log(error.stack);
-                })
-        }
-    });
-
 
     $("[name='done']").click(function (e) {
         e.preventDefault();
@@ -136,39 +116,38 @@ $(function () {
 
         let formData = new FormData();
 
-        // CANDIDATE PARAMATER TO SUBMIT TO IN THE DB
-
-        let user = $("[name='done']").data("target-user");
+        /* CANDIDATE PARAMATER TO SUBMIT TO IN THE DB
+        let candidate = $("[name='done']").data("target-candidate");
         formData.append
             (
-                "user",
-                 user
+                "candidate",
+                candidate
             );
-
+        */
+        console.log("Hello World");
 
         let ckNewNameHTML = $.trim($(selectorContainer1).html());
         let ckNewBioHTML = $.trim($(selectorContainer2).html());
         let ckNewBirthdayHTML = $.trim($(selectorContainer3).html());
-        let ckNewReligionHTML = $.trim($(selectorContainer4).html());
-        let ckNewMaritalHTML = $.trim($(selectorContainer5).html());
+        let ckNewUsertagHTML = $.trim($(selectorContainer4).html());
        
 
         /* ----------------------------------------------------------------
         CHECK CHANGES TO PREP FOR AJAX; SEND ONES THAT ARE ACTUALLY CHANGED 
         ---------------------------------------------------------------- */
         if (ckNewNameHTML.valueOf()
-            != ckOriginBirthdayHTML.valueOf()) {
-            formData.append("name", ckNewNameHTML);
+            != ckOriginNameHTML.valueOf()) {
+            formData.append("full_name", ckNewNameHTML);
         }
 
         if (ckNewBioHTML.valueOf() 
             != ckOriginBioHTML.valueOf()) {
-            formData.append("bio", ckNewBioeHTML);
+            formData.append("bio", ckNewBioHTML);
         }
       
-        if (ckNewReligionHTML.valueOf()
-            != ckOriginReligionHTML.valueOf()) {
-            formData.append("religion", ckNewMaritalHTML);
+        if (ckNewUsertagHTML.valueOf()
+            != ckOriginUsertagHTML.valueOf()) {
+            formData.append("user_tag", ckNewUsertagHTML);
         }
 
         if (ckNewBirthdayHTML.valueOf()
@@ -176,24 +155,19 @@ $(function () {
             formData.append("birthday", ckNewBirthdayHTML);
         }
 
-        if (ckNewMaritalHTML.valueOf()
-            != ckOriginMartialHTML.valueOf()) {
-            formData.append("marital", ckNewMaritalHTML);
-        }
-
         /* ----------------------------------------------------------------
         CHECK CHANGES TO PREP FOR AJAX; SEND ONES THAT ARE ACTUALLY CHANGED 
         ---------------------------------------------------------------- */
-        /*
+      
         $.ajax({
             type: "post",
-            url: "../phpScripts/candidate_edit.php",
+            url: '../phpScripts/userpage_edit.php',
             data: formData,
             contentType: false,
             processData: false,
             success: function (response) {
                 if (response === "OK") {
-                    alert("Candidate Edited Successfully");
+                    alert("Info Edited Successfully");
                 }
                 else {
                     alert("Something went wrong");
@@ -202,7 +176,7 @@ $(function () {
             }
         });
 
-        */
+       
     });
 
 

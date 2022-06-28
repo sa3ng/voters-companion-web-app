@@ -1,6 +1,7 @@
 
 <?php
 require_once '../phpScripts/globals.php';
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,29 +34,22 @@ require_once '../phpScripts/globals.php';
     $senator_names = fetchCandidateNames($DB_CREDENTIALS,'S'); 
 
     //Fill up preferred Candidates
-    $president_pick;
-    $vice_pres_pick;
-    $senator_picks;
-
+    $president_pick = fetchPreferedNames($DB_CREDENTIALS, 'president_id');
+    $vice_pres_pick = fetchPreferedNames($DB_CREDENTIALS, 'vpresident_id');
+    $senator_picks = fetchPreferedSenators($DB_CREDENTIALS);
+    
     $acc_id = fetchAccId($DB_CREDENTIALS);
     
     //Personal Info
     $full_name = fetchPersonalInfo($DB_CREDENTIALS,"full_name");
     $bio = fetchPersonalInfo($DB_CREDENTIALS,"bio");
+    $user_tag = fetchPersonalInfo($DB_CREDENTIALS,"user_tag");
     $bday = fetchPersonalInfo($DB_CREDENTIALS,"birthday");
     $religion = fetchPersonalInfo($DB_CREDENTIALS,"religion_id");
     $status = fetchPersonalInfo($DB_CREDENTIALS,"status_id");
   ?>
 
-<script>
-
-
-</script>
-
- 
 <body>
-
-
 <!--Tabs-->
 <section class="hero is-link">
     <div class="hero-body">
@@ -142,12 +136,16 @@ require_once '../phpScripts/globals.php';
     <div class="tab-content">
             <div class="tab-pane is-active" id="pane-1">
              <!-- CONTAINER FOR THE CHOSEN CANDIDATES -->
-             <form action="" method="POST">
+             <form action="../phpScripts/uploadpreferred.php" method="POST">
                 <div class="columns" >
                     <div class="column has-text-centered">
                         <h1 class="title is-2" style="color: black;">President</h1>
+                        <?php
+                            echo "<h2 class='title is-3' style='color: black;'> " .$president_pick."</h2>";
+                        ?>
+                     
                         <h2 class="title is-2" style="color: black;">
-                        <select id="president_id_input" name="president_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
+                        <select id="president_id_input" name="president_id_input" class="input is-primary" type="dr" placeholder="Primary input">
                             <?php
                             foreach($president_names as $names){
                               echo "<option value='".$names."'>".$names."</option>";
@@ -160,6 +158,9 @@ require_once '../phpScripts/globals.php';
 
                     <div class="column has-text-centered" >
                         <h1 class="title is-2" style="color: black;">Vice President</h1>
+                        <?php
+                            echo "<h2 class='title is-3' style='color: black;'> " .$vice_pres_pick."</h2>";
+                        ?>
                         <h2 class="title is-2" style="color: black;">
                         <select id="v_president_id_input" name="v_president_id_input" class="input is-primary" type="dr" placeholder="Primary input" >
                             <?php
@@ -184,8 +185,10 @@ require_once '../phpScripts/globals.php';
                         <div class="columns">
                             <div class="column has-text-centered">
                                 <h1 class="title is-3" style="color: black;">Senator 1</h1>
-                                <br>
-                                <h2 class="title is-2" style="color: black;">
+                        <?php
+                            echo "<h3 class='title is-4' style='color: black;'> " .$senator_picks[0]."</h2>";
+                        ?>
+                        <h2 class="title is-2" style="color: black;">
                         <select id="sen1_id_input" name="sen1_id_input" class="candidate-select input is-primary" type="dr" placeholder="Primary input">
                             <?php
                             foreach($senator_names as $names){
@@ -199,7 +202,9 @@ require_once '../phpScripts/globals.php';
 
                             <div class="column has-text-centered">
                                 <h1 class="title is-3" style="color: black;">Senator 2</h1>
-                                <br>
+                            <?php
+                                 echo "<h3 class='title is-4' style='color: black;'> " .$senator_picks[1]."</h2>";
+                             ?>
                                 <h2 class="title is-2" style="color: black;">
                         <select id="sen2_id_input" name="sen2_id_input" class="candidate-select input is-primary" type="dr" placeholder="Primary input" >
                         <?php
@@ -214,7 +219,9 @@ require_once '../phpScripts/globals.php';
 
                             <div class="column has-text-centered">
                                 <h1 class="title is-3" style="color: black;">Senator 3</h1>
-                                <br>
+                            <?php
+                                 echo "<h3 class='title is-4' style='color: black;'> " .$senator_picks[2]."</h2>";
+                             ?>
                                 <h2 class="title is-2" style="color: black;">
                         <select id="sen3_id_input" name="sen3_id_input" class="candidate-select input is-primary" type="dr" placeholder="Primary input" >
                         <?php
@@ -235,7 +242,9 @@ require_once '../phpScripts/globals.php';
                         <div class="columns">
                             <div class="column has-text-centered">
                                 <h1 class="title is-3" style="color: black;">Senator 4</h1>
-                                <br>
+                                <?php
+                                 echo "<h3 class='title is-4' style='color: black;'> " .$senator_picks[3]."</h2>";
+                                ?>
                                 <h2 class="title is-2" style="color: black;">
                         <select id="sen4_id_input" name="sen4_id_input" class="candidate-select input is-primary" type="dr" placeholder="Primary input" >
                         <?php
@@ -250,7 +259,9 @@ require_once '../phpScripts/globals.php';
 
                             <div class="column has-text-centered">
                                 <h1 class="title is-3" style="color: black;">Senator 5</h1>
-                                <br>
+                                <?php
+                                 echo "<h3 class='title is-4' style='color: black;'> " .$senator_picks[4]."</h2>";
+                             ?>
                                 <h2 class="title is-2" style="color: black;">
                         <select id="sen5_id_input" name="sen5_id_input" class="candidate-select input is-primary" type="dr" placeholder="Primary input" >
                         <?php
@@ -265,7 +276,9 @@ require_once '../phpScripts/globals.php';
 
                             <div class="column has-text-centered">
                                 <h1 class="title is-3" style="color: black;">Senator 6</h1>
-                                <br>
+                                <?php
+                                 echo "<h3 class='title is-4' style='color: black;'> " .$senator_picks[5]."</h2>";
+                             ?>
                                 <h2 class="title is-2" style="color: black;">
                         <select id="sen6_id_input" name="sen6_id_input" class="candidate-select input is-primary" type="dr" placeholder="Primary input" >
                             <?php
@@ -287,7 +300,9 @@ require_once '../phpScripts/globals.php';
                         <div class="columns">
                             <div class="column has-text-centered">
                                 <h1 class="title is-3" style="color: black;">Senator 7</h1>
-                                <br>
+                                <?php
+                                 echo "<h3 class='title is-4' style='color: black;'> " .$senator_picks[6]."</h2>";
+                             ?>
                                 <h2 class="title is-2" style="color: black;">
                         <select id="sen7_id_input" name="sen7_id_input" class="candidate-select input is-primary" type="dr" placeholder="Primary input" >
                         <?php
@@ -303,7 +318,9 @@ require_once '../phpScripts/globals.php';
 
                             <div class="column has-text-centered">
                                 <h1 class="title is-3" style="color: black;">Senator 8</h1>
-                                <br>
+                                <?php
+                                 echo "<h3 class='title is-4' style='color: black;'> " .$senator_picks[7]."</h2>";
+                             ?>
                                 <h2 class="title is-2" style="color: black;">
                         <select id="sen8_id_input" name="sen8_id_input" class="candidate-select input is-primary" type="dr" placeholder="Primary input" >
                         <?php
@@ -320,7 +337,9 @@ require_once '../phpScripts/globals.php';
 
                             <div class="column has-text-centered">
                                 <h1 class="title is-3" style="color: black;">Senator 9</h1>
-                                <br>
+                                <?php
+                                 echo "<h3 class='title is-4' style='color: black;'> " .$senator_picks[8]."</h2>";
+                                 ?>
                                 <h2 class="title is-2" style="color: black;">
                         <select id="sen9_id_input" name="sen9_id_input" class="candidate-select input is-primary" type="dr" placeholder="Primary input" >
                         <?php
@@ -343,7 +362,9 @@ require_once '../phpScripts/globals.php';
                         <div class="columns">
                             <div class="column has-text-centered">
                                 <h1 class="title is-3" style="color: black;">Senator 10</h1>
-                                <br>
+                                <?php
+                                 echo "<h3 class='title is-4' style='color: black;'> " .$senator_picks[9]."</h2>";
+                             ?>
                                 <h2 class="title is-2" style="color: black;">
                         <select id="sen10_id_input" name="sen10_id_input" class="candidate-select input is-primary" type="dr" placeholder="Primary input" >
                         <?php
@@ -360,7 +381,9 @@ require_once '../phpScripts/globals.php';
 
                             <div class="column has-text-centered">
                                 <h1 class="title is-3" style="color: black;">Senator 11</h1>
-                                <br>
+                                <?php
+                                 echo "<h3 class='title is-4' style='color: black;'> " .$senator_picks[10]."</h2>";
+                             ?>
                                 <h2 class="title is-2" style="color: black;">
                         <select id="sen11_id_input" name="sen11_id_input" class="candidate-select input is-primary" type="dr" placeholder="Primary input" >
                         <?php
@@ -377,7 +400,9 @@ require_once '../phpScripts/globals.php';
 
                             <div class="column has-text-centered">
                                 <h1 class="title is-3" style="color: black;">Senator 12</h1>
-                                <br>
+                                <?php
+                                 echo "<h3 class='title is-4' style='color: black;'> " .$senator_picks[11]."</h2>";
+                                ?>
                                 <h2 class="title is-2" style="color: black;">
                         <select id="sen12_id_input" name="sen12_id_input" class="candidate-select input is-primary" type="dr" placeholder="Primary input" >
                         <?php
@@ -405,10 +430,10 @@ require_once '../phpScripts/globals.php';
                 ?>
             </div>
 
-            </form> 
+        </form> 
         
         
-        <!--Personal Details-->
+
         <div class="tab-pane" id="pane-2">
             <div class="columns is-centered">
             <div class="content">
@@ -418,64 +443,46 @@ require_once '../phpScripts/globals.php';
                    
                     <?php
                         if (isLoggedIn()) {
-                            echo "<div id='CK-name'>".$full_name."</div><br>";
+                            echo "<dd><div id='CK-name'>".$full_name."</div></dd><br>";
                         } 
                     ?>
 
-                    <dt><strong>Bio:</strong></dt>
+                    <dt><strong>User Tag:</strong> <button class='button is-small is-info' name='editUsertag'>Edit</button></dt> 
                     <?php
                         
                         if (isLoggedIn()) {
-                            echo "<dd>".$bio."</dd><br>";
-                        } else {
-                            echo "<dd> Name Here</dd><br>";
-                        }
+                            echo "<dd><div id='CK-usertag'>".$user_tag."</div></dd><br>";
+                        } 
 
                     ?>
 
-                    <dt><strong>Birthday:</strong></dt> 
+                    <dt><strong>Bio:</strong> <button class='button is-small is-info' name='editBio'>Edit</button></dt> 
                     <?php
                         
                         if (isLoggedIn()) {
-                            echo "<dd>".$bday."</dd><br>";
-                        } else {
-                            echo "<dd> Name Here</dd><br>";
-                        }
+                            echo "<dd><div id='CK-bio'>".$bio."</div><br>";
+                        } 
 
                     ?>
 
-                    <dt><strong>Relgion:</strong></dt> 
+                    <dt><strong>Birthday:</strong> <button class='button is-small is-info' name='editBirthday'>Edit</button></dt>  
                     <?php
                         
                         if (isLoggedIn()) {
-                            echo "<dd>".$religion."</dd><br>";
-                        } else {
-                            echo "<dd> Name Here</dd><br>";
-                        }
-
-                    ?>
-
-                    <dt><strong>Marital Status:</strong></dt> 
-                    <?php
-                       
-                        
-                        if (isLoggedIn()) {
-                            echo "<dd>".$status."</dd><br>";
-                        } else {
-                            echo "<dd> Name Here</dd><br>";
-                        }
+                            echo "<dd><div id='CK-birthday'>".$bday."</div></dd><br>";
+                        } 
 
                     ?>
                 </dl>
             </div>
             </div>
         </div>
-
+        
+  
 
     </div>
 </div>
 </section>
-
 <script src="../resources/ckeditor/build/ckeditor.js"></script>
 <script src="../resources/js/usersckeditors.js"></script>
 <script src="../resources/js/usr_page.js"></script>

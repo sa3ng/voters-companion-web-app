@@ -179,7 +179,7 @@ function fetchCandidateNames($db_credentials, $position_id)
         $stmt->close();
     }
 
-function fetchPreferedNames($db_credentials, $position_id)
+function fetchPreferedNames($db_credentials, $column)
     {
         $conn = new mysqli(
             $db_credentials["server"],
@@ -190,7 +190,7 @@ function fetchPreferedNames($db_credentials, $position_id)
         );
     
         // preparation of prepared statement
-        $stmt = $conn->prepare("SELECT * FROM candidatesTBL WHERE position_id ='".$position_id."'");
+        $stmt = $conn->prepare("SELECT $column FROM accCandidatesTBL");
         // execution
         $stmt->execute();
         // result retrieval
@@ -201,8 +201,50 @@ function fetchPreferedNames($db_credentials, $position_id)
 
         //Fill up Arrays 
         while($names = mysqli_fetch_assoc($results)){
-            array_push($candidate_names , $names['full_name']);
+            array_push($candidate_names , $names[$column]);
             
+        }
+        
+        return $candidate_names[0];
+
+        $conn->close();
+        $stmt->close();
+    }
+
+    function fetchPreferedSenators($db_credentials)
+    {
+        $conn = new mysqli(
+            $db_credentials["server"],
+            $db_credentials["user"],
+            $db_credentials["pass"],
+            $db_credentials["db_name"],
+            $db_credentials["port"]
+        );
+    
+        // preparation of prepared statement
+        $stmt = $conn->prepare("SELECT * FROM accCandidatesTBL");
+        // execution
+        $stmt->execute();
+        // result retrieval
+        $results = $stmt->get_result();
+        
+        //define arrayVariables as an array
+        $candidate_names = array();
+
+        //Fill up Arrays 
+        while($names = mysqli_fetch_assoc($results)){
+            array_push($candidate_names , $names['s1_id']);
+            array_push($candidate_names , $names['s2_id']);
+            array_push($candidate_names , $names['s3_id']);
+            array_push($candidate_names , $names['s4_id']);
+            array_push($candidate_names , $names['s5_id']);
+            array_push($candidate_names , $names['s6_id']);
+            array_push($candidate_names , $names['s7_id']);
+            array_push($candidate_names , $names['s8_id']);
+            array_push($candidate_names , $names['s9_id']);
+            array_push($candidate_names , $names['s10_id']);
+            array_push($candidate_names , $names['s11_id']);
+            array_push($candidate_names , $names['s12_id']);
         }
         
         return $candidate_names;

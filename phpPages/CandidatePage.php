@@ -73,9 +73,6 @@ if ($candidate_basic["position_id"] == "P") {
 
     <?php
     include_once '../phpPages/footer-header/header.php'
-
-   
-
     ?>
 
 </head>
@@ -406,6 +403,7 @@ if ($candidate_basic["position_id"] == "P") {
             </div>
     </section>
    
+    <script src="../resources/ckeditor/build/ckeditor.js"></script>
     <script src="../resources/js/ckeditors.js"></script>
     <script src="../resources/js/bulma.js"></script>
     <script src="../resources/js/tabs.js"></script>
