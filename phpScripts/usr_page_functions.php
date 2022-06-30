@@ -173,6 +173,7 @@ function fetchCandidateNames($db_credentials, $position_id)
             
         }
         
+        
         return $candidate_names;
 
         $conn->close();

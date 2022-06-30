@@ -34,8 +34,6 @@
     $stmt->close();
 
     $conn->close();
-
-    echo $pres_id;
-    echo $vpres_id;
-    //header("Location:../phpPages/ForumPage.php");
+ 
+    header("Location:../phpPages/usrPage.php");
     ?>
