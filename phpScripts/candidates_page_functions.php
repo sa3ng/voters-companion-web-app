@@ -340,7 +340,7 @@ function isEditor()
   if (isLoggedIn()) {
   }
 
-  return false;
+  return true;
 }
 
 function getHeader()
