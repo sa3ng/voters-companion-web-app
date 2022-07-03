@@ -29,11 +29,16 @@
     );
     
     // preparation of prepared statement
-    $stmt = $conn->prepare("INSERT INTO accCandidatesTBL VALUES ('$acc_id', '$pres_id', '$vpres_id', '$s1_id', '$s2_id', '$s3_id', '$s4_id', '$s5_id', '$s6_id', '$s7_id', '$s8_id', '$s9_id', '$s10_id', '$s11_id', '$s12_id')");
+    
+    $stmt = $conn->prepare(
+      "UPDATE accCandidatesTBL 
+      SET president_id = '$pres_id', vpresident_id = '$vpres_id', s1_id ='$s1_id', s2_id = '$s2_id', s3_id = '$s3_id', s4_id = '$s4_id', s5_id = '$s5_id', s6_id = '$s6_id', s7_id = '$s7_id', s8_id = '$s8_id' , s9_id = '$s9_id', s10_id = '$s10_id', s11_id = '$s11_id', s12_id = '$s12_id'
+      WHERE acc_id = '$acc_id' ");
+
     $stmt->execute();
     $stmt->close();
 
     $conn->close();
- 
+
     header("Location:../phpPages/usrPage.php");
     ?>
