@@ -48,25 +48,28 @@ require_once '../phpScripts/globals.php';
 
     require_once 'footer-header/header.php';
 
+    //Current acc
+    $acc_id = fetchAccId($DB_CREDENTIALS);
+
     //Fill up variables
     $president_names = fetchCandidateNames($DB_CREDENTIALS,'P');
     $vice_pres_names = fetchCandidateNames($DB_CREDENTIALS,'VP');
     $senator_names = fetchCandidateNames($DB_CREDENTIALS,'S'); 
 
     //Fill up preferred Candidates
-    $president_pick = fetchPreferedNames($DB_CREDENTIALS, 'president_id');
-    $vice_pres_pick = fetchPreferedNames($DB_CREDENTIALS, 'vpresident_id');
-    $senator_picks = fetchPreferedSenators($DB_CREDENTIALS);
+    $president_pick = fetchPreferedNames($DB_CREDENTIALS, 'president_id', $acc_id);
+    $vice_pres_pick = fetchPreferedNames($DB_CREDENTIALS, 'vpresident_id', $acc_id);
+    $senator_picks = fetchPreferedSenators($DB_CREDENTIALS, $acc_id);
     
     $acc_id = fetchAccId($DB_CREDENTIALS);
     
     //Personal Info
-    $full_name = fetchPersonalInfo($DB_CREDENTIALS,"full_name");
-    $bio = fetchPersonalInfo($DB_CREDENTIALS,"bio");
-    $user_tag = fetchPersonalInfo($DB_CREDENTIALS,"user_tag");
-    $bday = fetchPersonalInfo($DB_CREDENTIALS,"birthday");
-    $religion = fetchPersonalInfo($DB_CREDENTIALS,"religion_id");
-    $status = fetchPersonalInfo($DB_CREDENTIALS,"status_id");
+    $full_name = fetchPersonalInfo($DB_CREDENTIALS,"full_name", $acc_id);
+    $bio = fetchPersonalInfo($DB_CREDENTIALS,"bio", $acc_id);
+    $user_tag = fetchPersonalInfo($DB_CREDENTIALS,"user_tag", $acc_id);
+    $bday = fetchPersonalInfo($DB_CREDENTIALS,"birthday", $acc_id);
+    $religion = fetchPersonalInfo($DB_CREDENTIALS,"religion_id", $acc_id);
+    $status = fetchPersonalInfo($DB_CREDENTIALS,"status_id", $acc_id);
   ?>
 
 <body>
@@ -78,7 +81,7 @@ require_once '../phpScripts/globals.php';
             <div class="media-left">
             <figure class="image is-128x128">
                 <?php
-                    $img_src = fetchPersonalInfo($DB_CREDENTIALS,'image_url');
+                    $img_src = fetchPersonalInfo($DB_CREDENTIALS,'image_url', $acc_id);
 
                     if ($img_src != null){
                         echo  "<img class='is-rounded' src='../resources/images/user_images/$img_src'>";
@@ -119,7 +122,7 @@ require_once '../phpScripts/globals.php';
             &nbsp;
 
                 <?php
-                        $full_name = fetchPersonalInfo($DB_CREDENTIALS,"full_name");
+                       
 
                         if (isLoggedIn()) {
                             echo "<h1 class='title is-1'>" . $full_name . "</h1>";
@@ -175,6 +178,7 @@ require_once '../phpScripts/globals.php';
                                 echo "<option value='".$names."'>".$names."</option>";
                                 }
                             ?>
+                            <option value="fiat" selected>ABSTAIN</option>
                         </select>
                         </h2>
                         </div>
@@ -195,6 +199,7 @@ require_once '../phpScripts/globals.php';
                               echo "<option value='".$names."'>".$names."</option>";
                             }
                             ?>
+                            <option value="fiat" >ABSTAIN</option>
                         </select>
                         </h2>      
                         </div>                  
