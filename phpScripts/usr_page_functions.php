@@ -106,7 +106,7 @@ function isAdmin($db_credentials)
 } 
 
 
-function fetchPersonalInfo($db_credentials, $info){
+function fetchPersonalInfo($db_credentials, $info, $acc_id){
     $conn = new mysqli(
         $db_credentials["server"],
         $db_credentials["user"],
@@ -116,7 +116,7 @@ function fetchPersonalInfo($db_credentials, $info){
     );
 
     //instantiate
-    $acc_id = fetchAccId($db_credentials);
+    // $acc_id = fetchAccId($db_credentials);
 
     // preparation of prepared statement
     $stmt = $conn->prepare("SELECT ".$info." FROM accProfileTBL WHERE acc_id=?");
@@ -180,7 +180,7 @@ function fetchCandidateNames($db_credentials, $position_id)
         $stmt->close();
     }
 
-function fetchPreferedNames($db_credentials, $column)
+function fetchPreferedNames($db_credentials, $column, $acc_id)
     {
         $conn = new mysqli(
             $db_credentials["server"],
@@ -191,7 +191,8 @@ function fetchPreferedNames($db_credentials, $column)
         );
     
         // preparation of prepared statement
-        $stmt = $conn->prepare("SELECT $column FROM accCandidatesTBL");
+        $stmt = $conn->prepare("SELECT $column FROM accCandidatesTBL WHERE acc_id = $acc_id");
+        
         // execution
         $stmt->execute();
         // result retrieval
@@ -212,7 +213,7 @@ function fetchPreferedNames($db_credentials, $column)
         $stmt->close();
     }
 
-    function fetchPreferedSenators($db_credentials)
+    function fetchPreferedSenators($db_credentials, $acc_id)
     {
         $conn = new mysqli(
             $db_credentials["server"],
@@ -223,7 +224,7 @@ function fetchPreferedNames($db_credentials, $column)
         );
     
         // preparation of prepared statement
-        $stmt = $conn->prepare("SELECT * FROM accCandidatesTBL");
+        $stmt = $conn->prepare("SELECT * FROM accCandidatesTBL WHERE acc_id = $acc_id");
         // execution
         $stmt->execute();
         // result retrieval
