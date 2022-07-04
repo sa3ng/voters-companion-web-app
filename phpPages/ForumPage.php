@@ -91,6 +91,16 @@
     background-color: #24a0ed;
     color: white;
   }
+  
+  .button-to-link {
+    background: none;
+    border: none;
+    padding: 0;
+
+    /*input has OS specific font-family*/
+    color: #069;
+    cursor: pointer;
+  }
 
   .hidden {
     display: none;
@@ -255,7 +265,7 @@
             <div class='media-content'>
               <div class='content'>
                 <p>
-                  <button formaction='usrPage.php' type='submit'" . $user_tag_array[0] . "</button> posted on $post_dates[$num_of_posts]
+                <button formaction='usrPage.php' class='button-to-link' type='submit'>" . $user_tag_array[0] . "</button> posted on $post_dates[$num_of_posts]
                   <span class='tag'>Question</span>
                 </p>
               </div>
