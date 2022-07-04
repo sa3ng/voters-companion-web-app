@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <link rel="stylesheet" href="../resources/css/voterscompanion.css">
 
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/7dc3015a44.js" crossorigin="anonymous"></script>
 
   <style>
@@ -44,7 +44,6 @@
   
   //Initialize functions
   $post_headers = fetchHeaders($DB_CREDENTIALS);
-  //$post_likes = fetchLikes($DB_CREDENTIALS);
   $post_acc_ids = fetchPostAccID($DB_CREDENTIALS);
   $post_dates = fetchDates($DB_CREDENTIALS, 1);
 
@@ -228,7 +227,7 @@
       $index = 0;
       foreach ($post_headers as $headers) {
         $user_tag_array = fetchTags($DB_CREDENTIALS, $post_acc_ids, $num_of_posts);
-
+        $post_likes = fetchLikes($DB_CREDENTIALS, $post_id[$num_of_posts]);
         echo "
       
         <form action='ForumPostPage.php' method='POST'>
