@@ -265,7 +265,7 @@
             <button 
             type='button' 
             id ='btn'
-            class='transparent post-icons has-text-grey-light'
+            class='transparent post-icons'
             name='like-button'
             >
             <i class='fa-solid fa-thumbs-up'>
