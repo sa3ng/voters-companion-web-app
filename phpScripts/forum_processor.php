@@ -10,7 +10,7 @@ function fetchPostInfo($db_credentials, $info, $post_header){
     );
 
     //instantiate
-    $acc_id = fetchAccId($db_credentials);
+    $acc_id = fetchAccId($db_credentials, $_COOKIE["acc_name"]);
 
     // preparation of prepared statement
     $stmt = $conn->prepare("SELECT ".$info." FROM postsTBL WHERE header=?");
@@ -136,7 +136,7 @@ function fetchHeaders($db_credentials)
             $db_credentials["port"]
         );
     
-        $acc_id = fetchAccId($db_credentials);
+        $acc_id = fetchAccId($db_credentials, $_COOKIE["acc_name"]);
 
         // preparation of prepared statement
         $stmt = $conn->prepare("SELECT * FROM postsTBL WHERE is_reply = 0 AND approved = 0 AND acc_id =".$acc_id);
@@ -182,16 +182,15 @@ function fetchHeaders($db_credentials)
         // result retrieval
         $results = $stmt->get_result();
         
-        //define arrayVariables as an array
-        $post_likes = array();
+        //has only one value 
+        $post_likes =  mysqli_fetch_assoc($results);
 
-        //Fill up Arrays 
-        while($posts = mysqli_fetch_assoc($results)){
-            array_push($post_likes , $posts['likes']);
-            
-        }
         
-        return $post_likes;
+
+        if($post_likes == NULL)
+            $post_likes = 0;
+        
+        return $post_likes['COUNT(post_id)'];
 
         $conn->close();
         $stmt->close();

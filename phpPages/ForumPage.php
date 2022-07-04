@@ -46,6 +46,7 @@
   $post_headers = fetchHeaders($DB_CREDENTIALS);
   $post_acc_ids = fetchPostAccID($DB_CREDENTIALS);
   $post_dates = fetchDates($DB_CREDENTIALS, 1);
+  $post_ids = fetchIDs($DB_CREDENTIALS);
 
   //Pending Posts - Users
   $posts_pending_headers = fetchPendingPosts($DB_CREDENTIALS, 'header');
@@ -226,14 +227,14 @@
     $index = 0;
     foreach ($post_headers as $headers) {
       $user_tag_array = fetchTags($DB_CREDENTIALS, $post_acc_ids, $num_of_posts);
-      $post_likes = fetchLikes($DB_CREDENTIALS, $post_id[$num_of_posts]);
+      $post_likes = (string) fetchLikes($DB_CREDENTIALS, $post_ids[$num_of_posts]);
+
       echo "
-      
         <form action='ForumPostPage.php' method='POST'>
         <article class='post'>
         <input type='hidden' name='post_header' value= '" . $headers . "'></input>
         <input type='hidden' name='post_user' value= '" . $user_tag_array[0] . "'></input>
-        <input type='hidden' name='post_likes' value= '" . $post_likes[$num_of_posts] . "'></input>
+        <input type='hidden' name='post_likes' value= '" . $post_likes . "'></input>
         <input type='hidden' name='post_date' value= '" . $post_dates[$num_of_posts] . "'></input>
           <button class='transparent' type='submit'><h3> " . $headers . "</h3> </button>
           <div class='media'>
