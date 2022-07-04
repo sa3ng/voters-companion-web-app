@@ -41,7 +41,7 @@
   //$post_messagess
 
 
-  
+
   //Initialize functions
   $post_headers = fetchHeaders($DB_CREDENTIALS);
   $post_acc_ids = fetchPostAccID($DB_CREDENTIALS);
@@ -58,7 +58,7 @@
 
   $post_acc_type = fetchAccTBL($DB_CREDENTIALS, 'type');
 
-  
+
 
   ?>
 </head>
@@ -76,15 +76,15 @@
   }
 
   .transparent {
-        cursor: pointer;
-        border: 1px solid white;
-        background-color: transparent;
-        color: white;
+    cursor: pointer;
+    border: 1px solid white;
+    background-color: transparent;
+    color: white;
 
   }
 
-  .hidden{
-      display: none;
+  .hidden {
+    display: none;
   }
 </style>
 
@@ -116,20 +116,20 @@
 
   <a class="button  box is-medium is-primary column is-4 is-offset-4" href='ForumCreatePost.php'>Create a Post</a>
 
-    <?php
-    if(strcmp($post_acc_type,"editor") == 0){
+  <?php
+  if (strcmp($post_acc_type, "editor") == 0) {
 
-      echo "<div class='column is-10 is-offset-1'>
+    echo "<div class='column is-10 is-offset-1'>
       <div class='content'><h2>For Approval:</h2></div>
       <div class='box content mb-6'>";
 
-      $index = 0;
-      foreach($posts_not_approved as $posts){
-        echo "
+    $index = 0;
+    foreach ($posts_not_approved as $posts) {
+      echo "
         <form action='ForumPostPage.php' method='POST'>
         <input type='hidden' value='$posts' name='post_header'>
         <article class='post' id='editorTestDiv'>
-              <button class='transparent' type='submit'><h3>".$posts."</h3></button>
+              <button class='transparent' type='submit'><h3>" . $posts . "</h3></button>
               <div class='media'>
                 <div class='media-left'>
                   <p class='image is-32x32'>
@@ -153,25 +153,22 @@
             </form>
             
         ";
-        $index += 1;
-        }
-
+      $index += 1;
     }
-
-    else{
-      $index = 0;
-      echo "<div class='column is-10 is-offset-1'>
+  } else {
+    $index = 0;
+    echo "<div class='column is-10 is-offset-1'>
       <div class='content'><h2>My Pending Posts</h2></div>
       <div class='box content mb-6'>";
 
-      foreach($posts_pending_headers as $pending_headers){
+    foreach ($posts_pending_headers as $pending_headers) {
 
-        echo "
+      echo "
 
         <form action='ForumPostPage.php' method='POST'>
         <input type='hidden' value='$pending_headers' name='post_header'>
         <article class='post'>
-              <button class='transparent' type='submit'><h3>".$pending_headers."</h3></button>
+              <button class='transparent' type='submit'><h3>" . $pending_headers . "</h3></button>
               <div class='media'>
                 <div class='media-left'>
                   <p class='image is-32x32'>
@@ -192,17 +189,17 @@
               </div>
             </article>
             </form>";
-          $index += 1;
-      } 
+      $index += 1;
     }
-
-    
-
+  }
 
 
-        
-        ?>
-<!-- 
+
+
+
+
+  ?>
+  <!-- 
         <script>
             function showEditorDiv() {
             var x = document.getElementById("editorTestDiv");
@@ -214,29 +211,31 @@
             }
         </script> -->
 
+  </div>
+
+  <div class="column is-7 ">
+    <div class="content">
+      <h2>Active Posts</h2>
     </div>
+  </div>
 
-    <div class="column is-7 ">
-      <div class="content"><h2>Active Posts</h2></div>
-    </div>
-    
-    <div class="box content">
+  <div class="box content">
 
-      <?php
+    <?php
 
-      $num_of_posts = 0;
-      $index = 0;
-      foreach ($post_headers as $headers) {
-        $user_tag_array = fetchTags($DB_CREDENTIALS, $post_acc_ids, $num_of_posts);
-        $post_likes = (string) fetchLikes($DB_CREDENTIALS, $post_ids[$num_of_posts]);
-       
-        echo "
+    $num_of_posts = 0;
+    $index = 0;
+    foreach ($post_headers as $headers) {
+      $user_tag_array = fetchTags($DB_CREDENTIALS, $post_acc_ids, $num_of_posts);
+      $post_likes = (string) fetchLikes($DB_CREDENTIALS, $post_ids[$num_of_posts]);
+
+      echo "
         <form action='ForumPostPage.php' method='POST'>
         <article class='post'>
-        <input type='hidden' name='post_header' value= '" . $headers. "'></input>
-        <input type='hidden' name='post_user' value= '" .$user_tag_array[0]. "'></input>
-        <input type='hidden' name='post_likes' value= '" .$post_likes. "'></input>
-        <input type='hidden' name='post_date' value= '" .$post_dates[$num_of_posts]. "'></input>
+        <input type='hidden' name='post_header' value= '" . $headers . "'></input>
+        <input type='hidden' name='post_user' value= '" . $user_tag_array[0] . "'></input>
+        <input type='hidden' name='post_likes' value= '" . $post_likes . "'></input>
+        <input type='hidden' name='post_date' value= '" . $post_dates[$num_of_posts] . "'></input>
           <button class='transparent' type='submit'><h3> " . $headers . "</h3> </button>
           <div class='media'>
             <div class='media-left'>
@@ -254,24 +253,24 @@
             </div>
             <div class='media-right'>";
 
-            if(strcmp($post_acc_type,"editor") == 0){
-              echo"<button class='button is-danger' formaction='../phpScripts/delete_post.php' type='submit'><i class='fa-solid fa-xmark'></i>&nbsp; Remove</button>";
-            }
-            
+      if (strcmp($post_acc_type, "editor") == 0) {
+        echo "<button class='button is-danger' formaction='../phpScripts/delete_post.php' type='submit'><i class='fa-solid fa-xmark'></i>&nbsp; Remove</button>";
+      }
 
-          echo 
-            "
+
+      echo
+      "
             </div>
           </div>
         </article>
         </form>
         ";
-        $num_of_posts += 1;
-      }
+      $num_of_posts += 1;
+    }
 
-      ?>
+    ?>
 
-    </div>
+  </div>
   </div>
   </div>
 
