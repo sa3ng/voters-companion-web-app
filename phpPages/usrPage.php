@@ -40,6 +40,10 @@ require_once '../phpScripts/globals.php';
             }
         })
     }
+
+    function hideEdit() {
+        document.getElementById("showEdit").style.visibility = "hidden";
+    }
         </script>
   </head>
 
@@ -47,9 +51,17 @@ require_once '../phpScripts/globals.php';
   <?php
 
     require_once 'footer-header/header.php';
-
+    
     //Current acc
-    $acc_id = fetchAccId($DB_CREDENTIALS);
+    $isViewing = FALSE;
+
+    if(isset($_POST['post_user'])){ 
+        $acc_id = fetchAccIdProfileTBL($DB_CREDENTIALS, $_POST['post_user']);
+        $isViewing = TRUE;
+    }
+    else
+        $acc_id = fetchAccId($DB_CREDENTIALS);
+    
 
     //Fill up variables
     $president_names = fetchCandidateNames($DB_CREDENTIALS,'P');
@@ -60,8 +72,6 @@ require_once '../phpScripts/globals.php';
     $president_pick = fetchPreferedNames($DB_CREDENTIALS, 'president_id', $acc_id);
     $vice_pres_pick = fetchPreferedNames($DB_CREDENTIALS, 'vpresident_id', $acc_id);
     $senator_picks = fetchPreferedSenators($DB_CREDENTIALS, $acc_id);
-    
-    $acc_id = fetchAccId($DB_CREDENTIALS);
     
     //Personal Info
     $full_name = fetchPersonalInfo($DB_CREDENTIALS,"full_name", $acc_id);
@@ -129,10 +139,16 @@ require_once '../phpScripts/globals.php';
                         } else {
                             echo "<h1 class='title is-1'>User Profile</h1>";
                         }
+
+                        //Button for editing info
+                        if($isViewing != TRUE){
+                            echo "<input type = 'button' class='button is-info is-light' id = 'showEdit'  value='Edit Profile' onclick='showEditDiv()' onclick='this.value='Finish Editing''></input>";
+                        }
                 ?>
 
-            <!-- Button For Editing Information -->
-            <input type = "button" class="button is-info is-light" id = "showEdit"  value="Edit Profile" onclick="showEditDiv()" onclick="this.value='Finish Editing'"></input>
+         
+            
+            
             
             </p>
             </div>
