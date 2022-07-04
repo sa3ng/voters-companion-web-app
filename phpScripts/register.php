@@ -14,6 +14,8 @@ if (array_key_exists("REQUEST_METHOD", $_SERVER))
             ],
             "accTBL",
             "email",
-            "name"
+            "name",
+            $_POST['user-register']
         );
+
     }

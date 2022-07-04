@@ -20,7 +20,7 @@ function selectSelfNameCookie()
 }
 
 
-function fetchAccId($db_credentials)
+function fetchAccId($db_credentials, $acc_name)
 {
     $conn = new mysqli(
         $db_credentials["server"],
@@ -32,7 +32,7 @@ function fetchAccId($db_credentials)
 
     // preparation of prepared statement
     $stmt = $conn->prepare("SELECT acc_id FROM accTBL WHERE name=?");
-    $stmt->bind_param("s", $_COOKIE["acc_name"]);
+    $stmt->bind_param("s", $acc_name);
 
     // execution
     $stmt->execute();

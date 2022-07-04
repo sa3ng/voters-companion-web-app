@@ -60,7 +60,7 @@ require_once '../phpScripts/globals.php';
         $isViewing = TRUE;
     }
     else
-        $acc_id = fetchAccId($DB_CREDENTIALS);
+        $acc_id = fetchAccId($DB_CREDENTIALS, $_COOKIE['acc_name']);
     
 
     //Fill up variables
@@ -97,7 +97,7 @@ require_once '../phpScripts/globals.php';
                         echo  "<img class='is-rounded' src='../resources/images/user_images/$img_src'>";
                     }
                     else{
-                      echo  "<img class='is-rounded' src='http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png'>"; 
+                      echo  "<img class='is-rounded' src='../resources/images/usr_generic/profile-user.png'>"; 
                     }
                 ?>
             </figure>
