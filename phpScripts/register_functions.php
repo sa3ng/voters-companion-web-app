@@ -15,6 +15,7 @@ function registerUser($db_credentials, $user_credentials, $user_db_tbl, $email_c
     } else {
         createAccount($conn, $user_credentials, $user_db_tbl);
         createProfileAccount($db_credentials, $conn, $acc_name);
+        createAccountPreferences($db_credentials, $conn, $acc_name);
         // header("index.php"); //Home page
         echo "OK";
     }
@@ -118,36 +119,43 @@ function createProfileAccount($db_credentials , mysqli $conn, $acc_name)
     $stmt->close();
 }
 
-// function createProfileAccount($db_credentials , mysqli $conn, $acc_name)
-// {
-//     $acc_id = fetchAccId($db_credentials, $acc_name);
+function createAccountPreferences($db_credentials , mysqli $conn, $acc_name)
+{
+    $acc_id = fetchAccId($db_credentials, $acc_name);
 
-//     //default values - locals
-//     $user_tag = '@default';
-//     $full_name = '-- Please Edit Your Name --';
-//     $gender = 'Edit Gender';
-//     $political_label = 'Default Man';
-//     $bio = '-- Introduce yourself --';
+    //default values - locals
+    $default_candidate = 'ABSTAIN';
+   
 
-//     $stmt = $conn->prepare(
-//         "INSERT INTO accProfileTBL(acc_id, user_tag, full_name, gender, political_label, bio) 
-//         VALUES(?, ?, ?, ?, ?, ?);"
-//     );
+    $stmt = $conn->prepare(
+        "INSERT INTO accCandidatesTBL(acc_id, president_id, vpresident_id,
+         s1_id, s2_id, s3_id, s4_id, s5_id, s6_id, s7_id, s8_id, s9_id, s10_id, s11_id, s12_id) 
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+    );
 
-//     //Temporary default values
-//     $stmt->bind_param(
-//         "ssssss",
-//         $acc_id,
-//         $user_tag,
-//         $full_name,
-//         $gender,
-//         $political_label,
-//         $bio
-//     );
+    //Temporary default values
+    $stmt->bind_param(
+        "sssssssssssssss",
+        $acc_id,
+        $default_candidate,
+        $default_candidate,
+        $default_candidate,
+        $default_candidate,
+        $default_candidate,
+        $default_candidate,
+        $default_candidate,
+        $default_candidate,
+        $default_candidate,
+        $default_candidate,
+        $default_candidate,
+        $default_candidate,
+        $default_candidate,
+        $default_candidate
+    );
 
-//     $stmt->execute();
-//     $stmt->close();
-// }
+    $stmt->execute();
+    $stmt->close();
+}
 
 
 

@@ -255,7 +255,7 @@
             <div class='media-content'>
               <div class='content'>
                 <p>
-                  <a href='#'>" . $user_tag_array[0] . "</a> posted on $post_dates[$num_of_posts]
+                  <button formaction='usrPage.php' type='submit'" . $user_tag_array[0] . "</button> posted on $post_dates[$num_of_posts]
                   <span class='tag'>Question</span>
                 </p>
               </div>
