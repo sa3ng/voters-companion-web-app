@@ -10,6 +10,7 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/7dc3015a44.js" crossorigin="anonymous"></script>
+  <script src="../resources/js/forum.js"></script>
 
   <style>
     .has-bg-img {
@@ -79,8 +80,16 @@
     cursor: pointer;
     border: 1px solid white;
     background-color: transparent;
-    color: white;
+    color: gray;
 
+  }
+
+  .blue {
+    cursor: pointer;
+    border: 1px solid white;
+    border-radius: 0.7ch;
+    background-color: #24a0ed;
+    color: white;
   }
 
   .hidden {
@@ -251,7 +260,21 @@
                 </p>
               </div>
             </div>
-            <div class='media-right'>";
+            <div class='media-right'>
+            <span>
+            <button 
+            type='button' 
+            id ='btn'
+            class='transparent post-icons has-text-grey-light'
+            name='like-button'
+            >
+            <i class='fa-solid fa-thumbs-up'>
+            </i>
+            <span 
+            name='like-count'>
+            $post_likes</span>
+            </button>
+            </span>";
 
       if (strcmp($post_acc_type, "editor") == 0) {
         echo "<button class='button is-danger' formaction='../phpScripts/delete_post.php' type='submit'><i class='fa-solid fa-xmark'></i>&nbsp; Remove</button>";
