@@ -62,6 +62,39 @@ function fetchHeaders($db_credentials)
         $stmt->close();
     }
 
+    function fetchIDs($db_credentials)
+    {
+        $conn = new mysqli(
+            $db_credentials["server"],
+            $db_credentials["user"],
+            $db_credentials["pass"],
+            $db_credentials["db_name"],
+            $db_credentials["port"]
+        );
+    
+        // preparation of prepared statement
+        $stmt = $conn->prepare("SELECT * FROM postsTBL WHERE is_reply = 0 AND approved = 1");
+        // execution
+        $stmt->execute();
+        // result retrieval
+        $results = $stmt->get_result();
+        
+        //define arrayVariables as an array
+        $post_ids = array();
+
+        //Fill up Arrays 
+        while($posts = mysqli_fetch_assoc($results)){
+            array_push($post_ids , $posts['post_id']);
+            
+        }
+        
+        return $post_ids;
+
+        $conn->close();
+        $stmt->close();
+    }
+
+
     function fetchDates($db_credentials, $approved)
     {
         $conn = new mysqli(
@@ -93,7 +126,6 @@ function fetchHeaders($db_credentials)
         $conn->close();
         $stmt->close();
     }
-
 
     function fetchPendingPosts($db_credentials, $column){
         $conn = new mysqli(
@@ -129,7 +161,7 @@ function fetchHeaders($db_credentials)
 
     }
 
-    function fetchLikes($db_credentials)
+    function fetchLikes($db_credentials, $post_id)
     {
         $conn = new mysqli(
             $db_credentials["server"],
@@ -138,9 +170,13 @@ function fetchHeaders($db_credentials)
             $db_credentials["db_name"],
             $db_credentials["port"]
         );
-    
+        
         // preparation of prepared statement
-        $stmt = $conn->prepare("SELECT * FROM postsTBL WHERE is_reply = 0");
+        $stmt = $conn->prepare("SELECT COUNT(post_id)
+        FROM likesTBL
+        WHERE post_id=?;");
+
+        $stmt->bind_param("i", $post_id);
         // execution
         $stmt->execute();
         // result retrieval
@@ -160,6 +196,7 @@ function fetchHeaders($db_credentials)
         $conn->close();
         $stmt->close();
     }
+
 
     function fetchPostAccID($db_credentials)
     {
