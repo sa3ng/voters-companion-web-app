@@ -44,6 +44,50 @@ if (isset($_POST["full_name"])) {
     $stmt->execute();
 }
 
+if (isset($_POST["bio"])) {
+    $stmt =  $conn->prepare(
+        "UPDATE accProfileTBL
+        SET bio=?
+        WHERE acc_id = ?;"
+    );
+
+    $stmt->bind_param(
+        "si",
+        $_POST["bio"],
+        $user
+    );
+    $stmt->execute();
+}
+
+if (isset($_POST["user_tag"])) {
+    $stmt =  $conn->prepare(
+        "UPDATE accProfileTBL
+        SET user_tag=?
+        WHERE acc_id = ?;"
+    );
+
+    $stmt->bind_param(
+        "si",
+        $_POST["user_tag"],
+        $user
+    );
+    $stmt->execute();
+}
+
+if (isset($_POST["birthday"])) {
+    $stmt =  $conn->prepare(
+        "UPDATE accProfileTBL
+        SET birthday=?
+        WHERE acc_id = ?;"
+    );
+
+    $stmt->bind_param(
+        "si",
+        $_POST["birthday"],
+        $user
+    );
+    $stmt->execute();
+}
 
 $stmt->execute();
 $stmt->close();
