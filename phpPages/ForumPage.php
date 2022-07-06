@@ -91,7 +91,7 @@
     background-color: #24a0ed;
     color: white;
   }
-  
+
   .button-to-link {
     background: none;
     border: none;
@@ -241,13 +241,13 @@
   <div class="box content">
 
     <?php
-
+    $is_post_liked = false;
     $num_of_posts = 0;
     $index = 0;
     foreach ($post_headers as $headers) {
       $user_tag_array = fetchTags($DB_CREDENTIALS, $post_acc_ids, $num_of_posts);
       $post_likes = (string) fetchLikes($DB_CREDENTIALS, $post_ids[$num_of_posts]);
-  
+
       echo "
         <form action='ForumPostPage.php' method='POST'>
         <article class='post'>
@@ -271,45 +271,40 @@
               </div>
             </div>
             <div class='media-right'>";
-            foreach($check_likes as $posts)
-            {
-              if($posts == $post_ids[$num_of_posts])
-              {
-                echo "<span>
-                <button 
-                type='button'
-                data-post-id='$post_ids[$num_of_posts]' 
-                id ='btn'
-                class='blue post-icons active-like'
-                name='like-button'
-                >
-                <i class='fa-solid fa-thumbs-up'>
-                </i>
-                <span 
-                name='like-count'>
-                $post_likes</span>
-                </button>
-                </span>";
-              }
-              else
-              {
-                echo "<span>
-                <button 
-                type='button'
-                data-post-id='$post_ids[$num_of_posts]' 
-                id ='btn'
-                class='transparent post-icons'
-                name='like-button'
-                >
-                <i class='fa-solid fa-thumbs-up'>
-                </i>
-                <span 
-                name='like-count'>
-                $post_likes</span>
-                </button>
-                </span>";
-              }
-            }
+      $is_post_liked = checkIfPostLiked($check_likes, $post_ids[$num_of_posts]);
+      if ($is_post_liked) {
+        echo "<span>
+              <button 
+              type='button'
+              data-post-id='$post_ids[$num_of_posts]' 
+              id ='btn'
+              class='blue post-icons active-like'
+              name='like-button'
+              >
+              <i class='fa-solid fa-thumbs-up'>
+              </i>
+              <span 
+              name='like-count'>
+              $post_likes</span>
+              </button>
+              </span>";
+      } else {
+        echo "<span>
+              <button 
+              type='button'
+              data-post-id='$post_ids[$num_of_posts]' 
+              id ='btn'
+              class='transparent post-icons'
+              name='like-button'
+              >
+              <i class='fa-solid fa-thumbs-up'>
+              </i>
+              <span 
+              name='like-count'>
+              $post_likes</span>
+              </button>
+              </span>";
+      }
 
       if (strcmp($post_acc_type, "editor") == 0) {
         echo "<button class='button is-danger' formaction='../phpScripts/delete_post.php' type='submit'><i class='fa-solid fa-xmark'></i>&nbsp; Remove</button>";
