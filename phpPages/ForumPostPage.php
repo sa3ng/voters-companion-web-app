@@ -6,6 +6,8 @@
     <title>Voters' Companion</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="../resources/css/voterscompanion.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="../resources/js/forum.js"></script>
     <?php
 
     require_once 'footer-header/header.php';
@@ -18,7 +20,6 @@
 
     if(isset($_POST['post_user'])){
       $post_user = $_POST['post_user'];
-      $post_likes = $_POST['post_likes'];
     }
     else{
       $post_user = '';
@@ -26,7 +27,8 @@
       
     $post_message = fetchPostInfo($DB_CREDENTIALS, 'message', $post_header);
     $post_id = fetchPostInfo($DB_CREDENTIALS,'post_id', $post_header);
-    
+    $check_likes = checkLikes($DB_CREDENTIALS, 'post_id');
+    $post_likes = (string) fetchLikes($DB_CREDENTIALS, $post_id);
     //replies
     $reply_messages = fetchReplyElement($DB_CREDENTIALS, $post_id, 'message');
 
@@ -53,6 +55,22 @@
 
     .post-icons{
       padding-right: 10px;
+    }
+
+    .transparent {
+    cursor: pointer;
+    border: 1px solid white;
+    background-color: transparent;
+    color: gray;
+
+   }
+
+    .blue {
+      cursor: pointer;
+      border: 1px solid white;
+      border-radius: 0.7ch;
+      background-color: #24a0ed;
+      color: white;
     }
   </style>
 
@@ -84,8 +102,47 @@
                 </p>
               </div>
             </div>
-            <div class='media-right'>
-              <span class='post-icons has-text-grey-light'><i class='fa-solid fa-thumbs-up'></i> 1</span>
+            <div class='media-right'>";
+            foreach($check_likes as $posts)
+            {
+              if($posts == $post_id)
+              {
+                echo "<span>
+                <button 
+                type='button'
+                data-post-id='$post_id' 
+                id ='btn'
+                class='blue post-icons active-like'
+                name='like-button'
+                >
+                <i class='fa-solid fa-thumbs-up'>
+                </i>
+                <span 
+                name='like-count'>
+                $post_likes</span>
+                </button>
+                </span>";
+              }
+              else
+              {
+                echo "<span>
+                <button 
+                type='button'
+                data-post-id='$post_id' 
+                id ='btn'
+                class='transparent post-icons'
+                name='like-button'
+                >
+                <i class='fa-solid fa-thumbs-up'>
+                </i>
+                <span 
+                name='like-count'>
+                $post_likes</span>
+                </button>
+                </span>";
+              }
+            }
+            echo "
             </div>
           </div>
             ";
@@ -114,7 +171,20 @@
             </div>
           </div>
           <div class='media-right'>
-            <span class='post-icons has-text-grey-light'><i class='fa-solid fa-thumbs-up'></i> 1</span>
+          <span>
+          <button 
+          type='button' 
+          id ='btn2'
+          class='transparent post-icons'
+          name='like-button'
+          >
+          <i class='fa-solid fa-thumbs-up'>
+          </i>
+          <span 
+          name='like-count'>
+          $post_likes</span>
+          </button>
+          </span>
           </div>
         </div>
       </article>";

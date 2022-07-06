@@ -295,6 +295,42 @@ function fetchHeaders($db_credentials)
         header("Location:../phpPages/ForumPostPage.php");
     }
 
+    function checkLikes($db_credentials, $column)
+    {
+        $conn = connectDB($db_credentials);
+
+        // preparation of prepared statement
+        $stmt = $conn->prepare("SELECT acc_id FROM accTBL WHERE name=?");
+        $stmt->bind_param("s",$_COOKIE["acc_name"]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $name = $result->fetch_assoc();
+
+        $stmt->close();
+
+        $stmt2 = $conn->prepare("SELECT post_id FROM likesTBL WHERE acc_id=?");
+        $stmt2->bind_param("i",$name["acc_id"]);
+        $stmt2->execute();
+        $results = $stmt2->get_result();
+
+        $stmt2->close();
+
+       
+        
+        //define arrayVariables as an array
+        $like_array = array();
+
+        //Fill up Arrays 
+        while($likes = $results->fetch_assoc()){
+            if(!is_null($likes))  
+                array_push($like_array , $likes[$column]);  
+        }
+        
+        return $like_array;
+
+        $conn->close();
+        echo "OK";
+    }
     function fetchReplyElement($db_credentials, $post_id, $element){
 
         $conn = new mysqli(
