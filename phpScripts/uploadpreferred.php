@@ -4,7 +4,7 @@
     require_once '../phpScripts/usr_page_functions.php';
 
     //variables
-    $acc_id = fetchAccId($DB_CREDENTIALS);
+    $acc_id = fetchAccId($DB_CREDENTIALS, $_COOKIE['acc_name']);
     $pres_id = $_POST["president_id_input"];
     $vpres_id = $_POST["v_president_id_input"];
     $s1_id = $_POST["sen1_id_input"];

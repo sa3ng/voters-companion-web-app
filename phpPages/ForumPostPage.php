@@ -103,45 +103,40 @@
               </div>
             </div>
             <div class='media-right'>";
-            foreach($check_likes as $posts)
-            {
-              if($posts == $post_id)
-              {
-                echo "<span>
-                <button 
-                type='button'
-                data-post-id='$post_id' 
-                id ='btn'
-                class='blue post-icons active-like'
-                name='like-button'
-                >
-                <i class='fa-solid fa-thumbs-up'>
-                </i>
-                <span 
-                name='like-count'>
-                $post_likes</span>
-                </button>
-                </span>";
-              }
-              else
-              {
-                echo "<span>
-                <button 
-                type='button'
-                data-post-id='$post_id' 
-                id ='btn'
-                class='transparent post-icons'
-                name='like-button'
-                >
-                <i class='fa-solid fa-thumbs-up'>
-                </i>
-                <span 
-                name='like-count'>
-                $post_likes</span>
-                </button>
-                </span>";
-              }
-            }
+            $is_post_liked = checkIfPostLiked($check_likes, $post_id);
+      if ($is_post_liked) {
+        echo "<span>
+              <button 
+              type='button'
+              data-post-id='$post_id' 
+              id ='btn'
+              class='blue post-icons active-like'
+              name='like-button'
+              >
+              <i class='fa-solid fa-thumbs-up'>
+              </i>
+              <span 
+              name='like-count'>
+              $post_likes</span>
+              </button>
+              </span>";
+      } else {
+        echo "<span>
+              <button 
+              type='button'
+              data-post-id='$post_id' 
+              id ='btn'
+              class='transparent post-icons'
+              name='like-button'
+              >
+              <i class='fa-solid fa-thumbs-up'>
+              </i>
+              <span 
+              name='like-count'>
+              $post_likes</span>
+              </button>
+              </span>";
+      }
             echo "
             </div>
           </div>
