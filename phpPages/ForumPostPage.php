@@ -29,9 +29,10 @@
     $post_id = fetchPostInfo($DB_CREDENTIALS,'post_id', $post_header);
     $check_likes = checkLikes($DB_CREDENTIALS, 'post_id');
     $post_likes = (string) fetchLikes($DB_CREDENTIALS, $post_id);
-    //replies
-    $reply_messages = fetchReplyElement($DB_CREDENTIALS, $post_id, 'message');
 
+    //replies
+    $reply_id = fetchReplyElement($DB_CREDENTIALS, $post_id, 'acc_id');
+    $reply_messages = fetchReplyElement($DB_CREDENTIALS, $post_id, 'message');
 
   
     ?>
@@ -65,6 +66,16 @@
 
    }
 
+   .button-to-link {
+    background: none;
+    border: none;
+    padding: 0;
+
+    /*input has OS specific font-family*/
+    color: #069;
+    cursor: pointer;
+  }
+
     .blue {
       cursor: pointer;
       border: 1px solid white;
@@ -85,8 +96,13 @@
         <article class="specific-post">
           <?php
 
-            echo "<h4 class='post_header'>".$post_header."</h4>
-                  <p class = 'post-message'>".$post_message ."</p>
+            echo "
+            <form method='POST'>
+            <input type='hidden' name='post_user' value= '" . $post_user . "'></input>
+
+
+            <h4 class='post_header'>".$post_header."</h4>
+            <p class = 'post-message'>".$post_message ."</p>
 
                   <div class='media'>
             <div class='media-left'>
@@ -97,11 +113,12 @@
             <div class='media-content'>
               <div class='content'>
                 <p>
-                  <a href='#'>".$post_user. "</a> posted 34 minutes ago 
+                  <button formaction='usrPage.php' class='button-to-link' type='submit'>".$post_user. "</button>
                   <span class='tag'>Question</span>
                 </p>
               </div>
             </div>
+            </form>
             <div class='media-right'>";
             $is_post_liked = checkIfPostLiked($check_likes, $post_id);
       if ($is_post_liked) {
@@ -149,8 +166,14 @@
         <?php
         echo "<article class='reply column is-offset-1'>";
 
+        $index = 0;
         foreach($reply_messages as $replies){
-        echo " <p class = 'reply'>".$replies."</p>
+          $reply_users = fetchReplyTag($DB_CREDENTIALS, $reply_id[$index]);
+        echo " 
+        <form method='POST'>
+        <input type='hidden' name='post_user' value= '" . $reply_users . "'></input>
+
+        <p class = 'reply'>".$replies."</p>
         <div class='media'>
           <div class='media-left'>
             <p class='image is-32x32'>
@@ -160,7 +183,7 @@
           <div class='media-content'>
             <div class='content'>
               <p>
-                <a href='#'>@red</a> replied 40 minutes ago 
+              <button formaction='usrPage.php' class='button-to-link' type='submit'>". $reply_users ."</button> 
                 <span class='tag'>Reply</span>
               </p>
             </div>
@@ -182,8 +205,9 @@
           </span>
           </div>
         </div>
+        </form>
       </article>";
-
+      $index++;
       }
         
 
