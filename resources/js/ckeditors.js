@@ -32,8 +32,7 @@ var selectorContainer8 = "#CK-accomplishments"
 var selectorBtn9 = "[name='editOrgs']"
 var selectorContainer9 = "#CK-orgs"
 
-var selectorBtn10 = "[name='editName']"
-var selectorContainer10 = "#CK-name"
+
 
 // ORIGINAL HTML STRINGS TO BE COMPARED WITH
 var ckOriginBirthdayHTML = $.trim($(selectorContainer1).html());
@@ -42,6 +41,9 @@ var ckOriginMaritalHTML = $.trim($(selectorContainer3).html());
 var ckOriginEducationHTML = $.trim($(selectorContainer4).html());
 var ckOriginWorkHTML = $.trim($(selectorContainer5).html());
 var ckOriginCriminalHTML = $.trim($(selectorContainer6).html());
+var ckOriginPlatformHTML = $.trim($(selectorContainer7).html());
+var ckOriginAccomplishmentsHTML = $.trim($(selectorContainer8).html());
+var ckOriginOrgsHTML = $.trim($(selectorContainer9).html());
 
 function newEdit($param) {
     if (globaleditor) {
@@ -290,7 +292,9 @@ $(function () {
         let ckNewEducationHTML = $.trim($(selectorContainer4).html());
         let ckNewWorkHTML = $.trim($(selectorContainer5).html());
         let ckNewCriminalHTML = $.trim($(selectorContainer6).html());
-
+        let ckOriginPlatformHTML = $.trim($(selectorContainer7).html());
+        let ckOriginAccomplishmentsHTML = $.trim($(selectorContainer8).html());
+        let ckOriginOrgsHTML = $.trim($(selectorContainer9).html());
         /* ----------------------------------------------------------------
         CHECK CHANGES TO PREP FOR AJAX; SEND ONES THAT ARE ACTUALLY CHANGED 
         ---------------------------------------------------------------- */
@@ -323,6 +327,23 @@ $(function () {
         if (ckNewCriminalHTML.valueOf()
             != ckOriginCriminalHTML.valueOf()) {
             formData.append("criminal", ckNewCriminalHTML);
+        }
+
+        
+        if (ckNewPlatformHTML.valueOf()
+            != ckOriginPlatformHTML.valueOf()) {
+            formData.append("platform", ckNewPlatformHTML);
+        }
+
+        
+        if (ckNewAccomplishmentsHTML.valueOf()
+            != ckOriginAccomplishmentsHTML.valueOf()) {
+            formData.append("accomplishments", ckNewAccomplishmentsHTML);
+        }
+        
+        if (ckNewOrgsHTML.valueOf()
+            != ckOriginOrgsHTML.valueOf()) {
+            formData.append("orgs", ckNewOrgsHTML);
         }
 
         if ($("[name='religion-select'] option:selected").text()
