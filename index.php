@@ -239,10 +239,6 @@ echo
               <h2 class="subtitle">
                 If you're interested to apply for a position to help manage this website, don't hesitate to reach out!
               </h2>
-              <form action="example.docs">
-                <button class="button">
-                  Get in Touch
-                </button>
               </form>
             </div>
           </div>

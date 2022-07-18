@@ -339,7 +339,7 @@ function fetchReplyElement($db_credentials, $post_id, $element)
     );
 
     // preparation of prepared statement
-    $stmt = $conn->prepare("SELECT * FROM postsTBL WHERE is_reply = 1 AND is_reply_of = " . $post_id);
+    $stmt = $conn->prepare("SELECT $element FROM postsTBL WHERE is_reply = 1 AND is_reply_of = " . $post_id);
     // execution
     $stmt->execute();
     // result retrieval
@@ -354,6 +354,73 @@ function fetchReplyElement($db_credentials, $post_id, $element)
     }
 
     return $reply_array;
+
+    $conn->close();
+    $stmt->close();
+}
+
+function fetchReplyAccId($db_credentials, $post_id)
+{
+
+    $conn = new mysqli(
+        $db_credentials["server"],
+        $db_credentials["user"],
+        $db_credentials["pass"],
+        $db_credentials["db_name"],
+        $db_credentials["port"]
+    );
+    
+
+    // preparation of prepared statement
+    $stmt = $conn->prepare("SELECT acc_id FROM postsTBL WHERE post_id = $post_id");
+    // execution
+    $stmt->execute();
+    // result retrieval
+    $results = $stmt->get_result();
+
+    //define arrayVariables as an array
+    $reply_array = array();
+
+    //Fill up Arrays 
+    while ($replies = mysqli_fetch_assoc($results)) {
+        array_push($reply_array, $replies["acc_id"]);
+    }
+
+    return $reply_array["acc_id"];
+
+    $conn->close();
+    $stmt->close();
+}
+
+
+
+function fetchReplyTag($db_credentials, $acc_id)
+{
+
+    $conn = new mysqli(
+        $db_credentials["server"],
+        $db_credentials["user"],
+        $db_credentials["pass"],
+        $db_credentials["db_name"],
+        $db_credentials["port"]
+    );
+
+    // preparation of prepared statement
+    $stmt = $conn->prepare("SELECT user_tag FROM accProfileTBL WHERE acc_id = $acc_id");
+    // execution
+    $stmt->execute();
+    // result retrieval
+    $results = $stmt->get_result();
+
+    //define arrayVariables as an array
+    $reply_array = array();
+
+    //Fill up Arrays 
+    while ($replies = mysqli_fetch_assoc($results)) {
+        array_push($reply_array, $replies["user_tag"]);
+    }
+
+    return $reply_array[0];
 
     $conn->close();
     $stmt->close();

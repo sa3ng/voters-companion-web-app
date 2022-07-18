@@ -27,7 +27,7 @@
     
         $stmt->close();
     
-        $stmt2 = $conn->prepare("INSERT INTO postsTBL(acc_id,message, is_reply, is_reply_of, likes, approved, date) VALUES('" . $name["acc_id"] . "','". $message . "', 1 ,".$post_id.", 0,1, DATE_FORMAT(NOW(), '%M %d %Y')))");
+        $stmt2 = $conn->prepare("INSERT INTO postsTBL(acc_id,message, is_reply, is_reply_of, likes, approved, date) VALUES('" . $name["acc_id"] . "','". $message . "', 1 ,".$post_id.", 0,1, DATE_FORMAT(NOW(), '%M %d %Y'))");
         $stmt2->execute();
         $stmt2->close();
     

@@ -332,14 +332,9 @@ function queryReligionforEditor($db_credentials, $candidate_id)
 
 function isEditor()
 {
+  global $DB_CREDENTIALS;
 
-  $conn = new mysqli(
-    "remotemysql.com",
-    "o9Dh9V4Tbr",
-    "cEMBedVrx0",
-    "o9Dh9V4Tbr",
-    3306
-  );
+  $conn = connectDB($DB_CREDENTIALS);
 
   // preparation of prepared statement
   $stmt = $conn->prepare("SELECT type FROM accTBL WHERE name=?");
@@ -363,6 +358,7 @@ function isEditor()
     return true;
   else
     return false;
+ 
 }
 
 function getHeader()
