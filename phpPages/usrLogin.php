@@ -41,7 +41,7 @@ require_once 'footer-header/header.php';
           <div class="box">
             <!-- LOGO HERE -->
             <figure class="avatar image is-128x128 mx-auto mb-5">
-              <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+              <img class="is-rounded" src="../resources/images/home_images/talk.jpg">
             </figure>
             <?php
             // Code section underneath dictates that the form should submit to itself

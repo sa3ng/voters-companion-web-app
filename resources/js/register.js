@@ -92,6 +92,7 @@ $(function () {
           $("#error-user").addClass("hidden");
           $("#user-register").removeClass("is-danger");
         } else {
+          console.log(response);
           alert("SOMETHING HAPPENED");
         }
       },

@@ -341,29 +341,28 @@ function isEditor()
     3306
   );
 
-// preparation of prepared statement
-$stmt = $conn->prepare("SELECT type FROM accTBL WHERE name=?");
-$stmt->bind_param("s", $_COOKIE["acc_name"]);
+  // preparation of prepared statement
+  $stmt = $conn->prepare("SELECT type FROM accTBL WHERE name=?");
+  $stmt->bind_param("s", $_COOKIE["acc_name"]);
 
-// execution
-$stmt->execute();
-// result retrieval
-$results = $stmt->get_result();
-// should only have one result; No need to have a while iterator here
-$user = $results->fetch_assoc();
+  // execution
+  $stmt->execute();
+  // result retrieval
+  $results = $stmt->get_result();
+  // should only have one result; No need to have a while iterator here
+  $user = $results->fetch_assoc();
 
-if (empty($user) == FALSE)
+  if (empty($user) == FALSE)
     $acc_type = $user['type'];
-else
+  else
     $acc_type = ''; //specify empty user
 
 
   //if account is editor
-  if(strcmp($acc_type, 'editor') == 0 || strcmp($acc_type, 'admin') == 0 )
+  if (strcmp($acc_type, 'editor') == 0 || strcmp($acc_type, 'admin') == 0)
     return true;
   else
     return false;
- 
 }
 
 function getHeader()
