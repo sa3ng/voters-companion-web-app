@@ -194,7 +194,7 @@ require_once '../phpScripts/globals.php';
                                 echo "<option value='".$names."'>".$names."</option>";
                                 }
                             ?>
-                            <option value="fiat" selected>ABSTAIN</option>
+                            <option value="ABSTAIN" selected>ABSTAIN</option>
                         </select>
                         </h2>
                         </div>
@@ -215,7 +215,7 @@ require_once '../phpScripts/globals.php';
                               echo "<option value='".$names."'>".$names."</option>";
                             }
                             ?>
-                            <option value="fiat" selected>ABSTAIN</option>
+                            <option value="ABSTAIN" selected>ABSTAIN</option>
                         </select>
                         </h2>      
                         </div>                  
@@ -245,7 +245,7 @@ require_once '../phpScripts/globals.php';
                               echo "<option value='".$names."'>".$names."</option>";
                             }
                             ?>
-                            <option value="fiat" selected>ABSTAIN</option>
+                            <option value="ABSTAIN" selected>ABSTAIN</option>
                         </select>
                         </h2>
                         </div>                            
@@ -264,7 +264,7 @@ require_once '../phpScripts/globals.php';
                               echo "<option value='".$names."'>".$names."</option>";
                             }
                             ?>
-                            <option value="fiat" selected>ABSTAIN</option>
+                            <option value="ABSTAIN" selected>ABSTAIN</option>
                         </select>
                         </h2>  
                         </div>                              
@@ -283,7 +283,7 @@ require_once '../phpScripts/globals.php';
                                 echo "<option value='".$names."'>".$names."</option>";
                                 }
                                 ?>
-                                <option value="fiat" selected>ABSTAIN</option>
+                                <option value="ABSTAIN" selected>ABSTAIN</option>
                             </select>
                             </h2>     
                             </div>                           
@@ -308,7 +308,7 @@ require_once '../phpScripts/globals.php';
                               echo "<option value='".$names."'>".$names."</option>";
                             }
                             ?>
-                            <option value="fiat" selected>ABSTAIN</option>
+                            <option value="ABSTAIN" selected>ABSTAIN</option>
                         </select>
                         </h2> 
                         </div>                             
@@ -327,7 +327,7 @@ require_once '../phpScripts/globals.php';
                               echo "<option value='".$names."'>".$names."</option>";
                             }
                             ?>
-                            <option value="fiat" selected>ABSTAIN</option>
+                            <option value="ABSTAIN" selected>ABSTAIN</option>
                         </select>
                         </h2>
                         </div>                              
@@ -346,7 +346,7 @@ require_once '../phpScripts/globals.php';
                                     echo "<option value='".$names."'>".$names."</option>";
                                     }
                                     ?> 
-                                    <option value="fiat">ABSTAIN</option>
+                                    <option value="ABSTAIN">ABSTAIN</option>
                                     
                                 </select>
                                 </h2>
@@ -372,7 +372,7 @@ require_once '../phpScripts/globals.php';
                               echo "<option value='".$names."'>".$names."</option>";
                             }
                             ?>
-                            <option value="fiat" selected>ABSTAIN</option>
+                            <option value="ABSTAIN" selected>ABSTAIN</option>
                         </select>
                         </h2>
                         </div>                            
@@ -391,7 +391,7 @@ require_once '../phpScripts/globals.php';
                               echo "<option value='".$names."'>".$names."</option>";
                             }
                             ?>
-                            <option value="fiat" selected>ABSTAIN</option>
+                            <option value="ABSTAIN" selected>ABSTAIN</option>
                         </select>
                         </h2>  
                         </div>                              
@@ -410,7 +410,7 @@ require_once '../phpScripts/globals.php';
                                 echo "<option value='".$names."'>".$names."</option>";
                                 }
                                 ?>
-                                <option value="fiat" selected>ABSTAIN</option>
+                                <option value="ABSTAIN" selected>ABSTAIN</option>
                             </select>
                             </h2>     
                             </div>                           
@@ -435,7 +435,7 @@ require_once '../phpScripts/globals.php';
                               echo "<option value='".$names."'>".$names."</option>";
                             }
                             ?>
-                            <option value="fiat" selected>ABSTAIN</option>
+                            <option value="ABSTAIN" selected>ABSTAIN</option>
                         </select>
                         </h2> 
                         </div>                             
@@ -454,7 +454,7 @@ require_once '../phpScripts/globals.php';
                               echo "<option value='".$names."'>".$names."</option>";
                             }
                             ?>
-                            <option value="fiat" selected>ABSTAIN</option>
+                            <option value="ABSTAIN" selected>ABSTAIN</option>
                         </select>
                         </h2>
                         </div>                              
@@ -473,7 +473,7 @@ require_once '../phpScripts/globals.php';
                                     echo "<option value='".$names."'>".$names."</option>";
                                     }
                                     ?> 
-                                    <option value="fiat">ABSTAIN</option>
+                                    <option value="ABSTAIN">ABSTAIN</option>
                                     
                                 </select>
                                 </h2>
@@ -499,7 +499,7 @@ require_once '../phpScripts/globals.php';
     <div class="tab-pane" id="pane-2">
         <div class="columns is-centered">
             <div class="content">
-                <button class='button is-small is-success editOption hidden' name='done'>Done</button>
+                <button class='button is-small is-success editOption hidden' name='done' type="submit" formaction="usrPage.php">Done</button>
                 <br>
                 <dl>
                     <dt><strong>Name: <button class='button is-small is-info editOption hidden' name='editName'>Edit</button></strong></dt> 

@@ -167,7 +167,8 @@ $(function () {
             processData: false,
             success: function (response) {
                 if (response === "OK") {
-                    alert("Info Edited Successfully");
+                    alert("Info Edited Successfully!");
+                    window.location.reload();
                 }
                 else {
                     alert("Something went wrong");
