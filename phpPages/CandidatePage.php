@@ -274,89 +274,37 @@ if ($candidate_basic["position_id"] == "P") {
 
             <!--Affiliated Party-->
             <div class="tab-pane" id="pane-3">
-                <div class="columns">
-                    <div class="container">
-                        <div class="content">
-                            <h2>Affliated Party and Organizations</h2>
-                        </div>
-                        <div class="columns">
-                            <div class="column">
-                                <article class="media">
-                                    <div class="media-left">
-                                        <figure class="image is-96x96">
-                                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Liberal_Party_of_the_Philippines_%28LP%29.svg/640px-Liberal_Party_of_the_Philippines_%28LP%29.svg.png">
-                                        </figure>
-                                    </div>
-                                    <div class="media-content">
-                                        <div class="content">
-                                            <p>
-                                                <strong>Liberal Party</strong>
-                                                <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article class="media">
-                                    <div class="media-left">
-                                        <figure class="image is-96x96">
-                                            <img src="https://bulma.io/images/placeholders/96x96.png">
-                                        </figure>
-                                    </div>
-                                    <div class="media-content">
-                                        <div class="content">
-                                            <p>
-                                                <strong>Example Org</strong>
-                                                <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                            <div class="column">
-                                <article class="media">
-                                    <div class="media-left">
-                                        <figure class="image is-96x96">
-                                            <img src="https://bulma.io/images/placeholders/96x96.png">
-                                        </figure>
-                                    </div>
-                                    <div class="media-content">
-                                        <div class="content">
-                                            <p>
-                                                <strong>Example Org</strong>
-                                                <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article class="media">
-                                    <div class="media-left">
-                                        <figure class="image is-96x96">
-                                            <img src="https://bulma.io/images/placeholders/96x96.png">
-                                        </figure>
-                                    </div>
-                                    <div class="media-content">
-                                        <div class="content">
-                                            <p>
-                                                <strong>Example Org</strong>
-                                                <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis. ╳
-                                            </p>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
+                <div class="columns is-centered">
+                    <div class="content">
+                        <?php
+                        if (isEditor()) {
+                            echo "<button class='button is-small is-info' name='editEdu'>Edit</button>";
+                          }
+                        ?>
+                        <div id="CK-orgs">
+                            <h3>Affiliated</h3>
+                            <p>Quisque ante lacus, malesuada ac auctor vitae, congue. Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.</p>
+                            <ol>
+                                <li>Donec blandit a lorem id convallis.</li>
+                                <li>Cras gravida arcu at diam gravida gravida.</li>
+                                <li>Integer in volutpat libero.</li>
+                            </ol>
                         </div>
                     </div>
                 </div>
-                <br><br><br><br><br>
             </div>
 
 
-            <!--Accomplishments-->
+            <!--platform-->
             <div class="tab-pane" id="pane-4">
                 <div class="columns is-centered">
                     <div class="content">
-                        <button class='button is-small is-info' name='editAccomplishment'>Edit</button>
-                        <div>
+                        <?php
+                        if (isEditor()) {
+                            echo "<button class='button is-small is-info' name='editEdu'>Edit</button>";
+                          }
+                        ?>
+                        <div id="CK-platform">
                             <h3>Platform</h3>
                             <p>Quisque ante lacus, malesuada ac auctor vitae, congue. Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.</p>
                             <ol>
@@ -402,6 +350,7 @@ if ($candidate_basic["position_id"] == "P") {
                 </div>
             </div>
     </section>
+   
     <script src="../resources/ckeditor/build/ckeditor.js"></script>
     <script src="../resources/js/ckeditors.js"></script>
     <script src="../resources/js/bulma.js"></script>

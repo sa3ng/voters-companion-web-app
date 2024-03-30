@@ -6,6 +6,8 @@
     <title>Voters' Companion</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="../resources/css/voterscompanion.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="../resources/js/forum.js"></script>
     <?php
 
     require_once 'footer-header/header.php';
@@ -18,7 +20,6 @@
 
     if(isset($_POST['post_user'])){
       $post_user = $_POST['post_user'];
-      $post_likes = $_POST['post_likes'];
     }
     else{
       $post_user = '';
@@ -26,9 +27,14 @@
       
     $post_message = fetchPostInfo($DB_CREDENTIALS, 'message', $post_header);
     $post_id = fetchPostInfo($DB_CREDENTIALS,'post_id', $post_header);
-    
+    $check_likes = checkLikes($DB_CREDENTIALS, 'post_id');
+    $post_likes = (string) fetchLikes($DB_CREDENTIALS, $post_id);
+
+
     //replies
+    $reply_id = fetchReplyElement($DB_CREDENTIALS, $post_id, 'acc_id');
     $reply_messages = fetchReplyElement($DB_CREDENTIALS, $post_id, 'message');
+    $reply_post_id = fetchReplyElement($DB_CREDENTIALS, $post_id, 'post_id');
 
 
   
@@ -54,6 +60,32 @@
     .post-icons{
       padding-right: 10px;
     }
+
+    .transparent {
+    cursor: pointer;
+    border: 1px solid white;
+    background-color: transparent;
+    color: gray;
+
+   }
+
+   .button-to-link {
+    background: none;
+    border: none;
+    padding: 0;
+
+    /*input has OS specific font-family*/
+    color: #069;
+    cursor: pointer;
+  }
+
+    .blue {
+      cursor: pointer;
+      border: 1px solid white;
+      border-radius: 0.7ch;
+      background-color: #24a0ed;
+      color: white;
+    }
   </style>
 
   <!-- Font Awesome  -->
@@ -67,8 +99,13 @@
         <article class="specific-post">
           <?php
 
-            echo "<h4 class='post_header'>".$post_header."</h4>
-                  <p class = 'post-message'>".$post_message ."</p>
+            echo "
+            <form method='POST'>
+            <input type='hidden' name='post_user' value= '" . $post_user . "'></input>
+
+
+            <h4 class='post_header'>".$post_header."</h4>
+            <p class = 'post-message'>".$post_message ."</p>
 
                   <div class='media'>
             <div class='media-left'>
@@ -79,13 +116,48 @@
             <div class='media-content'>
               <div class='content'>
                 <p>
-                  <a href='#'>".$post_user. "</a> posted 34 minutes ago 
+                  <button formaction='usrPage.php' class='button-to-link' type='submit'>".$post_user. "</button>
                   <span class='tag'>Question</span>
                 </p>
               </div>
             </div>
-            <div class='media-right'>
-              <span class='post-icons has-text-grey-light'><i class='fa-solid fa-thumbs-up'></i> 1</span>
+            </form>
+            <div class='media-right'>";
+            $is_post_liked = checkIfPostLiked($check_likes, $post_id);
+      if ($is_post_liked) {
+        echo "<span>
+              <button 
+              type='button'
+              data-post-id='$post_id' 
+              id ='btn'
+              class='blue post-icons active-like'
+              name='like-button'
+              >
+              <i class='fa-solid fa-thumbs-up'>
+              </i>
+              <span 
+              name='like-count'>
+              $post_likes</span>
+              </button>
+              </span>";
+      } else {
+        echo "<span>
+              <button 
+              type='button'
+              data-post-id='$post_id' 
+              id ='btn'
+              class='transparent post-icons'
+              name='like-button'
+              >
+              <i class='fa-solid fa-thumbs-up'>
+              </i>
+              <span 
+              name='like-count'>
+              $post_likes</span>
+              </button>
+              </span>";
+      }
+            echo "
             </div>
           </div>
             ";
@@ -97,8 +169,18 @@
         <?php
         echo "<article class='reply column is-offset-1'>";
 
+        $index = 0;
         foreach($reply_messages as $replies){
-        echo " <p class = 'reply'>".$replies."</p>
+          $reply_users = fetchReplyTag($DB_CREDENTIALS, $reply_id[$index]);
+          $post_likes_reply = (string) fetchLikes($DB_CREDENTIALS, $reply_post_id[$index]);
+          $is_reply_liked = checkIfPostLiked($check_likes, $reply_post_id[$index]);
+
+
+        echo " 
+        <form method='POST'>
+        <input type='hidden' name='post_user' value= '" . $reply_users . "'></input>
+
+        <p class = 'reply'>".$replies."</p>
         <div class='media'>
           <div class='media-left'>
             <p class='image is-32x32'>
@@ -108,17 +190,53 @@
           <div class='media-content'>
             <div class='content'>
               <p>
-                <a href='#'>@red</a> replied 40 minutes ago 
+              <button formaction='usrPage.php' class='button-to-link' type='submit'>". $reply_users ."</button> 
                 <span class='tag'>Reply</span>
               </p>
             </div>
           </div>
-          <div class='media-right'>
-            <span class='post-icons has-text-grey-light'><i class='fa-solid fa-thumbs-up'></i> 1</span>
+          <div class='media-right'>";
+
+          if ($is_reply_liked) {
+            echo "<span>
+                  <button 
+                  type='button'
+                  data-post-id='".$reply_post_id[$index]."' 
+                  id ='btn'
+                  class='blue post-icons active-like'
+                  name='like-button'
+                  >
+                  <i class='fa-solid fa-thumbs-up'>
+                  </i>
+                  <span 
+                  name='like-count'>
+                  $post_likes_reply</span>
+                  </button>
+                  </span>";
+          } else {
+            echo "<span>
+                  <button 
+                  type='button'
+                  data-post-id='".$reply_post_id[$index]."' 
+                  id ='btn'
+                  class='transparent post-icons'
+                  name='like-button'
+                  >
+                  <i class='fa-solid fa-thumbs-up'>
+                  </i>
+                  <span 
+                  name='like-count'>
+                  $post_likes_reply</span>
+                  </button>
+                  </span>";
+          }
+
+          echo "
           </div>
         </div>
+        </form>
       </article>";
-
+      $index++;
       }
         
 

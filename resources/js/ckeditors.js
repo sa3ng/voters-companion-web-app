@@ -33,6 +33,7 @@ var selectorBtn9 = "[name='editOrgs']"
 var selectorContainer9 = "#CK-orgs"
 
 
+
 // ORIGINAL HTML STRINGS TO BE COMPARED WITH
 var ckOriginBirthdayHTML = $.trim($(selectorContainer1).html());
 var ckOriginBirthplaceHTML = $.trim($(selectorContainer2).html());
@@ -40,6 +41,9 @@ var ckOriginMaritalHTML = $.trim($(selectorContainer3).html());
 var ckOriginEducationHTML = $.trim($(selectorContainer4).html());
 var ckOriginWorkHTML = $.trim($(selectorContainer5).html());
 var ckOriginCriminalHTML = $.trim($(selectorContainer6).html());
+var ckOriginPlatformHTML = $.trim($(selectorContainer7).html());
+var ckOriginAccomplishmentsHTML = $.trim($(selectorContainer8).html());
+var ckOriginOrgsHTML = $.trim($(selectorContainer9).html());
 
 function newEdit($param) {
     if (globaleditor) {
@@ -243,6 +247,23 @@ $(function () {
         }
     });
 
+    $(selectorBtn10).click(function (e) {
+        e.preventDefault();
+        newEdit($(selectorContainer10));
+
+        if (($(selectorContainer10).is(":visible"))) {
+            ClassicEditor
+                .create(document.querySelector(selectorContainer10))
+                .then(editor => {
+                    console.log("Created", editor);
+                    globaleditor = editor;
+                })
+                .catch(error => {
+                    console.log(error.stack);
+                })
+        }
+    });
+
     $("[name='done']").click(function (e) {
         e.preventDefault();
         if (globaleditor) {
@@ -271,7 +292,9 @@ $(function () {
         let ckNewEducationHTML = $.trim($(selectorContainer4).html());
         let ckNewWorkHTML = $.trim($(selectorContainer5).html());
         let ckNewCriminalHTML = $.trim($(selectorContainer6).html());
-
+        let ckOriginPlatformHTML = $.trim($(selectorContainer7).html());
+        let ckOriginAccomplishmentsHTML = $.trim($(selectorContainer8).html());
+        let ckOriginOrgsHTML = $.trim($(selectorContainer9).html());
         /* ----------------------------------------------------------------
         CHECK CHANGES TO PREP FOR AJAX; SEND ONES THAT ARE ACTUALLY CHANGED 
         ---------------------------------------------------------------- */
@@ -304,6 +327,23 @@ $(function () {
         if (ckNewCriminalHTML.valueOf()
             != ckOriginCriminalHTML.valueOf()) {
             formData.append("criminal", ckNewCriminalHTML);
+        }
+
+        
+        if (ckNewPlatformHTML.valueOf()
+            != ckOriginPlatformHTML.valueOf()) {
+            formData.append("platform", ckNewPlatformHTML);
+        }
+
+        
+        if (ckNewAccomplishmentsHTML.valueOf()
+            != ckOriginAccomplishmentsHTML.valueOf()) {
+            formData.append("accomplishments", ckNewAccomplishmentsHTML);
+        }
+        
+        if (ckNewOrgsHTML.valueOf()
+            != ckOriginOrgsHTML.valueOf()) {
+            formData.append("orgs", ckNewOrgsHTML);
         }
 
         if ($("[name='religion-select'] option:selected").text()

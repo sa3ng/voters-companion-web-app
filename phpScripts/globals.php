@@ -11,11 +11,19 @@ Port: 3306
 // GLOBAL VARIABLE FOR DB
 $DB_CREDENTIALS =
     [
-        "user" => "o9Dh9V4Tbr",
-        "pass" => "cEMBedVrx0",
-        "db_name" => "o9Dh9V4Tbr",
-        "server" => "remotemysql.com",
+        // "user" => "o9Dh9V4Tbr",
+        // "pass" => "cEMBedVrx0",
+        // "db_name" => "o9Dh9V4Tbr",
+        // "server" => "remotemysql.com",
+        // "port" => 3306
+
+        "user" => "freedb_sa3ng",
+        "pass" => "yW"."$". "B6aXSJ8nZn#w",
+        "db_name" => "freedb_votersAppDB",
+        "server" => "sql.freedb.tech",
         "port" => 3306
+
+
     ];
 
 $LOCALHOST_CREDENTIALS =

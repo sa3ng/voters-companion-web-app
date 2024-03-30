@@ -167,60 +167,10 @@
               </h1>
             </div>
             <div class="column is-8 is-offset-2">
-              <h2 class="subtitle">
-                Feel free to shoot us a message about anything you'd like to bring up with us regarding the website!
+              <h2 class="subtitle" style="text-align: center;">
+                <strong> pauloevangelista111@gmail.com | david@gmail.com | Cerda@gmail.com  Aguas@@gmail.com
               </h2>
-              <form
-                action="https://formspree.io/email@example.com"
-                method="POST"
-              >
-                <div class="field">
-                  <label class="label">Name</label>
-                  <div class="control has-icons-left">
-                    <input
-                      class="input"
-                      type="text"
-                      placeholder="Ex. John Smith"
-                      name="Name"
-                    />
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-user"></i>
-                    </span>
-                  </div>
-                </div>
-                <div class="field">
-                  <label class="label">Email</label>
-                  <div class="control has-icons-left">
-                    <input
-                      class="input"
-                      type="email"
-                      placeholder="Ex. johnsmith@gmail.com"
-                      name="Email"
-                    />
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-envelope"></i>
-                    </span>
-                  </div>
-                </div>
-                <div class="field">
-                  <label class="label">Message</label>
-                  <div class="control">
-                    <textarea
-                      class="textarea"
-                      placeholder="Enter message here"
-                      name="Message"
-                    ></textarea>
-                  </div>
-                </div>
-                <div class="field">
-                  <div class="control ">
-                    <button class="button submit-button">
-                      Submit&nbsp;&nbsp;
-                      <i class="fas fa-paper-plane"></i>
-                    </button>
-                  </div>
-                </div>
-              </form>
+              
             </div>
           </div>
         </div>
